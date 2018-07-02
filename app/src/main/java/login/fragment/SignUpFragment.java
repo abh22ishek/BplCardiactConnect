@@ -87,7 +87,11 @@ public class SignUpFragment extends Fragment {
                 {
                     userRegistration(getActivity());
                     navigateFragment();
-                    destroyCurrentFragment();
+                  //  destroyCurrentFragment();
+
+                    // unable to destroy current fragment android
+
+
                 }
 
             }
@@ -157,6 +161,7 @@ public class SignUpFragment extends Fragment {
     private void destroyCurrentFragment()
     {
 
+        //
     }
 
 
