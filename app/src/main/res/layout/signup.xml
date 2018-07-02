@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="5dp"
+    android:background="@color/bg_grey"
+    android:scrollbars="none"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:id="@+id/loginRelative"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_white"
+        android:layout_height="wrap_content"
+        android:id="@+id/security_question"
+       android:layout_below="@+id/loginLayout"
+        android:layout_alignParentStart="true"
+        >
+
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/security_ques"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/arial"
+            android:padding="5dp"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/security_question_1"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/arial"
+            android:padding="5dp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:padding="5dp"
+            android:hint="@string/security_question_1"
+            android:id="@+id/securityques1"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/arial"
+            android:textColorHint="@color/separator"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/security_question_2"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:fontFamily="@font/arial"
+            android:textSize="16sp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:padding="5dp"
+            android:hint="@string/security_question_2"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/arial"
+            android:id="@+id/securityques2"
+            android:textStyle="normal"
+            android:textColor="@color/black"
+            android:textColorHint="@color/separator"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@string/security_question_3"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/arial"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:padding="5dp"
+            android:hint="@string/security_question_3"
+            android:id="@+id/securityques3"
+            android:textColor="@color/black"
+            android:background="@android:color/transparent"
+            android:textStyle="normal"
+            android:fontFamily="@font/arial"
+            android:textColorHint="@color/separator"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator"
+            />
+
+
+        <custom.view.CustomButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:layout_marginTop="10dp"
+            app:fontname="centralSansBook"
+            android:background="@drawable/rounded_button"
+            android:id="@+id/btnSignUp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+
+
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@drawable/bg_rounded_white"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginLayout"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentTop="true"
+        >
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/email"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:hint="@string/email"
+            android:textStyle="bold"
+            android:fontFamily="@font/arial"
+            android:background="@android:color/transparent"
+            android:textColorHint="@color/separator"
+
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:padding="5dp"
+            android:hint="@string/password"
+            android:background="@android:color/transparent"
+            android:id="@+id/password"
+            android:textStyle="bold"
+            android:fontFamily="@font/arial"
+            android:textColor="@color/black"
+            android:textColorHint="@color/separator"
+
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:padding="5dp"
+            android:hint="@string/conf_pw"
+            android:background="@android:color/transparent"
+            android:id="@+id/confirmPassword"
+            android:textStyle="bold"
+            android:fontFamily="@font/arial"
+            android:textColor="@color/black"
+            android:textColorHint="@color/separator"
+
+            />
+    </LinearLayout>
+</RelativeLayout>
+
+</ScrollView>

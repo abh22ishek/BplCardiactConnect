@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+
+    <!--<color name="backgroundSplash">#125688</color>-->
+
+    <color name="cardiact_connect_theme">#223F63</color>
+    <color name="backgroundSplash">#0066BB</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="backgroundTheme">#FFFFFF</color>
+
+    <color name="bg_grey">#E8E8E8</color>
+
+    <color name="separator">#E0E0E0</color>
+
+    <color name="statusbarbackground">#222E75</color>
+    <color name="windowbackground">#E8EAF6</color>
+
+    <color name="window_background_bottom">#0066BB</color>
+    <color name="window_background_top">#004B96</color>
+
+    <color name="header_itltle_color">#7CBC50</color>
+    <color name="button_color">#33CC99</color>
+
+    <color name="button_text_color">#E31C15</color>
+    <color name="limits_text_color">#6195FA</color>
+    <color name="settings_bg">#004B88</color>
+    <color name="red">#E41710</color>
+    <color name="sig_strength_lo">#2196F3</color>
+    <color name="sig_strength_mid">#03A954</color>
+    <color name="sig_strength_hi">#FF00FF00</color>
+
+
+    <!--<color name="sig_strength_highest"></color>-->
+    <color name="grey_">#9E9E9E</color>
+    <color name="spalsh_text_color">#FF0F4183</color>
+    <color name="top_strength_color">#FFE9E90F</color>
+    <color name="sig_strength_top">#FFB0C826</color>
+</resources>

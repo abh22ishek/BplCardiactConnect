@@ -1,0 +1,150 @@
+<resources>
+    <string name="app_name">Cardiact Connect</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!--user details strings-->
+    <string name="name">Name</string>
+    <string name="age">Age (Years)</string>
+    <string name="sex">Sex</string>
+    <string name="gender">Gender</string>
+    <string name="height">Height(cm)</string>
+    <string name="weight">Weight(kg)</string>
+    <string name="set_name">Set Name</string>
+    <string name="set_age">Set Age</string>
+    <string name="set_height">Set Height</string>
+    <string name="set_weight">Set Weight</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+
+
+    <string name="welcome_user">Welcome User</string>
+    <string name="members">Members</string>
+    <string name="settings">Settings</string>
+    <string name="edit">Edit</string>
+    <string name="forget_password">Forgot Password</string>
+
+    <string name="success_regist">Successful Registration</string>
+
+    <string name="security_ver">Enter the Security Questions for verification</string>
+
+
+
+
+
+    <string name="security_question_1">Enter your favourite color</string>
+    <string name="security_question_2">Enter your birthplace</string>
+    <string name="security_question_3">Enter your mother\'s maiden name</string>
+    <string name="security_question_3_">Enter your mother\'s maiden \nname</string>
+
+
+
+    <string name="hosp_name">Hospital Name</string>
+    <string name="hosp_id">Hospital Id</string>
+    <string name="hosp_phone">Hospital Phone</string>
+    <string name="hosp_address">Hospital Address</string>
+
+
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+
+
+
+    <string name="proceed">Proceed</string>
+    <string name="background_image">Background Image</string>
+    <string name="back">Back key</string>
+    <string name="base_header_title">Base header title</string>
+    <string name="verify">Verify</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="user_guide_">User Guide</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="log_in">Log In</string>
+    <string name="password">Password</string>
+    <string name="security_ques">Security Question</string>
+    <string name="submit">SUBMIT</string>
+    <string name="update">UPDATE</string>
+
+
+    <string name="reset">RESET</string>
+
+
+    <string name="hint_ent_new_pw">Enter your new Password</string>
+    <string name="hint_conf_new_pw">Confirm your new Password</string>
+
+    <string name="conf_pw">Confirm Password</string>
+
+    <string name="sign_other_user">Sign Up as Other User</string>
+
+    <string name="t_and_c">Terms And Condition</string>
+    <string name="signed_t_and_c">I have read the Terms and Conditions</string>
+
+    <string name="bp_general_knowledge">The American Heart Association recommends home monitoring
+        for all people with high blood pressure to help the healthcare provider determine
+        whether treatments are working. Home monitoring (self-measured blood pressure)
+        is not a substitute for regular visits to your physician. If you have been prescribed
+        medication  to lower your blood pressure, don\'t stop taking your medication without
+        consulting your doctor, even if your blood pressure readings are in the normal range during home monitoring.\n\n
+
+Choosing a home blood pressure monitor\n\n
+<b>The American Heart Association recommends an automatic, cuff-style, bicep (upper-arm) monitor.</b>\n\n
+
+Wrist and finger monitors are not recommended because they yield less reliable readings.
+Choose a monitor that has been validated. If you are unsure, ask your doctor or pharmacist for advice.
+When selecting a blood pressure monitor for a senior, pregnant woman or child, make sure it is validated for these conditions.
+Make sure the cuff fits — measure around your upper arm and choose a monitor that comes with the correct size cuff.\n\n
+
+
+
+<b>Blood pressure categories</b>
+The five blood pressure ranges as recognized by the American Heart Association are:
+
+<b>Normal blood pressure</b>\n\n
+Congratulations on having blood pressure numbers that are within the normal
+        (optimal) range of less than 120/80 mm Hg. Keep up the good work and
+        stick with heart-healthy habits like following a balanced diet and getting regular exercise.\n\n
+
+<b>Prehypertension (early stage high blood pressure)</b>\n\n
+Prehypertension is when blood pressure is consistently ranging from 120-139/80-89 mm Hg.
+        People with prehypertension are likely to develop high blood pressure unless steps are taken to control it.\n\n
+
+<b>Hypertension Stage 1</b>\n\n
+Hypertension Stage 1 is when blood pressure is consistently
+        ranging from 140-159/90-99 mm Hg.
+        At this stage of high blood pressure,
+        doctors are likely to prescribe lifestyle
+        changes and may consider adding blood pressure medication.\n\n
+
+<b>Hypertension Stage 2</b>\n\n
+Hypertension Stage 2 is when blood pressure is
+        consistently ranging at levels greater than 160/100 mm Hg.
+        At this stage of high blood pressure, doctors are likely to prescribe a
+        combination of blood pressure medications along with lifestyle changes.\n\n
+
+<b>Hypertensive crisis</b>\n\n
+
+This is when high blood pressure requires emergency medical attention.
+        If your blood pressure is higher than 180/110 mm Hg and you are NOT
+        experiencing symptoms such as chest pain, shortness of breath, back pain,
+        numbness/weakness, changes in vision or difficulty speaking, wait about five
+        minutes and take it again. If the reading is still at or above that level,
+        you should CALL 9-1-1 and get help immediately. Learn more about the two
+        types of hypertensive crises.\n\n
+
+    </string>
+
+    <string name="hospital_icon">Hospital icon</string>
+
+    <string name="pat_name">Patient Name</string>
+    <string name="pat_id">Patient Id</string>
+
+    
+    <string name="view_arch_rec">View Archived Records</string>
+
+    <string name="import_rec_gen">Import Record From BPL Cardiact Connect</string>
+
+
+    <string name="start_rt_ecg">Start Real Time Measurement</string>
+
+
+</resources>
