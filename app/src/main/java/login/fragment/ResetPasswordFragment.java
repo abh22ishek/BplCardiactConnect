@@ -12,7 +12,6 @@ import android.widget.*;
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import database.*;
-import logger.*;
 
 public class ResetPasswordFragment extends Fragment {
 
@@ -46,10 +45,17 @@ public class ResetPasswordFragment extends Fragment {
 
     }
 
-
+String username="";
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if(null!=getArguments().getString(Constants.USER_NAME)) {
+
+            username=getArguments().getString(Constants.USER_NAME);
+
+
+        }
 
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,12 +67,10 @@ public class ResetPasswordFragment extends Fragment {
                 if(newPassword.getText().toString().trim().equals(confirmNewPassword.getText().toString().trim()))
                 {
                     // Here update the password for current user name int the database
-                  /*  DatabaseManager.getInstance().update_password(username,password1.getText().toString().trim());
+                   DatabaseManager.getInstance().update_password(username,newPassword.getText().toString().trim());
 
-                    Toast.makeText(ResetPasswordActivity.this,"Password has been reset successfully",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(ResetPasswordActivity.this,OximeterMainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);*/
+                   Toast.makeText(getActivity(),"Password has been reset successfully",Toast.LENGTH_SHORT).show();
+
                 }
                 else
                 {
@@ -95,7 +99,6 @@ public class ResetPasswordFragment extends Fragment {
 
 
         snackbar.setActionTextColor(Color.RED);
-
 
         View sbView = snackbar.getView();
         TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
