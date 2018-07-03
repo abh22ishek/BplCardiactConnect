@@ -231,7 +231,8 @@ public class SignUpFragment extends Fragment {
         super.onDestroy();
     }
 
-    private ContentValues addUsers(String username, String password, String security_ques1, String security_ques2, String security_ques3)
+    private ContentValues addUsers(String username, String password, String security_ques1,
+                                   String security_ques2, String security_ques3)
     {
         ContentValues values = new ContentValues();
         values.put(FeedReaderDbHelper.USER_NAME, username);

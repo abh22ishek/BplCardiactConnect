@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.drawable.*;
 import com.bumptech.glide.request.animation.*;
 import com.bumptech.glide.request.target.*;
 
+import application.*;
 import constants.*;
 import custom.view.*;
 import logger.*;
@@ -31,13 +32,15 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
     TextView appName;
 
-
     private String TAG=BaseLoginActivityClass.class.getSimpleName();
 
+    BaseApplicationClass globalVariable;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_login_activity_main);
+
+        globalVariable = (BaseApplicationClass) getApplicationContext();
 
 
         UserIcon=findViewById(R.id.hospitalIcon);
@@ -47,9 +50,9 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
         fragmentManager=getSupportFragmentManager();
         fragmentTransaction=fragmentManager.beginTransaction();
-        SignUpFragment signUpFragment = new SignUpFragment();
+        LoginFragment signUpFragment = new LoginFragment();
         fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment);
-        fragmentTransaction.addToBackStack(ClassConstants.SIGNUP_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.LOGIN_FRAGMENT);
         fragmentTransaction.commit();
 
 
@@ -108,7 +111,13 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
     }
 
+    @Override
+    public void setUserName(String userName) {
+        // Set the global user Name
+        globalVariable.setUsername(userName);
+    }
 
+    boolean mExit;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -116,6 +125,22 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
         FragmentManager fm=getSupportFragmentManager();
         if(fm.getBackStackEntryCount()>1) {
             fm.popBackStack();
+        }else{
+            if (mExit) {
+                super.onBackPressed();
+                this.finish();
+                // this.finishAffinity(); // removes the activity from same task
+
+            } else {
+                Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
+                mExit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mExit = false;
+                    }
+                },3*1000);
+            }
         }
     }
 

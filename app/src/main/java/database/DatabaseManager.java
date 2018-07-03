@@ -9,6 +9,7 @@ import static database.FeedReaderDbHelper.PASSWORD;
 import static database.FeedReaderDbHelper.SECURITY_Q_1;
 import static database.FeedReaderDbHelper.SECURITY_Q_2;
 import static database.FeedReaderDbHelper.SECURITY_Q_3;
+import static database.FeedReaderDbHelper.TABLE_NAME_USERS;
 import static database.FeedReaderDbHelper.USER_NAME;
 
 public class DatabaseManager {
@@ -92,10 +93,11 @@ public class DatabaseManager {
             if(cursor.getCount()>=1)
             {
                 b=true;
-                Logger.log(Level.INFO,TAG,"Username already exists insie table");
-                return b;
+                Logger.log(Level.INFO,TAG,"Username already exists inside table");
 
-            }
+                }
+
+            return b;
         }
 
         catch (Exception e){
@@ -104,7 +106,9 @@ public class DatabaseManager {
 
         finally {
             try {
+                if(cursor!=null)
                 cursor.close();
+
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -131,4 +135,44 @@ public class DatabaseManager {
 
         }
     }
+
+
+
+
+    // Login into app
+    public boolean Login(String username,String password) throws SQLException
+    {
+
+        Logger.log(Level.INFO, "DatabaseManager", "username " +username);
+        Logger.log(Level.INFO, "DatabaseManager", "password " +password);
+
+
+        Cursor cursor=mDatabase.query(TABLE_NAME_USERS, new String[]{USER_NAME,PASSWORD},
+                USER_NAME + "=?"+" "+"AND"+" "+PASSWORD+"=?" , new String[]{username,password}, null, null, null);
+
+        Logger.log(Level.INFO, "DatabaseManager", "Get  username and password count=" + cursor.getCount());
+
+        if(cursor.moveToNext())
+        {
+            Logger.log(Level.INFO, "DatabaseManager",
+                    "Get  username value=" + cursor.getString(cursor.getColumnIndex("user_name")));
+        }
+
+        if(cursor.getCount() > 0)
+        {
+            return true;
+        }
+
+
+        try {
+            cursor.close();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
 }

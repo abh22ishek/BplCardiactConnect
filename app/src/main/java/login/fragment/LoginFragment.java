@@ -9,8 +9,10 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 
+import application.*;
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
+import database.*;
 import logger.*;
 
 public class LoginFragment extends Fragment {
@@ -20,7 +22,11 @@ public class LoginFragment extends Fragment {
     TextView forgotPassword,signUp,user_guide;
     private String TAG=LoginFragment.class.getSimpleName();
 
+    private TextView userId,password;
+
+
     Button login;
+
 
 
     @Override
@@ -33,13 +39,27 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.login,container,false);
-        forgotPassword=view.findViewById(R.id.forgotPassword);
-        signUp=view.findViewById(R.id.SignUp);
-        user_guide=view.findViewById(R.id.user_guide);
-        login=view.findViewById(R.id.btnLogin);
+       initializeViews(view);
         return view;
     }
 
+
+    private void initializeViews(View view)
+    {
+        try{
+            forgotPassword=view.findViewById(R.id.forgotPassword);
+            signUp=view.findViewById(R.id.SignUp);
+            user_guide=view.findViewById(R.id.user_guide);
+            login=view.findViewById(R.id.btnLogin);
+
+            userId=view.findViewById(R.id.emailId);
+            password=view.findViewById(R.id.password);
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -112,15 +132,51 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                WelcomeUserFragment welcomeUserFragment = new WelcomeUserFragment();
-                fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
-                fragmentTransaction.replace(R.id.fragmentContainer,welcomeUserFragment);
-                fragmentTransaction.addToBackStack(ClassConstants.WELCOME_USER_FRAGMENT);
-                fragmentTransaction.commit();
+
+                if (userId.getText().toString().trim().equals("")) {
+                    Toast.makeText(getActivity(), "Email id cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.getText().toString().trim().equals("")) {
+                    Toast.makeText(getActivity(), "Password cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (userId.getText().toString() != null && password.getText().toString() != null) {
+
+
+
+                    // call the database query
+                    DatabaseManager.getInstance().openDatabase();
+                    if (DatabaseManager.getInstance().Login(userId.getText().toString().trim(),
+                            password.getText().toString().trim())) {
+
+                        loginActivityListner.setUserName(userId.getText().toString().trim());
+                        navigateFragment();
+                    } else {
+                        Toast.makeText(getActivity(), "Invalid Password and UserId", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+
+                }
+
             }
         });
 
+    }
+
+
+    private void navigateFragment()
+    {
+        android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        PatientMenuTrackFragment welcomeUserFragment = new PatientMenuTrackFragment();
+        fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
+        fragmentTransaction.replace(R.id.fragmentContainer,welcomeUserFragment);
+        fragmentTransaction.addToBackStack(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
+        fragmentTransaction.commit();
     }
 }
