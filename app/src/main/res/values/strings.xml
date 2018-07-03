@@ -68,9 +68,12 @@
 
     <string name="reset">RESET</string>
 
-
+    <string name="field_empty">This field cannot be empty</string>
     <string name="hint_ent_new_pw">Enter your new Password</string>
     <string name="hint_conf_new_pw">Confirm your new Password</string>
+
+    <string name="hint_ent_user_id">Enter your registered email id</string>
+    <string name="email_n_reg">Email id not registered</string>
 
     <string name="conf_pw">Confirm Password</string>
 
@@ -147,4 +150,7 @@ This is when high blood pressure requires emergency medical attention.
     <string name="start_rt_ecg">Start Real Time Measurement</string>
 
 
+    <string name="email_n_empty">Email id cannot be empty</string>
+
+    <string name="pwd_n_empty"> Password cannot be empty</string>
 </resources>

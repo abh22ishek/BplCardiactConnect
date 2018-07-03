@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/cardiact_connect_theme</item>
-        <item name="colorPrimaryDark">@color/statusbarbackground</item>
+        <item name="colorPrimaryDark">#223F50</item>
         <item name="colorAccent">@color/sig_strength_mid</item>
     </style>
 

@@ -1,7 +1,10 @@
 package database;
 
+import android.content.*;
 import android.database.*;
 import android.database.sqlite.*;
+
+import java.util.*;
 
 import logger.*;
 
@@ -165,13 +168,83 @@ public class DatabaseManager {
 
 
         try {
-            cursor.close();
+            if(cursor!=null)
+                cursor.close();
         }catch (Exception e)
         {
             e.printStackTrace();
         }
 
         return false;
+    }
+
+
+
+
+
+
+    public boolean IssecurityQvalid(String username,String sq1,String sq2,String sq3)
+    {
+        boolean b=false;
+
+        List<String> list=new ArrayList<>();
+
+        Cursor cursor=null;
+
+        try
+        {
+            cursor=mDatabase.query(TABLE_NAME_USERS,
+                    new String[]{SECURITY_Q_1,SECURITY_Q_2,SECURITY_Q_3},USER_NAME+"=?",new String[] {username},null,null,null);
+
+            Logger.log(Level.INFO,TAG, "Get count of username exists for all 3 security questions= "+ cursor.getCount());
+            if(cursor.moveToNext())
+            {
+                list.add(cursor.getString(cursor.getColumnIndex(SECURITY_Q_1)));
+                list.add(cursor.getString(cursor.getColumnIndex(SECURITY_Q_2)));
+                list.add(cursor.getString(cursor.getColumnIndex(SECURITY_Q_3)));
+
+                Logger.log(Level.INFO, "DataBaseManager get security q1", cursor.getString(cursor.getColumnIndex(SECURITY_Q_1)));
+                Logger.log(Level.INFO,"DataBaseManager get security q2",cursor.getString(cursor.getColumnIndex(SECURITY_Q_2)));
+                Logger.log(Level.INFO,"DataBaseManager get security q3",cursor.getString(cursor.getColumnIndex(SECURITY_Q_3)));
+
+            }
+
+
+            if(list.get(0).equals(sq1) && list.get(1).equals(sq2) && list.get(2).equals(sq3))
+            {
+                b=true;
+
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        finally {
+            try {
+                if(cursor!=null)
+               cursor.close();
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return b;
+
+
+    }
+
+
+
+
+    // to update password into the database
+
+    public void update_password(String username,String new_password)
+    {
+        ContentValues cv=new ContentValues();
+        cv.put(PASSWORD, new_password);
+        mDatabase.update(TABLE_NAME_USERS, cv, USER_NAME + "=?", new String[]{username});
     }
 
 

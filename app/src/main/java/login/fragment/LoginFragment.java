@@ -9,7 +9,6 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 
-import application.*;
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import database.*;
@@ -134,16 +133,16 @@ public class LoginFragment extends Fragment {
 
 
                 if (userId.getText().toString().trim().equals("")) {
-                    Toast.makeText(getActivity(), "Email id cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.email_n_empty), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (password.getText().toString().trim().equals("")) {
-                    Toast.makeText(getActivity(), "Password cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.pwd_n_empty), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (userId.getText().toString() != null && password.getText().toString() != null) {
+                if (userId.getText().toString() != "" && password.getText().toString() != "") {
 
 
 
