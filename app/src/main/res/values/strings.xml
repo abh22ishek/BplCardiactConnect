@@ -47,7 +47,7 @@
 
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-
+    <string name="ok">OK</string>
 
 
     <string name="proceed">Proceed</string>
@@ -64,9 +64,17 @@
     <string name="security_ques">Security Question</string>
     <string name="submit">SUBMIT</string>
     <string name="update">UPDATE</string>
+    <string name="header">Header</string>
+    <string name="ch_opt">Choose Options</string>
+    <string name="per_nec">Permissions are Necessary</string>
 
 
     <string name="reset">RESET</string>
+
+    <string name="def">Default</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+
 
     <string name="field_empty">This field cannot be empty</string>
     <string name="hint_ent_new_pw">Enter your new Password</string>
