@@ -1,6 +1,6 @@
 package login.fragment;
 
-import android.app.*;
+
 import android.content.*;
 import android.os.*;
 import android.support.annotation.*;
@@ -14,20 +14,26 @@ import database.*;
 
 public class ForgotPasswordFragment extends Fragment {
 
-    TextView ForgotPassword,userId;
+   private TextView userId;
 
-    Button verify,submit;
+   private Button verify,submit;
     private EditText security_question1,security_question2,security_question3;
 
 
-    LoginActivityListner loginActivityListner;
+   private LoginActivityListner loginActivityListner;
 
     private LinearLayout login,loginLayout;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        loginActivityListner= (LoginActivityListner) getActivity();
+
+    }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @NonNull Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.forgot_passw,container,false);
        try {
            verify=view.findViewById(R.id.verify);
@@ -58,7 +64,6 @@ public class ForgotPasswordFragment extends Fragment {
         login.setVisibility(View.VISIBLE);
 
 
-        loginActivityListner= (LoginActivityListner) getActivity();
         if(loginActivityListner!=null)
         loginActivityListner.onDataPass(ClassConstants.FORGOT_PASSWORD_FRAGMENT);
 
@@ -67,7 +72,11 @@ public class ForgotPasswordFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(userId.getText().toString().equals(""))
+                {
+                    Toast.makeText(getActivity(),"Please"+getString(R.string.hint_ent_user_id),Toast.LENGTH_SHORT).show();
                     return;
+                }
+
 
                 DatabaseManager.getInstance().openDatabase();
 

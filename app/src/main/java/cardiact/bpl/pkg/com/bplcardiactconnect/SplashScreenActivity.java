@@ -4,6 +4,7 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.view.*;
+import android.widget.*;
 
 import logger.*;
 
@@ -16,17 +17,18 @@ public class SplashScreenActivity extends Activity {
 
     private static final int splash_timeout=4000;
 
+    private TextView splashText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        splashText=findViewById(R.id.text);
         View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
-
-        setContentView(R.layout.activity_splash_screen);
+            setContentView(R.layout.activity_splash_screen);
 
     }
 
@@ -36,7 +38,13 @@ public class SplashScreenActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        showSplashScreen(mHandler);
 
+
+    }
+
+
+    public Handler showSplashScreen(Handler mHandler){
 
         if(mHandler==null){
             mHandler=new Handler();
@@ -56,6 +64,8 @@ public class SplashScreenActivity extends Activity {
             }
         }, splash_timeout);
 
-
+        return mHandler;
     }
+
+
 }

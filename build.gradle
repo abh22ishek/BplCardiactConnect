@@ -1,7 +1,25 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
+
+    apply plugin: 'findbugs'
+    apply plugin: 'pmd'
+
+    findbugs {
+        ignoreFailures = false
+        toolVersion = "3.0.1"
+        sourceSets=[sourceSets.main]
+
+        reportsDir = file("$project.buildDir/reports/findbugs")
+        effort = "max"
+    }
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled false
+            html.enabled true
+        }
+    }
     repositories {
         google()
         jcenter()

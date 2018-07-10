@@ -155,6 +155,7 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
         if (requestCode == Constants.SELECT_PICTURE && resultCode == RESULT_OK && null != data) {
             Uri uri = data.getData();
 
+            if(uri!=null)
            loadImageWithGlide(uri.toString());
 
         }
@@ -184,6 +185,7 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
     private void loadImageWithGlide(String uri){
 
+        //noinspection SpellCheckingInspection
         Glide
                 .with(BaseLoginActivityClass.this)
                 .load(uri)
@@ -320,9 +322,8 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
         // Log.i("TAG", "**Grant Results**=" + grantResults[0]+" "+grantResults[1]+" "+grantRes + "request code=" + requestCode);
 
-        for(int k=0;k<grantResults.length;k++)
-        {
-            Logger.log(Level.DEBUG,TAG,"grant results[]="+grantResults[k]);
+        for (int grantResult : grantResults) {
+            Logger.log(Level.DEBUG, TAG, "grant results[]=" + grantResult);
 
         }
         if(requestCode==Constants.CAMERA_REQUEST_CODE)
