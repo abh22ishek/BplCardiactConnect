@@ -13,6 +13,7 @@ import java.util.*;
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import database.*;
+import store.credentials.*;
 
 public class SignUpFragment extends Fragment {
 
@@ -24,6 +25,9 @@ public class SignUpFragment extends Fragment {
 
     private EditText security_question1,security_question2,security_question3;
     SQLiteDatabase database;
+
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -32,9 +36,12 @@ public class SignUpFragment extends Fragment {
     }
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loginActivityListner.onDataPass(ClassConstants.SIGNUP_FRAGMENT);
 
-
-
+    }
 
     @Nullable
     @Override
@@ -62,7 +69,6 @@ public class SignUpFragment extends Fragment {
 
 
         loginActivityListner= (LoginActivityListner) getActivity();
-        loginActivityListner.onDataPass(ClassConstants.SIGNUP_FRAGMENT);
 
         email_id.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -135,8 +141,9 @@ public class SignUpFragment extends Fragment {
                             security_question3.getText().toString().toLowerCase().trim()));
             // database.close(); Don't close it directly!
 
-           // StoreCredentials.save_signupcredentials(context, email_id.getText().toString().trim(), ClassConstants.SIGNUP_FRAGMENT);
-           // globalVariable.setUsername(email_id.getText().toString().trim());
+            loginActivityListner.setUserName(email_id.getText().toString().trim(),ClassConstants.SIGNUP_FRAGMENT);
+
+            // globalVariable.setUsername(email_id.getText().toString().trim());
 
 
             Toast.makeText(context,getString(R.string.success_regist), Toast.LENGTH_SHORT).show();
@@ -152,10 +159,10 @@ public class SignUpFragment extends Fragment {
         PatientMenuTrackFragment patientMenuTrackFragment = new PatientMenuTrackFragment();
         fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
 
-        fragmentTransaction.replace(R.id.fragmentContainer,patientMenuTrackFragment);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.fragmentContainer,patientMenuTrackFragment,ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
 
-        fragmentTransaction.remove(patientMenuTrackFragment).commit();
+        fragmentTransaction.commit();
 
     }
 

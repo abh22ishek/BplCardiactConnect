@@ -66,6 +66,7 @@ public class ForgotPasswordFragment extends Fragment {
 
         if(loginActivityListner!=null)
         loginActivityListner.onDataPass(ClassConstants.FORGOT_PASSWORD_FRAGMENT);
+        loginActivityListner.OnCurrentFragment(ClassConstants.FORGOT_PASSWORD_FRAGMENT);
 
 
         submit.setOnClickListener(new View.OnClickListener() {

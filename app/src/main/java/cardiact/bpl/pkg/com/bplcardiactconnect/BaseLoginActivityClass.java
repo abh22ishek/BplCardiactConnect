@@ -12,8 +12,8 @@ import android.os.*;
 import android.provider.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.*;
 import android.util.*;
 import android.view.*;
@@ -33,20 +33,22 @@ import constants.*;
 import custom.view.*;
 import logger.*;
 import login.fragment.*;
+import store.credentials.*;
 
 
 public class BaseLoginActivityClass extends FragmentActivity implements LoginActivityListner{
 
 
-    RoundedImageView UserIcon;
-    android.support.v4.app.FragmentManager fragmentManager ;
-    android.support.v4.app.FragmentTransaction fragmentTransaction;
+   private  RoundedImageView UserIcon;
 
-    TextView appName;
 
-    private String TAG=BaseLoginActivityClass.class.getSimpleName();
+   private TextView appName;
+   private String TAG=BaseLoginActivityClass.class.getSimpleName();
 
     BaseApplicationClass globalVariable;
+
+    private String userIconUri;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,17 +62,39 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
         appName=findViewById(R.id.appName);
 
-        fragmentManager=getSupportFragmentManager();
-        fragmentTransaction=fragmentManager.beginTransaction();
-        LoginFragment signUpFragment = new LoginFragment();
-        fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment);
-        fragmentTransaction.addToBackStack(ClassConstants.LOGIN_FRAGMENT);
-        fragmentTransaction.commit();
+
+        if(IsUserLoggedIn()){
+            android.support.v4.app.FragmentManager fragmentManager ;
+            android.support.v4.app.FragmentTransaction fragmentTransaction;
+            fragmentManager=getSupportFragmentManager();
+            fragmentTransaction=fragmentManager.beginTransaction();
+            WelcomeUserFragment welcomeUserFragment = new WelcomeUserFragment();
+
+            Bundle bundle=new Bundle();
+            bundle.putString(Constants.USER_NAME,mUsername);
+            welcomeUserFragment.setArguments(bundle);
+
+            fragmentTransaction.replace(R.id.fragmentContainer,welcomeUserFragment,ClassConstants.WELCOME_USER_FRAGMENT);
+            fragmentTransaction.addToBackStack(ClassConstants.WELCOME_USER_FRAGMENT);
+            fragmentTransaction.commit();
+        }else{
+            android.support.v4.app.FragmentManager fragmentManager ;
+            android.support.v4.app.FragmentTransaction fragmentTransaction;
+            fragmentManager=getSupportFragmentManager();
+            fragmentTransaction=fragmentManager.beginTransaction();
+            LoginFragment loginFragment = new LoginFragment();
+            fragmentTransaction.replace(R.id.fragmentContainer,loginFragment,ClassConstants.LOGIN_FRAGMENT);
+            fragmentTransaction.addToBackStack(ClassConstants.LOGIN_FRAGMENT);
+            fragmentTransaction.commit();
+        }
+
+
 
 
         UserIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                 selectOptions(BaseLoginActivityClass.this);
 
@@ -94,15 +118,37 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
 
 
+        //
+
+
     }
 
+    Fragment currentFragment=null;
     @Override
-    public void handleMessage(int state) {
+    public void OnCurrentFragment(String tag) {
+        FragmentManager fragmentManager=getSupportFragmentManager();
 
+        // Always get Current fragment
+         currentFragment = fragmentManager.findFragmentByTag(tag);
+
+        if (currentFragment.getClass().getName().equals(ClassConstants.LOGIN_FRAGMENT)) {
+
+
+        }else if(currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
+        {
+
+        }
+
+        Logger.log(Level.DEBUG,TAG, "Get Current Fragment="+currentFragment.getClass().getName());
     }
+
+
 
     @Override
     public void navigateFragment(String tag) {
+        android.support.v4.app.FragmentManager fragmentManager ;
+        android.support.v4.app.FragmentTransaction fragmentTransaction;
+
         fragmentManager=getSupportFragmentManager();
         fragmentTransaction=fragmentManager.beginTransaction();
         PatientMenuTrackFragment patientMenuTrackFragment = new PatientMenuTrackFragment();
@@ -112,25 +158,48 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
     }
 
+
+    // this method will only gets called during signUp or login
     @Override
-    public void setUserName(String userName) {
+    public void setUserName(String userName,String tag) {
         // Set the global user Name
         globalVariable.setUsername(userName);
+
+        if(TAG.equals(ClassConstants.LOGIN_FRAGMENT)){
+            return;
+        }
+
+
+        StoreCredentialsFile.storeSignUpCredentials(this,userName,TAG);
+        StoreCredentialsFile.store_profile_image(this, userIconUri,TAG,
+                globalVariable.getUsername());
+
+
+    }
+
+    @Override
+    public void displayImage(Uri uri) {
+        if(uri!=null)
+        loadImageWithGlide(uri.toString());
+        else
+            UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
     }
 
     boolean mExit;
+    private final int TIME_ELAPSE=3000;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
-        FragmentManager fm=getSupportFragmentManager();
-        if(fm.getBackStackEntryCount()>1) {
-            fm.popBackStack();
-        }else{
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        Logger.log(Level.DEBUG,TAG,"(((Get Current Fragment in back key))="+currentFragment.getClass().getName());
+
+
+      if( currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
+        {
             if (mExit) {
                 super.onBackPressed();
                 this.finish();
-                // this.finishAffinity(); // removes the activity from same task
 
             } else {
                 Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
@@ -140,13 +209,19 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
                     public void run() {
                         mExit = false;
                     }
-                },3*1000);
+                },TIME_ELAPSE);
             }
-        }
-    }
+        }else{
+          if(fragmentManager.getBackStackEntryCount()>1) {
+              fragmentManager.popBackStack();
+          }
+      }
 
 
+      }
 
+
+// mi computadora esta muy  lento
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -154,6 +229,7 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
         if (requestCode == Constants.SELECT_PICTURE && resultCode == RESULT_OK && null != data) {
             Uri uri = data.getData();
+            userIconUri=uri.toString();
 
             if(uri!=null)
            loadImageWithGlide(uri.toString());
@@ -168,12 +244,14 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
                 Log.i("**Absolute path**=", "" + file.getAbsolutePath());
                 uri=file.getAbsolutePath();
 
-              //  profile_image="file://"+uri;
+
+                userIconUri="file://"+uri;
                 loadImageWithGlide(uri);
 
 
 
             }else{
+                userIconUri="no_image";
                 UserIcon.setImageDrawable(this.getResources().getDrawable(R.drawable.user_icon));
             }
 
@@ -389,5 +467,44 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
                 .setNegativeButton(getString(R.string.cancel), okListener)
                 .create()
                 .show();
+    }
+
+
+    String mUsername;
+
+    private boolean IsUserLoggedIn()
+    {
+        boolean b;
+
+        SharedPreferences login_credentials;
+        login_credentials = this.getSharedPreferences(Constants.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
+
+        mUsername=login_credentials.getString(Constants.USER_NAME, null);
+        String mPwd= login_credentials.getString(Constants.PASSWORD, null);
+
+
+        if(mUsername!=null)
+            b=true;
+        else
+            b=false;
+
+        Logger.log(Level.DEBUG, TAG, "get value stored in a shared preference s file **User ID**" + mUsername);
+
+
+        return b;
+
+    }
+
+
+    public static void loggedOut(Context context)
+    {
+        SharedPreferences signup_credentials;
+        //=SignUpActivity.this.getPreferences(Context.MODE_PRIVATE) ;
+        signup_credentials=context.getSharedPreferences(Constants.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = signup_credentials.edit();
+        editor.putString(Constants.USER_NAME,null);
+        editor.putString(Constants.PASSWORD,null);
+        editor.apply();
+        Logger.log(Level.DEBUG, context.getClass().getSimpleName(), "shared preference s file all values is set to null");
     }
 }

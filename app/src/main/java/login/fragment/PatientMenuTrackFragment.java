@@ -7,13 +7,17 @@ import android.support.v4.app.*;
 import android.view.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
+import constants.*;
 
 public class PatientMenuTrackFragment extends Fragment {
 
+    LoginActivityListner loginActivityListner;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        loginActivityListner= (LoginActivityListner) getActivity();
     }
 
 
@@ -28,5 +32,13 @@ public class PatientMenuTrackFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        loginActivityListner.OnCurrentFragment(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
+
+
     }
+
+
+
+
+
 }

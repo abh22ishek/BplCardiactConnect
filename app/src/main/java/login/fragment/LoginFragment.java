@@ -27,6 +27,11 @@ public class LoginFragment extends Fragment {
     Button login;
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loginActivityListner.OnCurrentFragment(ClassConstants.LOGIN_FRAGMENT);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -66,7 +71,9 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         loginActivityListner.onDataPass("");
-       user_guide.setOnTouchListener(new View.OnTouchListener() {
+
+
+        user_guide.setOnTouchListener(new View.OnTouchListener() {
            @Override
            public boolean onTouch(View view, MotionEvent motionEvent) {
 
@@ -151,7 +158,7 @@ public class LoginFragment extends Fragment {
                     if (DatabaseManager.getInstance().Login(userId.getText().toString().trim(),
                             password.getText().toString().trim())) {
 
-                        loginActivityListner.setUserName(userId.getText().toString().trim());
+                        loginActivityListner.setUserName(userId.getText().toString().trim(),ClassConstants.LOGIN_FRAGMENT);
                         navigateFragment();
                     } else {
                         Toast.makeText(getActivity(), "Invalid Password and UserId", Toast.LENGTH_SHORT).show();
@@ -172,10 +179,12 @@ public class LoginFragment extends Fragment {
     {
         android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        PatientMenuTrackFragment welcomeUserFragment = new PatientMenuTrackFragment();
+        PatientMenuTrackFragment patientMenuTrackFragment = new PatientMenuTrackFragment();
         fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
-        fragmentTransaction.replace(R.id.fragmentContainer,welcomeUserFragment);
+        fragmentTransaction.replace(R.id.fragmentContainer,patientMenuTrackFragment,ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
         fragmentTransaction.commit();
+
+
     }
 }

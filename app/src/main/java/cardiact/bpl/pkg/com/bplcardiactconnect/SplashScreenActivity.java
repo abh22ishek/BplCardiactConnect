@@ -6,6 +6,8 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 
+import application.*;
+import constants.*;
 import logger.*;
 
 public class SplashScreenActivity extends Activity {
@@ -29,6 +31,8 @@ public class SplashScreenActivity extends Activity {
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
             setContentView(R.layout.activity_splash_screen);
+
+        globalVariable = (BaseApplicationClass) getApplicationContext();
 
     }
 
@@ -60,12 +64,21 @@ public class SplashScreenActivity extends Activity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
+
+
+
+
                 finish();
             }
         }, splash_timeout);
 
         return mHandler;
     }
+
+    BaseApplicationClass globalVariable;
+    String mUsername;
+
+    // get username value of shared pref
 
 
 }
