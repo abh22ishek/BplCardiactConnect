@@ -1,17 +1,23 @@
 package login.fragment;
 
 import android.content.*;
+import android.graphics.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
 import android.view.*;
+import android.widget.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
+import patient.list.*;
 
 public class PatientMenuTrackFragment extends Fragment {
 
     LoginActivityListner loginActivityListner;
+
+    private LinearLayout archivedRec;
+
 
     @Override
     public void onAttach(Context context) {
@@ -26,6 +32,8 @@ public class PatientMenuTrackFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.pat_menu_track,container,false);
 
+        archivedRec=view.findViewById(R.id.archivedRec);
+
         return view;
     }
 
@@ -35,10 +43,30 @@ public class PatientMenuTrackFragment extends Fragment {
         loginActivityListner.OnCurrentFragment(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
 
 
+        archivedRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPatientList();
+            }
+        });
+
+
     }
 
 
 
 
+
+    private void onPatientList()
+    {
+        android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        PatientListFragment patientListFragment = new PatientListFragment();
+       // fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_FADE );
+
+        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment);
+        fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.commit();
+    }
 
 }

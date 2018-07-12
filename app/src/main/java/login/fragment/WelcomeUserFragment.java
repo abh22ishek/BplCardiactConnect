@@ -64,7 +64,7 @@ public class WelcomeUserFragment extends Fragment {
 
         }
 
-        display_image(getActivity());
+        display_image();
 
 
         proceed.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +78,7 @@ public class WelcomeUserFragment extends Fragment {
     String mUsername = "";
 
 
-    private void display_image(Context context) {
+    private void display_image() {
 
         if (get_profile_image(mUsername) != "" || !get_profile_image(mUsername).equals("")) {
 

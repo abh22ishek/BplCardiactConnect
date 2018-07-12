@@ -169,7 +169,6 @@ public class SignUpFragment extends Fragment {
 
     private void destroyCurrentFragment()
     {
-
         //
     }
 

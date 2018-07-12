@@ -11,10 +11,13 @@ import android.net.*;
 import android.os.*;
 import android.provider.*;
 import android.support.annotation.*;
+import android.support.design.widget.*;
 import android.support.v4.app.*;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.*;
+import android.support.v4.view.*;
+import android.support.v4.widget.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -49,6 +52,12 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
     private String userIconUri;
 
+    private Button navHandler;
+
+    NavigationView nv;
+
+    DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +65,47 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
         globalVariable = (BaseApplicationClass) getApplicationContext();
 
-
+        drawerLayout=findViewById(R.id.drawerLayout);
         UserIcon=findViewById(R.id.hospitalIcon);
         UserIcon.setVisibility(View.GONE);
 
         appName=findViewById(R.id.appName);
+
+        navHandler=findViewById(R.id.navHandler);
+
+        navHandler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+
+            }
+        });
+
+        nv = findViewById(R.id.nv);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch(id)
+                {
+                    case R.id.profile:
+                        Toast.makeText(BaseLoginActivityClass.this, "My Account",Toast.LENGTH_SHORT).show();
+                    case R.id.settings:
+                        Toast.makeText(BaseLoginActivityClass.this, "Settings",Toast.LENGTH_SHORT).show();
+                    case R.id.logOut:
+                        Toast.makeText(BaseLoginActivityClass.this, "My logout",Toast.LENGTH_SHORT).show();
+                    default:
+                        return true;
+                }
+
+
+
+
+            }
+        });
+
+
+
 
 
         if(IsUserLoggedIn()){
@@ -104,6 +149,12 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public void onDataPass(String data) {
 

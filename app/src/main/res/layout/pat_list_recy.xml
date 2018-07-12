@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:padding="0dp"
         android:layout_margin="0dp"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
         android:id="@+id/recycler_view" />
 
 

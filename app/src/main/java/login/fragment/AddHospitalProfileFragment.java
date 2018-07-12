@@ -47,14 +47,7 @@ public class AddHospitalProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                PatientListFragment patientListFragment = new PatientListFragment();
-                fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
 
-                fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment);
-                fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
-                fragmentTransaction.commit();
             }
         });
     }

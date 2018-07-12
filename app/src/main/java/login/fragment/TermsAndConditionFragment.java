@@ -14,6 +14,7 @@ public class TermsAndConditionFragment extends Fragment {
 
     TextView termsAndConditionText;
     CheckBox checkBox;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

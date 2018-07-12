@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
+        android:id="@+id/archivedRec"
         android:layout_weight="1"
         android:background="@drawable/bg_rounded_white"
         android:layout_margin="5dp"
