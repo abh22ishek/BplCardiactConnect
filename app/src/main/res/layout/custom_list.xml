@@ -42,6 +42,8 @@
             android:textColor="@color/black"
             android:id="@+id/list_content"
             android:gravity="center"
+            android:dividerHeight="1dp"
+
             android:divider="@color/black"
             android:layout_below="@+id/separator"
             android:layout_centerHorizontal="true" />

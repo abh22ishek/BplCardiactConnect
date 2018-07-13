@@ -3,6 +3,7 @@ package cardiact.bpl.pkg.com.bplcardiactconnect;
 import android.*;
 import android.annotation.*;
 import android.app.*;
+import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.*;
 import android.graphics.*;
@@ -16,8 +17,9 @@ import android.support.v4.app.*;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.*;
-import android.support.v4.view.*;
 import android.support.v4.widget.*;
+import android.support.v7.app.*;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -39,7 +41,7 @@ import login.fragment.*;
 import store.credentials.*;
 
 
-public class BaseLoginActivityClass extends FragmentActivity implements LoginActivityListner{
+public class BaseLoginActivityClass extends AppCompatActivity implements LoginActivityListner{
 
 
    private  RoundedImageView UserIcon;
@@ -52,9 +54,10 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
     private String userIconUri;
 
-    private Button navHandler;
+
 
     NavigationView nv;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     DrawerLayout drawerLayout;
 
@@ -71,36 +74,45 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
         appName=findViewById(R.id.appName);
 
-        navHandler=findViewById(R.id.navHandler);
-
-        navHandler.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(Gravity.LEFT);
-
-            }
-        });
-
         nv = findViewById(R.id.nv);
+
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close);
+
+
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+
+
+
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch(id)
-                {
+                switch (id) {
                     case R.id.profile:
-                        Toast.makeText(BaseLoginActivityClass.this, "My Account",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLoginActivityClass.this, "My Profile", Toast.LENGTH_SHORT).show();
+                        break;
+
                     case R.id.settings:
-                        Toast.makeText(BaseLoginActivityClass.this, "Settings",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
+                        break;
                     case R.id.logOut:
-                        Toast.makeText(BaseLoginActivityClass.this, "My logout",Toast.LENGTH_SHORT).show();
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+
+                        logOutConfirmDialog(BaseLoginActivityClass.this);
+                        break;
+
                     default:
                         return true;
                 }
 
 
-
-
+                return true;
             }
         });
 
@@ -123,14 +135,7 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
             fragmentTransaction.addToBackStack(ClassConstants.WELCOME_USER_FRAGMENT);
             fragmentTransaction.commit();
         }else{
-            android.support.v4.app.FragmentManager fragmentManager ;
-            android.support.v4.app.FragmentTransaction fragmentTransaction;
-            fragmentManager=getSupportFragmentManager();
-            fragmentTransaction=fragmentManager.beginTransaction();
-            LoginFragment loginFragment = new LoginFragment();
-            fragmentTransaction.replace(R.id.fragmentContainer,loginFragment,ClassConstants.LOGIN_FRAGMENT);
-            fragmentTransaction.addToBackStack(ClassConstants.LOGIN_FRAGMENT);
-            fragmentTransaction.commit();
+           loginUserFrag();
         }
 
 
@@ -149,12 +154,16 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        if(actionBarDrawerToggle.onOptionsItemSelected(item))
+            return true;
+
         return super.onOptionsItemSelected(item);
     }
+
+
     @Override
     public void onDataPass(String data) {
 
@@ -187,7 +196,17 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
 
         }else if(currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
         {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
 
+
+        }
+
+        else if(currentFragment.getClass().getName().equals(ClassConstants.WELCOME_USER_FRAGMENT))
+        {
+
+            //this will clear the back stack and displays no animation on the screen
+            fragmentManager.popBackStackImmediate(currentFragment.getClass().getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         Logger.log(Level.DEBUG,TAG, "Get Current Fragment="+currentFragment.getClass().getName());
@@ -243,6 +262,8 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
         super.onBackPressed();
 
         FragmentManager fragmentManager=getSupportFragmentManager();
+        int count=fragmentManager.getBackStackEntryCount();
+        Logger.log(Level.DEBUG,TAG,"((--count no. fo Fragments-----))=" +count);
         Logger.log(Level.DEBUG,TAG,"(((Get Current Fragment in back key))="+currentFragment.getClass().getName());
 
 
@@ -265,13 +286,15 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
         }else{
           if(fragmentManager.getBackStackEntryCount()>1) {
               fragmentManager.popBackStack();
-          }
+          }else
+              finish();
       }
 
 
       }
 
 
+   //  hoy, estoy muy ocupado
 // mi computadora esta muy  lento
 
     @Override
@@ -558,4 +581,47 @@ public class BaseLoginActivityClass extends FragmentActivity implements LoginAct
         editor.apply();
         Logger.log(Level.DEBUG, context.getClass().getSimpleName(), "shared preference s file all values is set to null");
     }
+
+    android.support.v7.app.AlertDialog alertDialog;
+
+
+
+    private void logOutConfirmDialog(final Context context) {
+
+
+
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+        builder.setMessage(R.string.log_out_confirm)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        loggedOut(context);
+                      loginUserFrag();
+                    alertDialog.dismiss();
+                    }
+                });
+
+
+        alertDialog = builder.create();
+        //  alert.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
+        Logger.log(Level.DEBUG, TAG, "Alert dialog box gets called");
+        alertDialog.show();
+
+    }
+
+
+    private void loginUserFrag()
+    {
+        android.support.v4.app.FragmentManager fragmentManager ;
+        android.support.v4.app.FragmentTransaction fragmentTransaction;
+        fragmentManager=getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        LoginFragment loginFragment = new LoginFragment();
+        fragmentTransaction.replace(R.id.fragmentContainer,loginFragment,ClassConstants.LOGIN_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.LOGIN_FRAGMENT);
+        fragmentTransaction.commit();
+    }
+
+
 }

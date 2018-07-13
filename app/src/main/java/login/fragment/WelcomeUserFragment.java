@@ -1,5 +1,6 @@
 package login.fragment;
 
+import android.annotation.*;
 import android.content.*;
 import android.graphics.drawable.*;
 import android.net.*;
@@ -23,8 +24,10 @@ public class WelcomeUserFragment extends Fragment {
 
 
     LoginActivityListner loginActivityListner;
-    private TextView welcomeText;
+    private TextView welcomeText,signUpFresh;
     private ImageView proceed;
+
+    private TextView signAsOtherUser;
 
     @Override
     public void onAttach(Context context) {
@@ -36,7 +39,7 @@ public class WelcomeUserFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loginActivityListner.OnCurrentFragment(ClassConstants.WELCOME_USER_FRAGMENT);
+
 
     }
 
@@ -46,10 +49,15 @@ public class WelcomeUserFragment extends Fragment {
         View view = inflater.inflate(R.layout.welcome_user, container, false);
         welcomeText=view.findViewById(R.id.textView2);
         proceed=view.findViewById(R.id.proceed);
+        signUpFresh=view.findViewById(R.id.signUpFresh);
+
+        signAsOtherUser=view.findViewById(R.id.signAsOtherUser);
+
         return view;
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -64,6 +72,29 @@ public class WelcomeUserFragment extends Fragment {
 
         }
 
+
+        signUpFresh.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                if(MotionEvent.ACTION_DOWN==motionEvent.getAction())
+                {
+                    navigateToSignUpFreshFragment();
+
+                }
+
+                return true;
+            }
+        });
+
+
+
+        signAsOtherUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToSignUpNewUserFragment();
+            }
+        });
         display_image();
 
 
@@ -124,4 +155,36 @@ public class WelcomeUserFragment extends Fragment {
 
     }
 
+
+    private void navigateToSignUpFreshFragment()
+    {
+        android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+        SignUpFragment signUpFragment = new SignUpFragment();
+        fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_FADE );
+
+        fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGNUP_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.SIGNUP_FRAGMENT);
+
+        fragmentTransaction.commit();
+
+
+    }
+
+
+    private void navigateToSignUpNewUserFragment()
+    {
+        android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+        SignAsNewUser signUpFragment = new SignAsNewUser();
+
+        fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
+
+        fragmentTransaction.commit();
+
+
+    }
 }

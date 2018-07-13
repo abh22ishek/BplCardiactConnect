@@ -17,7 +17,7 @@ public class SplashScreenActivity extends Activity {
 
     private final  String TAG=SplashScreenActivity.class.getSimpleName();
 
-    private static final int splash_timeout=4000;
+    private static final int splash_timeout=5000;
 
     private TextView splashText;
 

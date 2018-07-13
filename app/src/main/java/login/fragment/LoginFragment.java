@@ -82,7 +82,7 @@ public class LoginFragment extends Fragment {
                    android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
                    TermsAndConditionFragment termsAndConditionFragment = new TermsAndConditionFragment();
                    fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
-                   fragmentTransaction.replace(R.id.fragmentContainer,termsAndConditionFragment);
+                   fragmentTransaction.replace(R.id.fragmentContainer,termsAndConditionFragment,ClassConstants.T_AND_C_FRAGMENT);
                    fragmentTransaction.addToBackStack(ClassConstants.T_AND_C_FRAGMENT);
                    fragmentTransaction.commit();
                }
@@ -104,7 +104,7 @@ public class LoginFragment extends Fragment {
                     ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
                     fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
 
-                    fragmentTransaction.replace(R.id.fragmentContainer,forgotPasswordFragment);
+                    fragmentTransaction.replace(R.id.fragmentContainer,forgotPasswordFragment,ClassConstants.FORGOT_PASSWORD_FRAGMENT);
                     fragmentTransaction.addToBackStack(ClassConstants.FORGOT_PASSWORD_FRAGMENT);
                     fragmentTransaction.commit();
                 }
@@ -124,7 +124,7 @@ public class LoginFragment extends Fragment {
                     SignUpFragment signUpFragment = new SignUpFragment();
                     fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
 
-                    fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment);
+                    fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment,ClassConstants.SIGNUP_FRAGMENT);
                     fragmentTransaction.addToBackStack(ClassConstants.SIGNUP_FRAGMENT);
                     fragmentTransaction.commit();
                 }
@@ -180,7 +180,7 @@ public class LoginFragment extends Fragment {
         android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         PatientMenuTrackFragment patientMenuTrackFragment = new PatientMenuTrackFragment();
-        fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN );
+        fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_FADE );
         fragmentTransaction.replace(R.id.fragmentContainer,patientMenuTrackFragment,ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
         fragmentTransaction.commit();

@@ -21,4 +21,6 @@ public class ClassConstants {
 
     public static final String WELCOME_USER_FRAGMENT= WelcomeUserFragment.class.getName();
 
+    public static final String SIGN_AS_NEW_USER_FRAGMENT=SignAsNewUser.class.getName();
+
 }

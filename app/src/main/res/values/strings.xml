@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cardiact Connect</string>
+    <string name="app_name">Cardiart Connect</string>
     <string name="action_settings">Settings</string>
 
 
@@ -16,6 +16,9 @@
     <string name="set_weight">Set Weight</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
     <string name="welcome_user">Welcome User</string>
     <string name="profile">Profile</string>
@@ -87,6 +90,10 @@
     <string name="conf_pw">Confirm Password</string>
 
     <string name="sign_other_user">Sign Up as Other User</string>
+
+    <string name="sign_new_user">Sign As as New User</string>
+    <string name="sign_as_other_user">Sign As as Other User</string>
+
 
     <string name="t_and_c">Terms And Condition</string>
     <string name="signed_t_and_c">I have read the Terms and Conditions</string>
@@ -162,4 +169,6 @@ This is when high blood pressure requires emergency medical attention.
     <string name="email_n_empty">Email id cannot be empty</string>
 
     <string name="pwd_n_empty"> Password cannot be empty</string>
+
+    <string name="log_out_confirm">Do you want to Log Out from the App ?</string>
 </resources>
