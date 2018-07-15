@@ -20,6 +20,8 @@ import android.support.v4.content.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
@@ -38,6 +40,7 @@ import constants.*;
 import custom.view.*;
 import logger.*;
 import login.fragment.*;
+import recyclerview.cardview.PatientRecyclerView;
 import store.credentials.*;
 
 
@@ -60,6 +63,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     DrawerLayout drawerLayout;
+    LoginActivityListner loginActivityListner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +81,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         nv = findViewById(R.id.nv);
 
 
+        loginActivityListner=this;
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close);
@@ -102,7 +107,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                         Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logOut:
-                        drawerLayout.closeDrawer(Gravity.LEFT);
+                        drawerLayout.closeDrawer(Gravity.START);
 
                         logOutConfirmDialog(BaseLoginActivityClass.this);
                         break;
@@ -121,19 +126,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
         if(IsUserLoggedIn()){
-            android.support.v4.app.FragmentManager fragmentManager ;
-            android.support.v4.app.FragmentTransaction fragmentTransaction;
-            fragmentManager=getSupportFragmentManager();
-            fragmentTransaction=fragmentManager.beginTransaction();
-            WelcomeUserFragment welcomeUserFragment = new WelcomeUserFragment();
-
-            Bundle bundle=new Bundle();
-            bundle.putString(Constants.USER_NAME,mUsername);
-            welcomeUserFragment.setArguments(bundle);
-
-            fragmentTransaction.replace(R.id.fragmentContainer,welcomeUserFragment,ClassConstants.WELCOME_USER_FRAGMENT);
-            fragmentTransaction.addToBackStack(ClassConstants.WELCOME_USER_FRAGMENT);
-            fragmentTransaction.commit();
+            welcomeUserFrag();
         }else{
            loginUserFrag();
         }
@@ -163,6 +156,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         return super.onOptionsItemSelected(item);
     }
 
+    RecyclerView recyclerView;
 
     @Override
     public void onDataPass(String data) {
@@ -177,7 +171,17 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
 
+        UserIcon.setImageDrawable(ContextCompat.getDrawable(BaseLoginActivityClass.this, R.drawable.user_icon));
 
+
+         if(data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)){
+             LinearLayoutManager layoutManager = new LinearLayoutManager(BaseLoginActivityClass.this, LinearLayoutManager.HORIZONTAL, false);
+             recyclerView.setLayoutManager(layoutManager);
+
+             PatientRecyclerView recyclerViewAdapter=new PatientRecyclerView(this,loginActivityListner);
+             recyclerView.setHasFixedSize(true);
+             recyclerView.setAdapter(recyclerViewAdapter);
+        }
         //
 
 
@@ -256,22 +260,32 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
     boolean mExit;
-    private final int TIME_ELAPSE=3000;
+    private final int TIME_ELAPSE=5000;
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
 
         FragmentManager fragmentManager=getSupportFragmentManager();
         int count=fragmentManager.getBackStackEntryCount();
         Logger.log(Level.DEBUG,TAG,"((--count no. fo Fragments-----))=" +count);
         Logger.log(Level.DEBUG,TAG,"(((Get Current Fragment in back key))="+currentFragment.getClass().getName());
 
+        String frag=currentFragment.getClass().getName();
 
-      if( currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
+        if(frag.equals(ClassConstants.SIGNUP_FRAGMENT) || frag.equals(ClassConstants.LOGIN_FRAGMENT)){
+            finish();
+            return;
+        }
+
+
+
+      if( frag.equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
         {
+
             if (mExit) {
-                super.onBackPressed();
-                this.finish();
+               // super.onBackPressed();
+                finish();
+                return;
 
             } else {
                 Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
@@ -283,10 +297,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                     }
                 },TIME_ELAPSE);
             }
+
+
         }else{
           if(fragmentManager.getBackStackEntryCount()>1) {
               fragmentManager.popBackStack();
           }else
+              //super.onBackPressed();
               finish();
       }
 
@@ -623,5 +640,23 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.commit();
     }
 
+
+
+    private void welcomeUserFrag()
+    {
+        android.support.v4.app.FragmentManager fragmentManager ;
+        android.support.v4.app.FragmentTransaction fragmentTransaction;
+        fragmentManager=getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        WelcomeUserFragment welcomeUserFragment = new WelcomeUserFragment();
+
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.USER_NAME,mUsername);
+        welcomeUserFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragmentContainer,welcomeUserFragment,ClassConstants.WELCOME_USER_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.WELCOME_USER_FRAGMENT);
+        fragmentTransaction.commit();
+    }
 
 }

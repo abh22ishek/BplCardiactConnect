@@ -25,7 +25,7 @@
             android:fontFamily="@font/roboto"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="@string/sign_other_user" />
+            android:text="@string/sign_new_user" />
     </LinearLayout>
 
     <ImageView

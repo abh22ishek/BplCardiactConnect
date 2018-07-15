@@ -40,6 +40,7 @@ public class SignUpFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loginActivityListner.onDataPass(ClassConstants.SIGNUP_FRAGMENT);
+        loginActivityListner.OnCurrentFragment(ClassConstants.SIGNUP_FRAGMENT);
 
     }
 

@@ -27,7 +27,6 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pat_list,parent,false);
         CustomViewHolder viewHolder = new CustomViewHolder(view);
 
-
         return viewHolder;
     }
 
@@ -45,7 +44,7 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        RelativeLayout layout;
+        LinearLayout layout;
 
         public CustomViewHolder(View view) {
             super(view);
@@ -59,7 +58,7 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
         @Override
         public void onClick(View view) {
             if(view==layout){
-                loginActivityListner.navigateFragment(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
+               // loginActivityListner.navigateFragment(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
             }
         }
     }

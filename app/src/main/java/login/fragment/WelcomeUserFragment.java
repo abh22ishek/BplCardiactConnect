@@ -29,6 +29,7 @@ public class WelcomeUserFragment extends Fragment {
 
     private TextView signAsOtherUser;
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -73,17 +74,12 @@ public class WelcomeUserFragment extends Fragment {
         }
 
 
-        signUpFresh.setOnTouchListener(new View.OnTouchListener() {
+
+        signUpFresh.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onClick(View view) {
+                navigateToSignUpFreshFragment();
 
-                if(MotionEvent.ACTION_DOWN==motionEvent.getAction())
-                {
-                    navigateToSignUpFreshFragment();
-
-                }
-
-                return true;
             }
         });
 
@@ -95,6 +91,9 @@ public class WelcomeUserFragment extends Fragment {
                 navigateToSignUpNewUserFragment();
             }
         });
+
+
+
         display_image();
 
 
@@ -178,7 +177,7 @@ public class WelcomeUserFragment extends Fragment {
         android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
 
-        SignAsNewUser signUpFragment = new SignAsNewUser();
+        SignAsNewUserFragment signUpFragment = new SignAsNewUserFragment();
 
         fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
