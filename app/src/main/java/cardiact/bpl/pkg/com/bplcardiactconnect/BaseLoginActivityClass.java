@@ -3,6 +3,7 @@ package cardiact.bpl.pkg.com.bplcardiactconnect;
 import android.*;
 import android.annotation.*;
 import android.app.*;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.*;
@@ -47,15 +48,16 @@ import store.credentials.*;
 public class BaseLoginActivityClass extends AppCompatActivity implements LoginActivityListner{
 
 
-   private  RoundedImageView UserIcon;
+    private  RoundedImageView UserIcon;
 
 
-   private TextView appName;
-   private String TAG=BaseLoginActivityClass.class.getSimpleName();
+    private TextView appName;
+    private String TAG=BaseLoginActivityClass.class.getSimpleName();
 
     BaseApplicationClass globalVariable;
 
     private String userIconUri;
+
 
 
 
@@ -71,6 +73,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         setContentView(R.layout.base_login_activity_main);
 
         globalVariable = (BaseApplicationClass) getApplicationContext();
+        final LinearLayout linearLayout =  findViewById(R.id.linearParams);
 
         drawerLayout=findViewById(R.id.drawerLayout);
         UserIcon=findViewById(R.id.hospitalIcon);
@@ -87,6 +90,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close);
 
 
+        builDynamicImageViews(BaseLoginActivityClass.this,linearLayout);
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -128,7 +132,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         if(IsUserLoggedIn()){
             welcomeUserFrag();
         }else{
-           loginUserFrag();
+            loginUserFrag();
         }
 
 
@@ -174,13 +178,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         UserIcon.setImageDrawable(ContextCompat.getDrawable(BaseLoginActivityClass.this, R.drawable.user_icon));
 
 
-         if(data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)){
-             LinearLayoutManager layoutManager = new LinearLayoutManager(BaseLoginActivityClass.this, LinearLayoutManager.HORIZONTAL, false);
-             recyclerView.setLayoutManager(layoutManager);
+        if(data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)){
+            LinearLayoutManager layoutManager = new LinearLayoutManager(BaseLoginActivityClass.this, LinearLayoutManager.HORIZONTAL, false);
+            recyclerView.setLayoutManager(layoutManager);
 
-             PatientRecyclerView recyclerViewAdapter=new PatientRecyclerView(this,loginActivityListner);
-             recyclerView.setHasFixedSize(true);
-             recyclerView.setAdapter(recyclerViewAdapter);
+            PatientRecyclerView recyclerViewAdapter=new PatientRecyclerView(this,loginActivityListner);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setAdapter(recyclerViewAdapter);
         }
         //
 
@@ -193,7 +197,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         FragmentManager fragmentManager=getSupportFragmentManager();
 
         // Always get Current fragment
-         currentFragment = fragmentManager.findFragmentByTag(tag);
+        currentFragment = fragmentManager.findFragmentByTag(tag);
 
         if (currentFragment.getClass().getName().equals(ClassConstants.LOGIN_FRAGMENT)) {
 
@@ -254,7 +258,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     public void displayImage(Uri uri) {
         if(uri!=null)
-        loadImageWithGlide(uri.toString());
+            loadImageWithGlide(uri.toString());
         else
             UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
     }
@@ -272,18 +276,22 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         String frag=currentFragment.getClass().getName();
 
-        if(frag.equals(ClassConstants.SIGNUP_FRAGMENT) || frag.equals(ClassConstants.LOGIN_FRAGMENT)){
+        if(frag.equals(ClassConstants.SIGNUP_FRAGMENT) ||
+         frag.equals(ClassConstants.LOGIN_FRAGMENT) || frag.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)){
             finish();
             return;
         }
 
 
 
-      if( frag.equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
+
+
+        if( frag.equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
         {
 
+
             if (mExit) {
-               // super.onBackPressed();
+                // super.onBackPressed();
                 finish();
                 return;
 
@@ -300,18 +308,18 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
         }else{
-          if(fragmentManager.getBackStackEntryCount()>1) {
-              fragmentManager.popBackStack();
-          }else
-              //super.onBackPressed();
-              finish();
-      }
+            if(fragmentManager.getBackStackEntryCount()>1) {
+                fragmentManager.popBackStack();
+            }else
+                //super.onBackPressed();
+                finish();
+        }
 
 
-      }
+    }
 
 
-   //  hoy, estoy muy ocupado
+    //  hoy, estoy muy ocupado
 // mi computadora esta muy  lento
 
     @Override
@@ -323,7 +331,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             userIconUri=uri.toString();
 
             if(uri!=null)
-           loadImageWithGlide(uri.toString());
+                loadImageWithGlide(uri.toString());
 
         }
 
@@ -613,8 +621,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                     public void onClick(DialogInterface dialog, int id) {
 
                         loggedOut(context);
-                      loginUserFrag();
-                    alertDialog.dismiss();
+                        loginUserFrag();
+                        alertDialog.dismiss();
                     }
                 });
 
@@ -659,4 +667,23 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.commit();
     }
 
+
+
+    private void builDynamicImageViews(Context context, LinearLayout layout)
+    {
+
+        for(int i=0;i<3;i++)
+        {
+            RoundedImageView roundedImageView = new RoundedImageView(context);
+            roundedImageView.setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            roundedImageView.setMaxHeight(100);
+            roundedImageView.setMaxWidth(100);
+
+            roundedImageView.setImageResource(R.drawable.user_icon);
+
+            // Adds the view to the layout
+            layout.addView(roundedImageView);
+        }
+
+    }
 }

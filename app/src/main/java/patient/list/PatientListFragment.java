@@ -38,11 +38,12 @@ LoginActivityListner loginActivityListner;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         loginActivityListner= (LoginActivityListner) getActivity();
         loginActivityListner.onDataPass("");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-          recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         PatientRecyclerView recyclerViewAdapter=new PatientRecyclerView(getActivity(),loginActivityListner);
         recyclerView.setHasFixedSize(true);

@@ -16,7 +16,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/progressBar"
+            android:id="@+id/relativeParams"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.4"
@@ -29,15 +29,24 @@
 
 
 
-            <custom.view.RoundedImageView
-                android:id="@+id/hospitalIcon"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_above="@+id/appName"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:src="@drawable/user_icon"
-                android:visibility="visible" />
+                android:orientation="horizontal"
+                android:id="@+id/linearParams"
+                android:layout_height="101dp">
+
+                <custom.view.RoundedImageView
+                    android:id="@+id/hospitalIcon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/user_icon"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/appName"
