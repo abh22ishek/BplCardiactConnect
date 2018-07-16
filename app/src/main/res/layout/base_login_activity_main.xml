@@ -27,26 +27,31 @@
 
             >
 
-
-
-            <LinearLayout
+            <HorizontalScrollView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/appName"
-                android:layout_centerInParent="true"
-                android:orientation="horizontal"
-                android:id="@+id/linearParams"
-                android:layout_height="101dp">
-
-                <custom.view.RoundedImageView
-                    android:id="@+id/hospitalIcon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/user_icon"
-                    android:visibility="visible" />
+                android:scrollbars="none"
+                android:layout_centerInParent="true">
 
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linearParams"
 
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="120dp"
+                    android:paddingEnd="120dp"
+                    android:orientation="horizontal">
+                    <custom.view.RoundedImageView
+                        android:id="@+id/hospitalIcon"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/user_icon"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
             <TextView
                 android:id="@+id/appName"
@@ -61,6 +66,7 @@
                 android:textColor="@color/separator"
                 android:textSize="30sp"
                 android:visibility="visible" />
+
 
         </RelativeLayout>
 

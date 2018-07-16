@@ -672,14 +672,39 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     private void builDynamicImageViews(Context context, LinearLayout layout)
     {
 
-        for(int i=0;i<3;i++)
+        for(int i=0;i<5;i++)
         {
             RoundedImageView roundedImageView = new RoundedImageView(context);
-            roundedImageView.setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            roundedImageView.setMaxHeight(100);
-            roundedImageView.setMaxWidth(100);
 
-            roundedImageView.setImageResource(R.drawable.user_icon);
+            roundedImageView.setId(i);
+            roundedImageView.setAlpha(0.5f);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+
+            params.gravity=Gravity.CENTER;
+            params.setMarginEnd(50);
+            roundedImageView.setLayoutParams(params);
+
+
+
+
+            Glide.with(context)
+                    .load(R.drawable.user_icon)
+                    .override(200,200)
+                    .centerCrop()
+                    .skipMemoryCache(true)
+                    .into(roundedImageView);
+
+
+            roundedImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    
+                }
+            });
+
 
             // Adds the view to the layout
             layout.addView(roundedImageView);
