@@ -25,6 +25,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.*;
 import android.view.*;
+import android.view.animation.*;
 import android.widget.*;
 
 import com.bumptech.glide.*;
@@ -33,7 +34,10 @@ import com.bumptech.glide.load.resource.drawable.*;
 import com.bumptech.glide.request.animation.*;
 import com.bumptech.glide.request.target.*;
 
+import org.spongycastle.jcajce.provider.symmetric.*;
+
 import java.io.*;
+import java.net.*;
 import java.util.*;
 
 import application.*;
@@ -59,7 +63,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     private String userIconUri;
 
 
-
+     ViewFlipper viewFlipper;
 
     NavigationView nv;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -73,10 +77,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         setContentView(R.layout.base_login_activity_main);
 
         globalVariable = (BaseApplicationClass) getApplicationContext();
-        final LinearLayout linearLayout =  findViewById(R.id.linearParams);
+        viewFlipper =  findViewById(R.id.linearParams);
+
 
         drawerLayout=findViewById(R.id.drawerLayout);
-        UserIcon=findViewById(R.id.hospitalIcon);
+        UserIcon=findViewById(R.id.hospitalIcon1);
         UserIcon.setVisibility(View.GONE);
 
         appName=findViewById(R.id.appName);
@@ -90,13 +95,26 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close);
 
 
-        builDynamicImageViews(BaseLoginActivityClass.this,linearLayout);
+
+       // builDynamicImageViews(BaseLoginActivityClass.this,linearLayout);
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
 
 
+        appName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                viewFlipper.showNext();
+                getCurrentViewFlipperID(BaseLoginActivityClass.this);
+
+
+
+            }
+        });
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -151,6 +169,18 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     }
 
+
+    public void loadAnimations1(ViewFlipper viewFlipper)
+    {
+        Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
+        Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+
+        viewFlipper.setInAnimation(in);
+        viewFlipper.setOutAnimation(out);
+    }
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -174,17 +204,18 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             appName.setVisibility(View.VISIBLE);
         }
 
-
+        appName.setVisibility(View.VISIBLE);
         UserIcon.setImageDrawable(ContextCompat.getDrawable(BaseLoginActivityClass.this, R.drawable.user_icon));
 
 
         if(data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)){
-            LinearLayoutManager layoutManager = new LinearLayoutManager(BaseLoginActivityClass.this, LinearLayoutManager.HORIZONTAL, false);
-            recyclerView.setLayoutManager(layoutManager);
+            UserIcon.setVisibility(View.GONE);
+            viewFlipper.setVisibility(View.VISIBLE);
 
-            PatientRecyclerView recyclerViewAdapter=new PatientRecyclerView(this,loginActivityListner);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(recyclerViewAdapter);
+
+            ShowViewFlipper(viewFlipper, BaseLoginActivityClass.this);
+
+
         }
         //
 
@@ -258,7 +289,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     public void displayImage(Uri uri) {
         if(uri!=null)
-            loadImageWithGlide(uri.toString());
+            loadImageWithGlide(uri.toString(),UserIcon);
         else
             UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
     }
@@ -331,7 +362,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             userIconUri=uri.toString();
 
             if(uri!=null)
-                loadImageWithGlide(uri.toString());
+                loadImageWithGlide(uri.toString(),UserIcon);
 
         }
 
@@ -345,7 +376,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
                 userIconUri="file://"+uri;
-                loadImageWithGlide(uri);
+                loadImageWithGlide(uri,UserIcon);
 
 
 
@@ -360,7 +391,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-    private void loadImageWithGlide(String uri){
+    private void loadImageWithGlide(String uri, ImageView imageView){
 
         //noinspection SpellCheckingInspection
         Glide
@@ -370,7 +401,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                 .centerCrop()// resizes the image to these dimensions (in pixel). does not respect aspect ratio
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(new GlideDrawableImageViewTarget(UserIcon) {
+                .into(new GlideDrawableImageViewTarget(imageView) {
                     @Override
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
                         super.onResourceReady(resource, animation);
@@ -595,7 +626,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-    public static void loggedOut(Context context)
+    public  void loggedOut(Context context)
     {
         SharedPreferences signup_credentials;
         //=SignUpActivity.this.getPreferences(Context.MODE_PRIVATE) ;
@@ -672,7 +703,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     private void builDynamicImageViews(Context context, LinearLayout layout)
     {
 
-        for(int i=0;i<5;i++)
+        /*for(int i=0;i<5;i++)
         {
             RoundedImageView roundedImageView = new RoundedImageView(context);
 
@@ -701,14 +732,138 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             roundedImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    
+
                 }
             });
 
 
             // Adds the view to the layout
             layout.addView(roundedImageView);
+        }*/
+
+    }
+
+
+
+    private List<String>  mapUserIDICon(Context context)
+    {
+
+
+        List<String> userList=new ArrayList<>();
+        List<String > userIconsUri=new ArrayList<>();
+            SharedPreferences sharedPreferences;
+            sharedPreferences = context.getSharedPreferences(Constants.PREFERENCE_PROFILE_IMAGE, Context.MODE_PRIVATE);
+
+
+        Map<String, ?> allEntries = sharedPreferences.getAll();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
+            userList.add(entry.getKey());
+            userIconsUri.add(entry.getValue().toString());
+
+
         }
+
+
+
+            return userIconsUri;
+
+        }
+
+
+
+    RoundedImageView roundedImageView;
+    private void ShowViewFlipper(ViewFlipper viewFlipper,Context context)
+        {
+            List<String>UriList=mapUserIDICon(BaseLoginActivityClass.this);
+            Uri uri;
+
+            for(int i=0;i<UriList.size();i++)
+            {
+
+                 roundedImageView = new RoundedImageView(context);
+                uri=Uri.parse(UriList.get(i));
+                loadImageWithGlide(uri.toString(),roundedImageView);
+                roundedImageView.setId(i);
+                viewFlipper.addView(roundedImageView);
+
+                }
+
+
+        }
+
+
+    public void getCurrentViewFlipperID (Context context) {
+
+        int index = -1;
+        List<String>UriList=mapUserIDICon(BaseLoginActivityClass.this);
+
+
+        for (int i = 0; i < UriList.size(); i++) {
+
+            if(i==viewFlipper.getCurrentView().getId()){
+                index=i;
+            }
+        }
+
+        if (index == -1) {
+            // failed to determine the right index
+            Log.w("imagen1", "Could not determine the right index!");
+            return;
+        }
+
+        Uri uri = Uri.parse(UriList.get(index));
+
+        Logger.log(Level.DEBUG,TAG,"--GET URI from current View Flipper---"+uri);
+
+
+        getCurrentUserIdFromCurrentViewFlipper(uri.toString(),context);
+
+    }
+
+
+
+
+
+    private String getCurrentUserIdFromCurrentViewFlipper(String uriAsValue, Context context) {
+
+        SharedPreferences sharedPreferences;
+        sharedPreferences = context.getSharedPreferences(Constants.PREFERENCE_PROFILE_IMAGE, Context.MODE_PRIVATE);
+
+        String currentUserId="";
+
+        Map<String, ?> allEntries = sharedPreferences.getAll();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
+            if (uriAsValue.equals(entry.getValue())) {
+                currentUserId= entry.getKey();
+                break;
+            }
+
+
+        }
+        Logger.log(Level.DEBUG,TAG,"--Get current UserID mapped from Current Icons display--="+currentUserId);
+        reloadSignAsNewUserFragment(currentUserId);
+        return currentUserId;
+    }
+
+
+
+
+    private void reloadSignAsNewUserFragment(String userId)
+    {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+        SignAsNewUserFragment signUpFragment = new SignAsNewUserFragment();
+        Bundle bundle =new Bundle();
+        bundle.putString(Constants.USER_NAME,userId);
+        signUpFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
 
     }
 }

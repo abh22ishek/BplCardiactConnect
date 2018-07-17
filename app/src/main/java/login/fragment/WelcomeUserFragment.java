@@ -133,6 +133,7 @@ public class WelcomeUserFragment extends Fragment {
         SharedPreferences profile_image;
         profile_image = getActivity().getSharedPreferences(Constants.PREFERENCE_PROFILE_IMAGE, Context.MODE_PRIVATE);
 
+
         String image_str=profile_image.getString(key_username,"");
         Logger.log(Level.INFO, ClassConstants.WELCOME_USER_FRAGMENT, "get profile image from shared pref=" + image_str);
 
@@ -178,6 +179,10 @@ public class WelcomeUserFragment extends Fragment {
         android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
 
         SignAsNewUserFragment signUpFragment = new SignAsNewUserFragment();
+
+        Bundle bundle =new Bundle();
+        bundle.putString(Constants.USER_NAME,"");
+        signUpFragment.setArguments(bundle);
 
         fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);

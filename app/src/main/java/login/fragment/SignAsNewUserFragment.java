@@ -10,10 +10,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.R;
-import constants.ClassConstants;
+import constants.*;
 
 /**
  * Created by abhishekraj on 13/07/18.
@@ -24,6 +24,8 @@ public class SignAsNewUserFragment extends Fragment {
 
 
     private TextView signUpFresh;
+
+    private EditText userId;
 
     LoginActivityListner loginActivityListner;
 
@@ -48,6 +50,7 @@ public class SignAsNewUserFragment extends Fragment {
         View view= inflater.inflate(R.layout.log_out ,container,false);
         signUpFresh=view.findViewById(R.id.signUpFresh);
 
+        userId=view.findViewById(R.id.userId);
         return view;
     }
 
@@ -55,6 +58,14 @@ public class SignAsNewUserFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        loginActivityListner.onDataPass(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
+        if(null!=getArguments().getString(Constants.USER_NAME)) {
+
+           final String username=getArguments().getString(Constants.USER_NAME);
+           userId.setText(username);
+
+
+        }
 
         signUpFresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +74,10 @@ public class SignAsNewUserFragment extends Fragment {
                 navigateToSignUpFreshFragment();
             }
         });
+
+
+
+
     }
 
 
@@ -81,4 +96,9 @@ public class SignAsNewUserFragment extends Fragment {
 
 
     }
+
+
+
+
+
 }
