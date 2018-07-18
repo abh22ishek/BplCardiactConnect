@@ -31,7 +31,6 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         loginActivityListner= (LoginActivityListner) getActivity();
     }
 
@@ -167,11 +166,6 @@ public class SignUpFragment extends Fragment {
 
     }
 
-
-    private void destroyCurrentFragment()
-    {
-        //
-    }
 
 
 

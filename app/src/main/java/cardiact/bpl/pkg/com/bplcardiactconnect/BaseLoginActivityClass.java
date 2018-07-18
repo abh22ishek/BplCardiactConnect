@@ -91,6 +91,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         loginActivityListner=this;
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayOptions(R.mipmap.ic_launcher);
+
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close);
 
@@ -168,6 +170,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         });
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sortby, menu);
+        return true;
+    }
+
 
 
     public void loadAnimations1(ViewFlipper viewFlipper)
@@ -184,10 +193,36 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        switch (item.getItemId()) {
+            // action with ID action_refresh was selected
+            case R.id.age:
+                Toast.makeText(this, "Refresh selected", Toast.LENGTH_SHORT)
+                        .show();
+                break;
+
+            case R.id.name:
+                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+                        .show();
+                break;
+
+
+            case R.id.Id:
+                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+                        .show();
+                break;
+
+
+
+
+            default:
+                break;
+        }
         if(actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
+
+
     }
 
     RecyclerView recyclerView;
@@ -245,7 +280,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         {
 
             //this will clear the back stack and displays no animation on the screen
-            fragmentManager.popBackStackImmediate(currentFragment.getClass().getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            int count=fragmentManager.getBackStackEntryCount();
+            Logger.log(Level.DEBUG,TAG,"---Back stack entry count after POP BACK STACK IMMEDIATE---"+count);
         }
 
         Logger.log(Level.DEBUG,TAG, "Get Current Fragment="+currentFragment.getClass().getName());
@@ -308,7 +344,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         String frag=currentFragment.getClass().getName();
 
         if(frag.equals(ClassConstants.SIGNUP_FRAGMENT) ||
-         frag.equals(ClassConstants.LOGIN_FRAGMENT) || frag.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)){
+         frag.equals(ClassConstants.LOGIN_FRAGMENT) || frag.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)
+                || frag.equals(ClassConstants.WELCOME_USER_FRAGMENT)){
             finish();
             return;
         }

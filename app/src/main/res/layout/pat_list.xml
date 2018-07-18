@@ -37,7 +37,7 @@
 
 
             <TextView
-                android:id="@+id/PatientName"
+                android:id="@+id/patName"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
 
@@ -55,7 +55,7 @@
 
 
             <TextView
-                android:id="@+id/Age"
+                android:id="@+id/patAge"
                 android:layout_width="100dp"
                 android:textStyle="bold"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                 android:text="@string/age" />
 
             <TextView
-                android:id="@+id/Sex"
+                android:id="@+id/patSex"
                 android:layout_width="100dp"
                 android:textStyle="bold"
                 android:layout_height="wrap_content"

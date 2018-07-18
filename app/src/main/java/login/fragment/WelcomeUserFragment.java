@@ -2,28 +2,26 @@ package login.fragment;
 
 import android.annotation.*;
 import android.content.*;
-import android.graphics.drawable.*;
 import android.net.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
-import android.support.v4.content.*;
 import android.view.*;
 import android.widget.*;
 
-import com.bumptech.glide.*;
-import com.bumptech.glide.load.resource.drawable.*;
-import com.bumptech.glide.request.animation.*;
-import com.bumptech.glide.request.target.*;
+
+
+import java.util.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import logger.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class WelcomeUserFragment extends Fragment {
 
 
-    LoginActivityListner loginActivityListner;
+    private LoginActivityListner loginActivityListner;
     private TextView welcomeText,signUpFresh;
     private ImageView proceed;
 
@@ -33,13 +31,13 @@ public class WelcomeUserFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         loginActivityListner = (LoginActivityListner) getActivity();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loginActivityListner.OnCurrentFragment(ClassConstants.WELCOME_USER_FRAGMENT);
 
 
     }
@@ -105,12 +103,12 @@ public class WelcomeUserFragment extends Fragment {
         });
     }
 
-    String mUsername = "";
+    private String mUsername = "";
 
 
     private void display_image() {
 
-        if (get_profile_image(mUsername) != "" || !get_profile_image(mUsername).equals("")) {
+        if (!Objects.equals(get_profile_image(mUsername), "") || !get_profile_image(mUsername).equals("")) {
 
 
             Uri uri = Uri.parse(get_profile_image(mUsername));

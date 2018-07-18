@@ -1,20 +1,22 @@
 package login.fragment;
 
 import android.content.*;
-import android.graphics.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
 import android.view.*;
 import android.widget.*;
 
+import java.util.*;
+
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import patient.list.*;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class PatientMenuTrackFragment extends Fragment {
 
-    LoginActivityListner loginActivityListner;
+    private LoginActivityListner loginActivityListner;
 
     private LinearLayout archivedRec;
 
@@ -22,7 +24,6 @@ public class PatientMenuTrackFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         loginActivityListner= (LoginActivityListner) getActivity();
     }
 
@@ -59,7 +60,7 @@ public class PatientMenuTrackFragment extends Fragment {
 
     private void onPatientList()
     {
-        android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        android.support.v4.app.FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         PatientListFragment patientListFragment = new PatientListFragment();
        // fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_FADE );

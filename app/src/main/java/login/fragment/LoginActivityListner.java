@@ -2,6 +2,10 @@ package login.fragment;
 
 import android.net.*;
 
+import java.util.*;
+
+import model.*;
+
 public interface LoginActivityListner {
 
     void onDataPass(String data);
@@ -10,4 +14,5 @@ public interface LoginActivityListner {
     void setUserName(String userName,String  tag);
 
     void displayImage(Uri uri);
+    void passSortedList(List<PatientModel> patientModelList);
 }

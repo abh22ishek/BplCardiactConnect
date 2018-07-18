@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.*;
 import android.widget.*;
 
+import java.util.*;
+
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import database.*;
@@ -50,7 +52,7 @@ String username="";
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(null!=getArguments().getString(Constants.USER_NAME)) {
+        if(null!= Objects.requireNonNull(getArguments()).getString(Constants.USER_NAME)) {
 
             username=getArguments().getString(Constants.USER_NAME);
 
