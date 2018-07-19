@@ -3,11 +3,12 @@ package model;
 
 import android.support.annotation.*;
 
+import java.io.*;
 import java.util.*;
 
 public class PatientModel implements Comparable<PatientModel>{
 
-    String patId;
+     int patId;
     String patName;
 
     int  patAge;
@@ -26,7 +27,7 @@ public class PatientModel implements Comparable<PatientModel>{
     String refDoc;
 
 
-    public PatientModel(String patId, String patName, int patAge, String gender, String patRace, String patRefDoc, String refDoc) {
+    public PatientModel(int patId, String patName, int patAge, String gender, String patRace, String patRefDoc, String refDoc) {
         this.patId = patId;
         this.patName = patName;
         this.patAge = patAge;
@@ -36,11 +37,11 @@ public class PatientModel implements Comparable<PatientModel>{
         this.refDoc = refDoc;
     }
 
-    public String getPatId() {
+    public int getPatId() {
         return patId;
     }
 
-    public void setPatId(String patId) {
+    public void setPatId(int patId) {
         this.patId = patId;
     }
 
@@ -110,20 +111,20 @@ public class PatientModel implements Comparable<PatientModel>{
             //return PatName2.compareTo(PatName1);
         }};
 
-    /*Comparator for sorting the list by Id*/
+
+
     public static Comparator<PatientModel> patIdComparator = new Comparator<PatientModel>() {
 
         public int compare(PatientModel s1, PatientModel s2) {
 
-            int rollno1 = s1.getPatAge();
-            int rollno2 = s2.getPatAge();
 
-            /*For ascending order*/
-            return rollno1-rollno2;
+            //ascending order
+            return s1.getPatId()-s2.getPatId();
 
-            /*For descending order*/
-            //rollno2-rollno1;
+            //descending order
+            //return PatName2.compareTo(PatName1);
         }};
+
 
 
 

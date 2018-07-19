@@ -43,7 +43,7 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
 
 
         holder.patName.setText(patModelList.get(position).getPatName());
-        holder.patId.setText(patModelList.get(position).getPatId());
+        holder.patId.setText(String.valueOf(patModelList.get(position).getPatId()));
 
         holder.patAge.setText(String.valueOf(patModelList.get(position).getPatAge()));
 

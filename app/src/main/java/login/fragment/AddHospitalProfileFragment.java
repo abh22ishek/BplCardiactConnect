@@ -4,14 +4,10 @@ import android.content.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
-import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
-import constants.*;
-import patient.list.*;
-import recyclerview.cardview.*;
 
 public class AddHospitalProfileFragment extends Fragment {
 

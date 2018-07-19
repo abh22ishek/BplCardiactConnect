@@ -4,14 +4,12 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_margin="0dp"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardCornerRadius="2dp"
-    app:cardElevation="4dp"
-    android:foreground="?android:attr/selectableItemBackground"
     app:cardUseCompatPadding="true"
+
     android:layout_height="wrap_content">
 
     <HorizontalScrollView

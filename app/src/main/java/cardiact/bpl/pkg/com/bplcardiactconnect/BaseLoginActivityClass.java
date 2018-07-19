@@ -3,7 +3,6 @@ package cardiact.bpl.pkg.com.bplcardiactconnect;
 import android.*;
 import android.annotation.*;
 import android.app.*;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.*;
@@ -21,8 +20,6 @@ import android.support.v4.content.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.*;
 import android.view.*;
 import android.view.animation.*;
@@ -34,10 +31,8 @@ import com.bumptech.glide.load.resource.drawable.*;
 import com.bumptech.glide.request.animation.*;
 import com.bumptech.glide.request.target.*;
 
-import org.spongycastle.jcajce.provider.symmetric.*;
 
 import java.io.*;
-import java.net.*;
 import java.util.*;
 
 import application.*;
@@ -45,7 +40,8 @@ import constants.*;
 import custom.view.*;
 import logger.*;
 import login.fragment.*;
-import recyclerview.cardview.PatientRecyclerView;
+import model.*;
+import patient.list.*;
 import store.credentials.*;
 
 
@@ -71,6 +67,12 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     DrawerLayout drawerLayout;
     LoginActivityListner loginActivityListner;
 
+    RelativeLayout baseLayout;
+
+    ImageView navHeaderIcon;
+
+    private Uri UserIconUri;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         nv = findViewById(R.id.nv);
 
 
+
+        baseLayout=findViewById(R.id.relativeParams);
+        navHeaderIcon=nv.findViewById(R.id.navHeaderIcon);
+
         loginActivityListner=this;
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(R.mipmap.ic_launcher);
@@ -98,7 +104,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
 
-       // builDynamicImageViews(BaseLoginActivityClass.this,linearLayout);
+
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -196,19 +202,18 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.age:
-                Toast.makeText(this, "Refresh selected", Toast.LENGTH_SHORT)
-                        .show();
+               reloadPatientListFragment(Constants.SORT_BY_AGE);
                 break;
 
             case R.id.name:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-                        .show();
+                reloadPatientListFragment(Constants.SORT_BY_NAME);
+
                 break;
 
 
             case R.id.Id:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-                        .show();
+                reloadPatientListFragment(Constants.SORT_BY_ID);
+
                 break;
 
 
@@ -225,7 +230,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     }
 
-    RecyclerView recyclerView;
 
     @Override
     public void onDataPass(String data) {
@@ -234,6 +238,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         if(data.equalsIgnoreCase(ClassConstants.SIGNUP_FRAGMENT)|| data.equalsIgnoreCase(ClassConstants.WELCOME_USER_FRAGMENT)){
             UserIcon.setVisibility(View.VISIBLE);
             appName.setVisibility(View.GONE);
+
         }else{
             UserIcon.setVisibility(View.GONE);
             appName.setVisibility(View.VISIBLE);
@@ -254,16 +259,26 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
         //
 
+        if(data.equals(ClassConstants.PATIENT_LIST_FRAGMENT)){
+            baseLayout.setVisibility(View.GONE);
+            return;
+        }
+
+        baseLayout.setVisibility(View.VISIBLE);
 
     }
 
     Fragment currentFragment=null;
+
+
     @Override
     public void OnCurrentFragment(String tag) {
         FragmentManager fragmentManager=getSupportFragmentManager();
 
         // Always get Current fragment
         currentFragment = fragmentManager.findFragmentByTag(tag);
+        int count= fragmentManager.getBackStackEntryCount();
+                Logger.log(Level.DEBUG,TAG,"Back stack frag coumt in Oncurreent frag()="+count);
 
         if (currentFragment.getClass().getName().equals(ClassConstants.LOGIN_FRAGMENT)) {
 
@@ -271,20 +286,24 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }else if(currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            loadImageWithGlide(userIconUri,navHeaderIcon);
         } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
 
-
+            baseLayout.setVisibility(View.GONE);
+            return;
         }
 
         else if(currentFragment.getClass().getName().equals(ClassConstants.WELCOME_USER_FRAGMENT))
         {
 
             //this will clear the back stack and displays no animation on the screen
-            int count=fragmentManager.getBackStackEntryCount();
+
             Logger.log(Level.DEBUG,TAG,"---Back stack entry count after POP BACK STACK IMMEDIATE---"+count);
         }
 
         Logger.log(Level.DEBUG,TAG, "Get Current Fragment="+currentFragment.getClass().getName());
+
+        baseLayout.setVisibility(View.VISIBLE);
     }
 
 
@@ -324,10 +343,18 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     @Override
     public void displayImage(Uri uri) {
-        if(uri!=null)
+        if(uri!=null){
             loadImageWithGlide(uri.toString(),UserIcon);
+            UserIconUri=uri;
+
+        }
         else
             UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
+    }
+
+    @Override
+    public void passSortedList(List<PatientModel> patientModelList) {
+
     }
 
     boolean mExit;
@@ -903,4 +930,25 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
     }
+
+
+
+    private void reloadPatientListFragment(String SortBy)
+    {
+        android.support.v4.app.FragmentManager fragmentManager = Objects.requireNonNull(BaseLoginActivityClass.this).getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        PatientListFragment patientListFragment = new PatientListFragment();
+
+
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.SORT_BY,SortBy);
+        patientListFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment);
+        fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.commit();
+    }
+
+
+
 }

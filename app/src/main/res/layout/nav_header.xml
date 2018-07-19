@@ -11,6 +11,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/user_icon"
+        android:id="@+id/navHeaderIcon"
+
         android:contentDescription="@string/settings"
         />
 </LinearLayout>
