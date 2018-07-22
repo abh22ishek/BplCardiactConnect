@@ -155,6 +155,7 @@ This is when high blood pressure requires emergency medical attention.
     <string name="hospital_icon">Hospital icon</string>
 
     <string name="pat_name">Patient Name</string>
+    <string name="pat_race">Patient Race</string>
     <string name="pat_id">Patient Id</string>
 
     

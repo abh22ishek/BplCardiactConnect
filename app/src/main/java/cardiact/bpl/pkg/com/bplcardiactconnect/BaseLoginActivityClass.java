@@ -71,7 +71,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     ImageView navHeaderIcon;
 
-    private Uri UserIconUri;
+     Uri NavigationUserIconUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,9 +91,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         nv = findViewById(R.id.nv);
 
 
+        View header = nv.getHeaderView(0);
+         navHeaderIcon = header.findViewById(R.id.navHeaderIcon);
 
         baseLayout=findViewById(R.id.relativeParams);
-        navHeaderIcon=nv.findViewById(R.id.navHeaderIcon);
 
         loginActivityListner=this;
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -141,6 +142,9 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
                         logOutConfirmDialog(BaseLoginActivityClass.this);
                         break;
+
+                    case R.id.navHeaderIcon:
+                        Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
 
                     default:
                         return true;
@@ -277,6 +281,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         // Always get Current fragment
         currentFragment = fragmentManager.findFragmentByTag(tag);
+        Logger.log(Level.DEBUG,TAG,"--NAvigation Image URI--"+NavigationUserIconUri);
         int count= fragmentManager.getBackStackEntryCount();
                 Logger.log(Level.DEBUG,TAG,"Back stack frag coumt in Oncurreent frag()="+count);
 
@@ -286,7 +291,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }else if(currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            loadImageWithGlide(userIconUri,navHeaderIcon);
+           loadImageWithGlide(NavigationUserIconUri.toString(),navHeaderIcon);
+
+
+
         } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
 
             baseLayout.setVisibility(View.GONE);
@@ -345,7 +353,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     public void displayImage(Uri uri) {
         if(uri!=null){
             loadImageWithGlide(uri.toString(),UserIcon);
-            UserIconUri=uri;
+            NavigationUserIconUri=uri;
 
         }
         else
