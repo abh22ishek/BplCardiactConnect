@@ -10,7 +10,7 @@ public interface LoginActivityListner {
 
     void onDataPass(String data);
     void OnCurrentFragment(String tag);
-    void navigateFragment(String tag);
+    void navigateToFragment(String tag);
     void setUserName(String userName,String  tag);
 
     void displayImage(Uri uri);

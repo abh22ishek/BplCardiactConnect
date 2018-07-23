@@ -1,5 +1,6 @@
 package constants;
 
+import ecg.*;
 import login.fragment.*;
 import patient.list.*;
 
@@ -22,5 +23,8 @@ public class ClassConstants {
     public static final String WELCOME_USER_FRAGMENT= WelcomeUserFragment.class.getName();
 
     public static final String SIGN_AS_NEW_USER_FRAGMENT=SignAsNewUserFragment.class.getName();
+
+    public static final String ECG_DISPALY_FRAGMENT= ECGDisplayFragment.class.getName();
+
 
 }

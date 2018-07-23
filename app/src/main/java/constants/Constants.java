@@ -23,5 +23,10 @@ public class Constants {
     public static final String SORT_BY_NAME="sort_by_name";
     public static final String SORT_BY_ID="sort_by_id";
 
+    public static final float CMS_PER_INCH=2.54f;
+
+    public static final float AMPLITUDE_PER_CM=328f;
+
+    public static final float SAMPLES_PER_CM=1000f;
 
 }

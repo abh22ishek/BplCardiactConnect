@@ -6,6 +6,7 @@ import android.app.*;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.*;
+import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.net.*;
@@ -38,6 +39,7 @@ import java.util.*;
 import application.*;
 import constants.*;
 import custom.view.*;
+import ecg.*;
 import logger.*;
 import login.fragment.*;
 import model.*;
@@ -55,7 +57,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     private String TAG=BaseLoginActivityClass.class.getSimpleName();
 
     BaseApplicationClass globalVariable;
-
     private String userIconUri;
 
 
@@ -268,6 +269,12 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             return;
         }
 
+        if(data.equals(ClassConstants.ECG_DISPALY_FRAGMENT))
+        {
+            baseLayout.setVisibility(View.GONE);
+            return;
+        }
+
         baseLayout.setVisibility(View.VISIBLE);
 
     }
@@ -281,9 +288,9 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         // Always get Current fragment
         currentFragment = fragmentManager.findFragmentByTag(tag);
-        Logger.log(Level.DEBUG,TAG,"--NAvigation Image URI--"+NavigationUserIconUri);
+        Logger.log(Level.DEBUG,TAG,"--Navigation Image URI--"+NavigationUserIconUri);
         int count= fragmentManager.getBackStackEntryCount();
-                Logger.log(Level.DEBUG,TAG,"Back stack frag coumt in Oncurreent frag()="+count);
+                Logger.log(Level.DEBUG,TAG,"Back stack frag count in On curreent frag()="+count);
 
         if (currentFragment.getClass().getName().equals(ClassConstants.LOGIN_FRAGMENT)) {
 
@@ -309,23 +316,30 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             Logger.log(Level.DEBUG,TAG,"---Back stack entry count after POP BACK STACK IMMEDIATE---"+count);
         }
 
-        Logger.log(Level.DEBUG,TAG, "Get Current Fragment="+currentFragment.getClass().getName());
+        else if(currentFragment.getClass().getName().equals(ClassConstants.ECG_DISPALY_FRAGMENT)){
 
+
+        }
+
+
+        Logger.log(Level.DEBUG,TAG, "Get Current Fragment="+currentFragment.getClass().getName());
         baseLayout.setVisibility(View.VISIBLE);
     }
 
 
 
     @Override
-    public void navigateFragment(String tag) {
+    public void navigateToFragment(String tag) {
+
+
         android.support.v4.app.FragmentManager fragmentManager ;
         android.support.v4.app.FragmentTransaction fragmentTransaction;
 
         fragmentManager=getSupportFragmentManager();
         fragmentTransaction=fragmentManager.beginTransaction();
-        PatientMenuTrackFragment patientMenuTrackFragment = new PatientMenuTrackFragment();
-        fragmentTransaction.replace(R.id.fragmentContainer,patientMenuTrackFragment);
-        fragmentTransaction.addToBackStack(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
+        ECGDisplayFragment ecgDisplayFragment = new ECGDisplayFragment();
+        fragmentTransaction.replace(R.id.fragmentContainer,ecgDisplayFragment);
+        fragmentTransaction.addToBackStack(ClassConstants.ECG_DISPALY_FRAGMENT);
         fragmentTransaction.commit();
 
     }
@@ -852,8 +866,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
             for(int i=0;i<UriList.size();i++)
             {
-
-                 roundedImageView = new RoundedImageView(context);
+                roundedImageView = new RoundedImageView(context);
                 uri=Uri.parse(UriList.get(i));
                 loadImageWithGlide(uri.toString(),roundedImageView);
                 roundedImageView.setId(i);
@@ -958,5 +971,20 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
+
+        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE)
+        {
+         Logger.log(Level.INFO,TAG,"LANDSCAPE ORIENTATION");
+        }else if(newConfig.orientation==Configuration.ORIENTATION_PORTRAIT){
+            Logger.log(Level.INFO,TAG,"PORTRAIT ORIENTATION");
+
+        }else{
+            Logger.log(Level.INFO,TAG,"UNSPECIFIED ORIENTATION");
+
+        }
+    }
 }
