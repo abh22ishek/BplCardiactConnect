@@ -68,7 +68,7 @@ public class PatientMenuTrackFragment extends Fragment {
         Bundle bundle=new Bundle();
         bundle.putString(Constants.SORT_BY,"");
         patientListFragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment);
+        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment,ClassConstants.PATIENT_LIST_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
         fragmentTransaction.commit();
     }

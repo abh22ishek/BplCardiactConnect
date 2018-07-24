@@ -40,11 +40,13 @@ import application.*;
 import constants.*;
 import custom.view.*;
 import ecg.*;
+import gennx.model.*;
 import logger.*;
 import login.fragment.*;
 import model.*;
 import patient.list.*;
 import store.credentials.*;
+import utility.*;
 
 
 public class BaseLoginActivityClass extends AppCompatActivity implements LoginActivityListner{
@@ -74,6 +76,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
      Uri NavigationUserIconUri;
 
+     List<EcgLEadModel> EcgLeads;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +103,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         loginActivityListner=this;
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayOptions(R.mipmap.ic_launcher);
 
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close);
@@ -181,9 +184,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         });
 
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+       MenuInflater  inflater = getMenuInflater();
         inflater.inflate(R.menu.sortby, menu);
         return true;
     }
@@ -221,6 +226,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
                 break;
 
+
+            case R.id.Ecg:
+               EcgLeads= Utility.readfile("Cardiart","Ecg.txt");
+               reloadEcgDisplayFragment(EcgLeads);
+                break;
 
 
 
@@ -316,6 +326,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             Logger.log(Level.DEBUG,TAG,"---Back stack entry count after POP BACK STACK IMMEDIATE---"+count);
         }
 
+
         else if(currentFragment.getClass().getName().equals(ClassConstants.ECG_DISPALY_FRAGMENT)){
 
 
@@ -379,8 +390,18 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     }
 
+    @Override
+    public boolean isImaggeIconVisible(boolean isVisible) {
+
+        if(!isVisible)
+
+        UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
+        return isVisible;
+    }
+
     boolean mExit;
     private final int TIME_ELAPSE=5000;
+
     @Override
     public void onBackPressed() {
 
@@ -400,7 +421,15 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
 
-
+        if( frag.equals(ClassConstants.PATIENT_LIST_FRAGMENT))
+        {
+        /*    final Strname=ClassConstants.PATIENT_MENU_TRACK_FRAGMENT;
+            fragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
+        for(int i = 2; i < count; ++i) {
+                fragmentManager.popBackStackImmediate();
+            }
+        return;
+        }
 
 
         if( frag.equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
@@ -447,6 +476,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             Uri uri = data.getData();
             userIconUri=uri.toString();
 
+            NavigationUserIconUri=uri;
             if(uri!=null)
                 loadImageWithGlide(uri.toString(),UserIcon);
 
@@ -460,6 +490,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                 Log.i("**Absolute path**=", "" + file.getAbsolutePath());
                 uri=file.getAbsolutePath();
 
+                NavigationUserIconUri=Uri.parse(uri);
 
                 userIconUri="file://"+uri;
                 loadImageWithGlide(uri,UserIcon);
@@ -468,6 +499,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
             }else{
                 userIconUri="no_image";
+                NavigationUserIconUri=null;
                 UserIcon.setImageDrawable(this.getResources().getDrawable(R.drawable.user_icon));
             }
 
@@ -954,6 +986,25 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
 
+
+    private void reloadEcgDisplayFragment(List<EcgLEadModel> EcgLeads)
+    {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+        ECGDisplayFragment ecgDisplayFragment = new ECGDisplayFragment();
+        Bundle bundle =new Bundle();
+        bundle.putSerializable(Constants.CUSTOM_DATA, (Serializable) EcgLeads);
+        ecgDisplayFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragmentContainer,ecgDisplayFragment, ClassConstants.ECG_DISPALY_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.ECG_DISPALY_FRAGMENT);
+        fragmentTransaction.commit();
+
+
+    }
+
+
     private void reloadPatientListFragment(String SortBy)
     {
         android.support.v4.app.FragmentManager fragmentManager = Objects.requireNonNull(BaseLoginActivityClass.this).getSupportFragmentManager();
@@ -965,8 +1016,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         bundle.putString(Constants.SORT_BY,SortBy);
         patientListFragment.setArguments(bundle);
 
-        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment);
-        fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment,ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 

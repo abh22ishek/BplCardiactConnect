@@ -49,7 +49,7 @@ private List<PatientModel> patientListSortedByName;
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loginActivityListner.onDataPass(ClassConstants.PATIENT_LIST_FRAGMENT);
-       // loginActivityListner.OnCurrentFragment(ClassConstants.PATIENT_LIST_FRAGMENT);
+       loginActivityListner.OnCurrentFragment(ClassConstants.PATIENT_LIST_FRAGMENT);
 
         if((Objects.requireNonNull(getArguments())).getString(Constants.SORT_BY)!=null){
             soretedVal= getArguments().getString(Constants.SORT_BY);

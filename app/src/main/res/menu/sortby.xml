@@ -22,4 +22,9 @@
     <item android:id="@+id/Id"
         android:title="@string/sort_id"/>
 
+
+    <item android:id="@+id/Ecg"
+        android:title="@string/start_rt_ecg"/>
+
+
 </menu>

@@ -6,6 +6,8 @@ import android.support.annotation.*;
 import android.util.*;
 import android.view.*;
 
+import java.util.*;
+
 import constants.*;
 import data.*;
 import logger.*;
@@ -17,6 +19,23 @@ public class EcgGraphView extends View {
     Paint mPaint;
     int mPixelsPerCm = 0;
     public  String leadArr[]={"I","II","III","aVR","aVL","aVF","MCL1","MCL2","MCL3","MCL4","MCL5","MCL6"};
+
+
+    List<String> EcgLead1;
+    List<String> EcgLead2;
+
+    List<String> EcgLeadV1;
+
+    List<String> EcgLeadV2;
+
+    List<String> EcgLeadV3;
+
+    List<String> EcgLeadV4;
+    List<String> EcgLeadV5;
+
+
+    List<String> EcgLeadV6;
+
 
     public EcgGraphView(Context context) {
         super(context);
@@ -69,6 +88,7 @@ public class EcgGraphView extends View {
 
         mPaint.setColor(0x43AFEB00);// 4FBFFF00);
         mPaint.setTextSize(12.0f);
+
         int count = 1;
         int y = 0;
         Logger.log(Level.INFO, "GRAPH VIEW", "*****" + getWidth());
@@ -162,7 +182,7 @@ public class EcgGraphView extends View {
 
         final int noOfLeads = leadArr.length;
 
-        final int leadSampleCount = Lead3Data.LEAD3Array.length;
+        final int leadSampleCount = 10000;
         // traverse through the points one by one to get moving graphs
         for (int i = 0; i < leadSampleCount; i++) {
             if (mX > getWidth()) {
@@ -170,93 +190,80 @@ public class EcgGraphView extends View {
             }
             mX += widthScale;
 
-            mPaint.setColor(Color.WHITE);
-            mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeWidth(2);
-
+            mPaint.setColor(Color.BLACK);
+            mPaint.setStrokeWidth(2.5f );
+            mPaint.setAntiAlias(true);
             // draw ECG
 
-           /*if (noOfLeads >= 1) {
+
                 mP1 = (2 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(0))
-                        .elementAt(i)).intValue() / heightScale);
+                        - (int) (Integer.parseInt(EcgLead1.get(i)) / heightScale);
                 mCanvas.drawLine(mPx1, mPp1, mX, mP1, mPaint);
-            }
 
-            if (noOfLeads >= 2) {
+
+
                 mP2 = (5 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(1))
-                        .elementAt(i)).intValue() / heightScale);
+                        - (int) (Integer.parseInt(EcgLead2.get(i))/ heightScale);
                 mCanvas.drawLine(mPx2, mPp2, mX, mP2, mPaint);
-            }*/
 
-            if (noOfLeads >= 3) {
-                mP3 = (8 * graphHeight) - (int)  (Lead3Data.LEAD3Array[i] / heightScale);
+
+
+                mP3 = (8 * graphHeight) - (int)  (Integer.parseInt(EcgLeadV3.get(i)) / heightScale);
                 mCanvas.drawLine(mPx3, mPp3, mX, mP3, mPaint);
-            }
-/*
-            if (noOfLeads >= 4) {
+
+
+
                 mP4 = (11 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(3))
-                        .elementAt(i)).intValue() / heightScale);
+                        - (int) (Integer.parseInt(EcgLead1.get(i)) / heightScale);
                 mCanvas.drawLine(mPx4, mPp4, mX, mP4, mPaint);
-            }*/
 
-           /* if (noOfLeads >= 5) {
+
+
                 mP5 = (14 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(4))
-                        .elementAt(i)).intValue() / heightScale);
+                        - (int) (Integer.parseInt(EcgLead1.get(i))/ heightScale);
                 mCanvas.drawLine(mPx5, mPp5, mX, mP5, mPaint);
-            }
 
-            if (noOfLeads >= 6) {
+
+
                 mP6 = (17 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(5))
-                        .elementAt(i)).intValue() / heightScale);
+                        - (int) (Integer.parseInt(EcgLead1.get(i))/ heightScale);
                 mCanvas.drawLine(mPx6, mPp6, mX, mP6, mPaint);
-            }
 
-            if (noOfLeads >= 7) {
+
+
                 mP7 = (20 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(6))
-                        .elementAt(i)).intValue() / heightScale);
+                        - (int) (Integer.parseInt(EcgLeadV1.get(i))/ heightScale);
                 mCanvas.drawLine(mPx7, mPp7, mX, mP7, mPaint);
-            }
 
-            if (noOfLeads >= 8) {
+
+
                 mP8 = (23 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(7))
-                        .elementAt(i)).intValue() / heightScale);
+                        - (int) (Integer.parseInt(EcgLeadV2.get(i)) / heightScale);
                 mCanvas.drawLine(mPx8, mPp8, mX, mP8, mPaint);
-            }
 
-            if (noOfLeads >= 9) {
+
+
                 mP9 = (26 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(8))
-                        .elementAt(i)).intValue() / heightScale);
+                        - (int) (Integer.parseInt(EcgLeadV3.get(i)) / heightScale);
                 mCanvas.drawLine(mPx9, mPp9, mX, mP9, mPaint);
-            }
 
-            if (noOfLeads >= 10) {
-                mP10 = (29 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(9))
-                        .elementAt(i)).intValue() / heightScale);
+
+
+                mP10 = (29 * graphHeight) - (int) (Integer.parseInt(EcgLeadV4.get(i))/ heightScale);
                 mCanvas.drawLine(mPx10, mPp10, mX, mP10, mPaint);
-            }
 
-            if (noOfLeads >= 11) {
-                mP11 = (32 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(10))
-                        .elementAt(i)).intValue() / heightScale);
+
+
+                mP11 = (32 * graphHeight) -(int) (Integer.parseInt(EcgLeadV5.get(i)) / heightScale);
                 mCanvas.drawLine(mPx11, mPp11, mX, mP11, mPaint);
-            }
 
-            if (noOfLeads >= 12) {
-                mP12 = (35 * graphHeight)
-                        - (int) (((Integer) ((Vector) mLeads.elementAt(11))
-                        .elementAt(i)).intValue() / heightScale);
+
+
+                mP12 =  (35 * graphHeight) - (int)(Integer.parseInt(EcgLeadV6.get(i)) / heightScale);
                 mCanvas.drawLine(mPx12, mPp12, mX, mP12, mPaint);
-            }*/
+
+
+
             // store current point as previous point
             mPp1 = mP1;
             mPp2 = mP2;
@@ -282,6 +289,26 @@ public class EcgGraphView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(25 *mPixelsPerCm,36* mPixelsPerCm);
+    }
+
+
+
+    public void setList(List<String> lead1, List<String> lead2 , List<String> leadV1, List<String> leadV2
+    , List<String> leadV3, List<String> leadV4, List<String> leadV5, List<String> leadV6){
+
+        EcgLead1=lead1;
+        EcgLead2=lead2;
+        EcgLeadV1=leadV1;
+
+        EcgLeadV2=leadV2;
+
+        EcgLeadV3=leadV3;
+        EcgLeadV4=leadV4;
+
+        EcgLeadV5=leadV5;
+        EcgLeadV6=leadV6;
+
+
     }
 
 }

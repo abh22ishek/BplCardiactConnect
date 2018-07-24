@@ -12,7 +12,9 @@ import java.util.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
+import data.*;
 import database.*;
+import logger.*;
 import store.credentials.*;
 
 public class SignUpFragment extends Fragment {
@@ -38,8 +40,10 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.log(Level.DEBUG,ClassConstants.SIGNUP_FRAGMENT,"On Create() of Fragment");
         loginActivityListner.onDataPass(ClassConstants.SIGNUP_FRAGMENT);
         loginActivityListner.OnCurrentFragment(ClassConstants.SIGNUP_FRAGMENT);
+        loginActivityListner.isImaggeIconVisible(false);
 
     }
 
@@ -48,6 +52,8 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.signup,container,false);
         btnSignUp=view.findViewById(R.id.btnSignUp);
+        Logger.log(Level.DEBUG,ClassConstants.SIGNUP_FRAGMENT,"On CreateView() of Fragment");
+
 
 
         email_id=  view.findViewById(R.id.email);
@@ -66,6 +72,7 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Logger.log(Level.DEBUG,ClassConstants.SIGNUP_FRAGMENT,"On onActivityCreated() of Fragment");
 
 
         loginActivityListner= (LoginActivityListner) getActivity();

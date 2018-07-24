@@ -165,7 +165,7 @@ This is when high blood pressure requires emergency medical attention.
 
 
     <string name="start_rt_ecg">Start Real Time Measurement</string>
-
+    <string name="ecg">ECG</string>
 
     <string name="email_n_empty">Email id cannot be empty</string>
 

@@ -15,4 +15,6 @@ public interface LoginActivityListner {
 
     void displayImage(Uri uri);
     void passSortedList(List<PatientModel> patientModelList);
+
+    boolean isImaggeIconVisible(boolean isVisible);
 }
