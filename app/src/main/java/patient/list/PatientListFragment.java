@@ -60,7 +60,7 @@ private List<PatientModel> patientListSortedByName;
 
     }
 
-private String soretedVal="";
+    private String soretedVal="";
 
 
     private void populateRecyclerView(){

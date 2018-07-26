@@ -27,6 +27,6 @@ public class Constants {
 
     public static final float AMPLITUDE_PER_CM=328f;
 
-    public static final float SAMPLES_PER_CM=1000f;
+    public static final float SAMPLES_PER_CM=400f;
 
 }

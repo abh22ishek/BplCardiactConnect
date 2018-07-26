@@ -24,7 +24,7 @@
 
 
     <item android:id="@+id/Ecg"
-        android:title="@string/start_rt_ecg"/>
+        android:title="@string/ecg"/>
 
 
 </menu>

@@ -73,10 +73,12 @@ public class DatabaseManager {
         if(mOpenCounter == 1) {
             // Opening new database
             mDatabase = mDatabaseHelper.getWritableDatabase();
-            //  mDatabaseHelper.onUpgrade(mDatabase,1,2); // upgrade database
+
+         //   mDatabaseHelper.onUpgrade(mDatabase,1,2); // upgrade database
             // mDatabaseHelper.onDowngrade(mDatabase,1,2);
         }
 
+        Logger.log(Level.DEBUG,TAG,"--GET Current Database Version--"+mDatabase.getVersion());
         return mDatabase;
     }
 

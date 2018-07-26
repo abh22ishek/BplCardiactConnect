@@ -89,7 +89,7 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
         @Override
         public void onClick(View view) {
             if(view==layout){
-                loginActivityListner.navigateToFragment(ClassConstants.ECG_DISPALY_FRAGMENT);
+               // loginActivityListner.navigateToFragment(ClassConstants.ECG_DISPALY_FRAGMENT);
             }
         }
     }

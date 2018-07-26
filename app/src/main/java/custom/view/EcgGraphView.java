@@ -9,8 +9,9 @@ import android.view.*;
 import java.util.*;
 
 import constants.*;
-import data.*;
 import logger.*;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 public class EcgGraphView extends View {
@@ -54,7 +55,6 @@ public class EcgGraphView extends View {
 
         mPixelsPerCm = (int) (density / Constants.CMS_PER_INCH + 0.5f);
 
-        setMinimumWidth(25 * mPixelsPerCm);
 
 
     }
@@ -68,6 +68,9 @@ public class EcgGraphView extends View {
         mPaint.setStrokeWidth(1);// default value
 
         // Find out the pixel density
+
+        Logger.log(Level.DEBUG,TAG,"--pixels per cm --"+mPixelsPerCm);
+
         final float widthScale = mPixelsPerCm / Constants.SAMPLES_PER_CM; // 100
         // samples per cm
         final float heightScale = Constants.AMPLITUDE_PER_CM / mPixelsPerCm; // pixels
@@ -76,8 +79,7 @@ public class EcgGraphView extends View {
         //   mCanvas.drawRect(r3, mPaint);
 
 
-        for (float i = mPixelsPerCm / (float) 10; i < getWidth(); i += mPixelsPerCm
-                / (float) 10) {
+        for (float i = mPixelsPerCm / (float) 10; i < getWidth(); i += mPixelsPerCm / (float) 10) {
             mCanvas.drawLine(i, 0, i, getHeight(), mPaint);
         }
 
@@ -90,14 +92,15 @@ public class EcgGraphView extends View {
         mPaint.setTextSize(12.0f);
 
         int count = 1;
-        int y = 0;
-        Logger.log(Level.INFO, "GRAPH VIEW", "*****" + getWidth());
+        int y ;
+
+
 
 
         for (float i = mPixelsPerCm; i < getWidth(); i += mPixelsPerCm) {
-            mPaint.setColor(Color.BLACK);// 4FBFFF00);
+            mPaint.setColor(Color.GRAY);// 4FBFFF00);
+            mPaint.setStrokeWidth(2.5f);
             mCanvas.drawLine(i, 0, i, getHeight(), mPaint);
-            mPaint.setColor(Color.GRAY);
 
 
             for (int k = 0; k < 12; k++) {
@@ -119,7 +122,7 @@ public class EcgGraphView extends View {
 
 
         if (null != leadArr) {
-            int mul = 0;
+            int mul ;
             for (int i = 0; i < leadArr.length; i++) {
                 mul = (3 * i) * mPixelsPerCm;
                 mCanvas.drawText(leadArr[i], 2, 20 + mul, mPaint);
@@ -154,31 +157,34 @@ public class EcgGraphView extends View {
         mP4 = mP5 = mP6 = mP7 = mP8 = mP9 = mP10 = mP11 = mP12 = 0;
 
         final int graphHeight = mPixelsPerCm;
+        Logger.log(Level.DEBUG,TAG,"--GEt Height --"+getHeight());
+        Logger.log(Level.DEBUG,TAG,"--pixels per 36 cm --"+36 * mPixelsPerCm);
+        Logger.log(Level.DEBUG,TAG,"--pixels per cm --"+40 * graphHeight);
 
         float mPx1 = 0;
-        mPp1 = 2 * graphHeight;
+        mPp1 = 7 * graphHeight;
         float mPx2 = 0;
-        mPp2 = 5 * graphHeight; // graphHeight * 2;
+        mPp2 = 10 * graphHeight; // graphHeight * 2;
         float mPx3 = 0;
-        mPp3 = 8 * graphHeight; // graphHeight * 3;
+        mPp3 = 13 * graphHeight; // graphHeight * 3;
         float mPx4 = 0;
-        mPp4 = 11 * graphHeight; // graphHeight * 3;
+        mPp4 = 16 * graphHeight; // graphHeight * 3;
         float mPx5 = 0;
-        mPp5 = 14 * graphHeight; // graphHeight * 3;
+        mPp5 = 19 * graphHeight; // graphHeight * 3;
         float mPx6 = 0;
-        mPp6 = 17 * graphHeight; // graphHeight * 3;
+        mPp6 = 22 * graphHeight; // graphHeight * 3;
         float mPx7 = 0;
-        mPp7 = 20 * graphHeight; // graphHeight * 3;
+        mPp7 = 25 * graphHeight; // graphHeight * 3;
         float mPx8 = 0;
-        mPp8 = 23 * graphHeight; // graphHeight * 3;
+        mPp8 = 28 * graphHeight; // graphHeight * 3;
         float mPx9 = 0;
-        mPp9 = 26 * graphHeight; // graphHeight * 3;
+        mPp9 = 31 * graphHeight; // graphHeight * 3;
         float mPx10 = 0;
-        mPp10 = 29 * graphHeight; // graphHeight * 3;
+        mPp10 = 34 * graphHeight; // graphHeight * 3;
         float mPx11 = 0;
-        mPp11 = 32 * graphHeight; // graphHeight * 3;
+        mPp11 = 37 * graphHeight; // graphHeight * 3;
         float mPx12 = 0;
-        mPp12 = 35 * graphHeight; // graphHeight * 3;
+        mPp12 = 40 * graphHeight; // graphHeight * 3;
 
         final int noOfLeads = leadArr.length;
 
@@ -191,78 +197,85 @@ public class EcgGraphView extends View {
             mX += widthScale;
 
             mPaint.setColor(Color.BLACK);
+
+
             mPaint.setStrokeWidth(2.5f );
             mPaint.setAntiAlias(true);
             // draw ECG
 
 
-                mP1 = (2 * graphHeight)
-                        - (int) (Integer.parseInt(EcgLead1.get(i)) / heightScale);
+               mP1 = (7* graphHeight) - (int) (Integer.parseInt(EcgLead1.get(i)) / heightScale);
                 mCanvas.drawLine(mPx1, mPp1, mX, mP1, mPaint);
 
 
-
-                mP2 = (5 * graphHeight)
-                        - (int) (Integer.parseInt(EcgLead2.get(i))/ heightScale);
-                mCanvas.drawLine(mPx2, mPp2, mX, mP2, mPaint);
-
-
-
-                mP3 = (8 * graphHeight) - (int)  (Integer.parseInt(EcgLeadV3.get(i)) / heightScale);
-                mCanvas.drawLine(mPx3, mPp3, mX, mP3, mPaint);
+            mP2 = (10 * graphHeight)
+                    - (int) (Integer.parseInt(EcgLead2.get(i))/ heightScale);
+            mCanvas.drawLine(mPx2, mPp2, mX, mP2, mPaint);
 
 
 
-                mP4 = (11 * graphHeight)
+            mP3 = (13 * graphHeight) - (int)  (Integer.parseInt(EcgLeadV3.get(i)) / heightScale);
+            mCanvas.drawLine(mPx3, mPp3, mX, mP3, mPaint);
+
+
+
+
+
+
+
+
+                mP4 = (16 * graphHeight)
                         - (int) (Integer.parseInt(EcgLead1.get(i)) / heightScale);
                 mCanvas.drawLine(mPx4, mPp4, mX, mP4, mPaint);
 
 
 
-                mP5 = (14 * graphHeight)
+                mP5 = (19 * graphHeight)
                         - (int) (Integer.parseInt(EcgLead1.get(i))/ heightScale);
                 mCanvas.drawLine(mPx5, mPp5, mX, mP5, mPaint);
 
 
 
-                mP6 = (17 * graphHeight)
+                mP6 = (22 * graphHeight)
                         - (int) (Integer.parseInt(EcgLead1.get(i))/ heightScale);
                 mCanvas.drawLine(mPx6, mPp6, mX, mP6, mPaint);
 
 
 
-                mP7 = (20 * graphHeight)
+                mP7 = (25 * graphHeight)
                         - (int) (Integer.parseInt(EcgLeadV1.get(i))/ heightScale);
                 mCanvas.drawLine(mPx7, mPp7, mX, mP7, mPaint);
 
 
 
-                mP8 = (23 * graphHeight)
+                mP8 = (28 * graphHeight)
                         - (int) (Integer.parseInt(EcgLeadV2.get(i)) / heightScale);
                 mCanvas.drawLine(mPx8, mPp8, mX, mP8, mPaint);
 
 
 
-                mP9 = (26 * graphHeight)
+                mP9 = (31 * graphHeight)
                         - (int) (Integer.parseInt(EcgLeadV3.get(i)) / heightScale);
                 mCanvas.drawLine(mPx9, mPp9, mX, mP9, mPaint);
 
 
 
-                mP10 = (29 * graphHeight) - (int) (Integer.parseInt(EcgLeadV4.get(i))/ heightScale);
+                mP10 = (34 * graphHeight) - (int) (Integer.parseInt(EcgLeadV4.get(i))/ heightScale);
                 mCanvas.drawLine(mPx10, mPp10, mX, mP10, mPaint);
 
 
 
-                mP11 = (32 * graphHeight) -(int) (Integer.parseInt(EcgLeadV5.get(i)) / heightScale);
+                mP11 = (37 * graphHeight) -(int) (Integer.parseInt(EcgLeadV5.get(i)) / heightScale);
                 mCanvas.drawLine(mPx11, mPp11, mX, mP11, mPaint);
 
 
 
-                mP12 =  (35 * graphHeight) - (int)(Integer.parseInt(EcgLeadV6.get(i)) / heightScale);
-                mCanvas.drawLine(mPx12, mPp12, mX, mP12, mPaint);
 
 
+
+
+            mP12 =  (40 * graphHeight) - (int)(Integer.parseInt(EcgLeadV6.get(i)) / heightScale);
+            mCanvas.drawLine(mPx12, mPp12, mX, mP12, mPaint);
 
             // store current point as previous point
             mPp1 = mP1;
@@ -308,7 +321,6 @@ public class EcgGraphView extends View {
         EcgLeadV5=leadV5;
         EcgLeadV6=leadV6;
 
-
-    }
+        }
 
 }

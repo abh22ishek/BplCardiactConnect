@@ -8,14 +8,11 @@ import android.support.v4.app.*;
 import android.view.*;
 import android.widget.*;
 
-import java.util.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
-import data.*;
 import database.*;
 import logger.*;
-import store.credentials.*;
 
 public class SignUpFragment extends Fragment {
 

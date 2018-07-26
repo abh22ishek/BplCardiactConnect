@@ -1,21 +1,26 @@
 package utility;
 
+import android.content.*;
+import android.database.sqlite.*;
 import android.os.*;
 import android.util.*;
 
 import java.io.*;
 import java.util.*;
 
+import database.*;
 import gennx.model.*;
 import logger.*;
 
 public class Utility {
 
+    private final String TAG=Utility.class.getSimpleName();
 
     public static synchronized    List<EcgLEadModel> readfile(String filedir, String filename)
 
     {
 
+        String ecgData="";
 
         List<List<String>> ecgList = new ArrayList<>();
 
@@ -71,6 +76,8 @@ public class Utility {
 
             }
 
+
+            populateDatabaseWithPatients(sb.toString());
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -184,6 +191,50 @@ public class Utility {
 
         return EcgmodelList;
     }
+
+
+
+
+
+
+    private  static void populateDatabaseWithPatients(String ecgData)
+    {
+        try {
+            final SQLiteDatabase database= DatabaseManager.getInstance().openDatabase();
+
+            for(int i=0;i<200;i++){
+                database.insert(FeedReaderDbHelper.TABLE_NAME_PATIENT, null,
+                        addPatientData(
+
+                                "Patient 2", "222222","","Male",ecgData));
+            }
+
+
+
+
+            Logger.log(Log.DEBUG,"--","Patient Record inserted");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private static ContentValues addPatientData(String patname, String patId, String test_time,
+                                   String gender, String ecg)
+    {
+        ContentValues values = new ContentValues();
+        values.put(FeedReaderDbHelper.PATIENT_NAME, patname);
+        values.put(FeedReaderDbHelper.PATIENT_ID, patId);
+        values.put(FeedReaderDbHelper.PATIENT_TEST_TIME, test_time);
+        values.put(FeedReaderDbHelper.PATIENT_GENDER, gender);
+        values.put(FeedReaderDbHelper.PATIENT_ECG_DATA, ecg);
+
+        return values;
+
+    }
+
+
+
 
 
 }

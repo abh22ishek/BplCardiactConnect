@@ -31,9 +31,12 @@ import com.bumptech.glide.load.engine.*;
 import com.bumptech.glide.load.resource.drawable.*;
 import com.bumptech.glide.request.animation.*;
 import com.bumptech.glide.request.target.*;
+import com.bumptech.glide.util.*;
 
 
 import java.io.*;
+import java.lang.*;
+import java.lang.Process;
 import java.util.*;
 
 import application.*;
@@ -41,6 +44,12 @@ import constants.*;
 import custom.view.*;
 import ecg.*;
 import gennx.model.*;
+import io.reactivex.*;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.*;
+import io.reactivex.disposables.*;
+import io.reactivex.schedulers.*;
 import logger.*;
 import login.fragment.*;
 import model.*;
@@ -77,6 +86,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
      Uri NavigationUserIconUri;
 
      List<EcgLEadModel> EcgLeads;
+
+     Observable<List<EcgLEadModel>> mObservable;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -228,8 +241,21 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
             case R.id.Ecg:
-               EcgLeads= Utility.readfile("Cardiart","Ecg.txt");
-               reloadEcgDisplayFragment(EcgLeads);
+               // EcgLeads= Utility.readfile("Cardiart","Ecg.txt");
+                 pd=new ProgressDialog(this);
+                pd.setMessage("Downloading ...");
+
+
+                pd.show();
+                mObservable=Observable.just(Utility.readfile("Cardiart","Ecg.txt")).
+                        subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+
+                mObservable.subscribe(mObserver);
+
+              //  EcgLeads= Utility.readfile("","");
+
+
+               // reloadEcgDisplayFragment(EcgLeads);
                 break;
 
 
@@ -244,6 +270,41 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
     }
+
+    ProgressDialog pd;
+
+    Observer<List<EcgLEadModel>> mObserver=new Observer<List<EcgLEadModel>>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+
+            Logger.log(Level.DEBUG,TAG,"-On Subscribe-()");
+        }
+
+        @Override
+        public void onNext(List<EcgLEadModel> ecgLEadModels) {
+            Logger.log(Level.DEBUG,TAG,"-On Next-()");
+
+            EcgLeads=ecgLEadModels;
+            reloadEcgDisplayFragment(EcgLeads);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Logger.log(Level.DEBUG,TAG,"-On Error-()");
+
+        }
+
+        @Override
+        public void onComplete() {
+
+            Logger.log(Level.DEBUG,TAG,"-On Complete-()");
+            if(pd.isShowing())
+            {
+                pd.dismiss();
+            }
+
+        }
+    };
 
 
     @Override
@@ -282,6 +343,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         if(data.equals(ClassConstants.ECG_DISPALY_FRAGMENT))
         {
             baseLayout.setVisibility(View.GONE);
+           // getSupportActionBar().hide();
             return;
         }
 

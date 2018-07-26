@@ -20,7 +20,7 @@ public class BaseApplicationClass extends Application {
     }
 
 
-    String username;
+    private String username;
 
     public String getUsername() {
         return username;
