@@ -370,7 +370,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }else if(currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-           loadImageWithGlide(NavigationUserIconUri.toString(),navHeaderIcon);
+            if(NavigationUserIconUri!=null){
+                loadImageWithGlide(NavigationUserIconUri.toString(),navHeaderIcon);
+
+            }
 
 
 
@@ -441,8 +444,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         if(uri!=null){
             loadImageWithGlide(uri.toString(),UserIcon);
             NavigationUserIconUri=uri;
-
-        }
+            }
         else
             UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
     }
@@ -572,6 +574,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
     private void loadImageWithGlide(String uri, ImageView imageView){
+
 
         //noinspection SpellCheckingInspection
         Glide
@@ -992,7 +995,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
         Uri uri = Uri.parse(UriList.get(index));
-
         Logger.log(Level.DEBUG,TAG,"--GET URI from current View Flipper---"+uri);
 
 
