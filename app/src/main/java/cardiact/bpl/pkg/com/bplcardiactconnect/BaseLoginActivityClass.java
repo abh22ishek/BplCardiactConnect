@@ -31,12 +31,10 @@ import com.bumptech.glide.load.engine.*;
 import com.bumptech.glide.load.resource.drawable.*;
 import com.bumptech.glide.request.animation.*;
 import com.bumptech.glide.request.target.*;
-import com.bumptech.glide.util.*;
 
 
 import java.io.*;
 import java.lang.*;
-import java.lang.Process;
 import java.util.*;
 
 import application.*;
@@ -44,7 +42,6 @@ import constants.*;
 import custom.view.*;
 import ecg.*;
 import gennx.model.*;
-import io.reactivex.*;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.*;
@@ -202,7 +199,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
        MenuInflater  inflater = getMenuInflater();
-        inflater.inflate(R.menu.sortby, menu);
+        inflater.inflate(R.menu.menu_splash_screen, menu);
         return true;
     }
 
@@ -463,6 +460,15 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         return isVisible;
     }
 
+    boolean [] booleansArr;
+    @Override
+    public void getSelectedUser(String data, boolean[] arrays) {
+        booleansArr=new boolean[arrays.length];
+        //copying one array to another
+        booleansArr=Arrays.copyOf(arrays,arrays.length);
+
+    }
+
     boolean mExit;
     private final int TIME_ELAPSE=5000;
 
@@ -629,6 +635,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         dialog.getWindow().getAttributes().windowAnimations =R.style.DialogBoxAnimation;
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_list);
+
         final ListView content= dialog.findViewById(R.id.list_content);
         final TextView header=  dialog.findViewById(R.id.header);
 

@@ -178,4 +178,6 @@ This is when high blood pressure requires emergency medical attention.
     <string name="sort_name">Sort By Name</string>
     <string name="sort_id">Sort By ID</string>
 
+    <string name="del">Delete</string>
+
 </resources>

@@ -7,6 +7,7 @@ import android.support.v4.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
 
+import java.net.*;
 import java.util.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
@@ -17,7 +18,7 @@ import login.fragment.*;
 import model.*;
 import recyclerview.cardview.*;
 
-public class PatientListFragment extends Fragment{
+public class PatientListFragment extends Fragment {
 
 private RecyclerView recyclerView;
 private LoginActivityListner loginActivityListner;
@@ -29,6 +30,8 @@ private List<PatientModel> patientListSortedByName;
     public void onAttach(Context context) {
         super.onAttach(context);
         loginActivityListner= (LoginActivityListner) getActivity();
+
+
     }
 
     @Override
@@ -69,26 +72,29 @@ private List<PatientModel> patientListSortedByName;
         recyclerView.setLayoutManager(layoutManager);
 
 
+
         switch (soretedVal) {
             case Constants.SORT_BY_AGE:
-                recyclerViewAdapter = new PatientRecyclerView(getActivity(), loginActivityListner, sortByAge(populatePatientList()));
+                recyclerViewAdapter = new PatientRecyclerView(getActivity(), loginActivityListner, sortByAge(populatePatientList()),false);
 
                 break;
             case Constants.SORT_BY_NAME:
-                recyclerViewAdapter = new PatientRecyclerView(getActivity(), loginActivityListner, sortByName(populatePatientList()));
+                recyclerViewAdapter = new PatientRecyclerView(getActivity(), loginActivityListner, sortByName(populatePatientList()),false);
 
                 break;
             case Constants.SORT_BY_ID:
-                recyclerViewAdapter = new PatientRecyclerView(getActivity(), loginActivityListner, sortByID(populatePatientList()));
+                recyclerViewAdapter = new PatientRecyclerView(getActivity(), loginActivityListner, sortByID(populatePatientList()),false);
 
                 break;
             default:
-                recyclerViewAdapter = new PatientRecyclerView(getActivity(), loginActivityListner, populatePatientList());
+                recyclerViewAdapter = new PatientRecyclerView(getActivity(), loginActivityListner, populatePatientList(),false);
                 break;
         }
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerViewAdapter);
+
+
     }
 
 
@@ -195,4 +201,7 @@ private List<PatientModel> patientListSortedByName;
         return patientListSortedByID;
     }
 
+    public interface OnHeadlineSelectedListener {
+        boolean showcheckbox(boolean show);
+    }
 }

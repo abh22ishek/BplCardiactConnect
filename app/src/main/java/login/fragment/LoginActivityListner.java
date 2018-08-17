@@ -17,4 +17,5 @@ public interface LoginActivityListner {
     void passSortedList(List<PatientModel> patientModelList);
 
     boolean isImaggeIconVisible(boolean isVisible);
+    void getSelectedUser(String data, boolean[] arrays);
 }

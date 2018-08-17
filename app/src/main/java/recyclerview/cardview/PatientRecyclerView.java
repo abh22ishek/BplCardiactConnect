@@ -12,6 +12,7 @@ import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import login.fragment.*;
 import model.*;
+import patient.list.*;
 
 
 public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerView.CustomViewHolder>{
@@ -19,11 +20,17 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
    Context context;
    LoginActivityListner loginActivityListner;
    List<PatientModel> patModelList;
+  boolean iselection;
 
-    public PatientRecyclerView(Context context, LoginActivityListner listner, List<PatientModel> pat) {
+  boolean array[];
+    public PatientRecyclerView(Context context, LoginActivityListner listner, List<PatientModel> pat,boolean Isseleted) {
         this.context = context;
         this.loginActivityListner=listner;
         this.patModelList=pat;
+
+        this.iselection=Isseleted;
+
+        array=new boolean[pat.size()];
     }
 
 
@@ -39,8 +46,10 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull  CustomViewHolder holder,  int position) {
 
+
+       final int pos=position;
 
         holder.patName.setText(patModelList.get(position).getPatName());
         holder.patId.setText(String.valueOf(patModelList.get(position).getPatId()));
@@ -51,6 +60,51 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
         holder.patRace.setText(patModelList.get(position).getPatRace());
 
 
+        if(iselection)
+        {
+            holder.checkBox.setVisibility(View.VISIBLE);
+            holder.patAge.setVisibility(View.INVISIBLE);
+            holder.patSex.setVisibility(View.INVISIBLE);
+            holder.patRace.setVisibility(View.INVISIBLE);
+        }
+
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if(isChecked)
+                {
+                    array[pos]=true;
+                    loginActivityListner.getSelectedUser("data",array);
+                }else{
+                    array[pos]=false;
+                }
+
+            }
+        });
+
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                iselection=true;
+                notifyDataSetChanged();
+
+                return true;
+            }
+        });
+
+
+
+
+            for(int i=0;i< array.length;i++)
+            {
+                holder.checkBox.setChecked(array[pos]);
+            }
+
+
+
+
 
     }
 
@@ -59,7 +113,7 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
         return patModelList.size();
     }
 
-    class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class CustomViewHolder extends RecyclerView.ViewHolder  {
 
 
         LinearLayout layout;
@@ -68,30 +122,27 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
         private TextView patAge;
         private TextView patSex;
         private TextView patRace;
+        private  CheckBox checkBox;
 
         public CustomViewHolder(View view) {
             super(view);
 
         this.layout=view.findViewById(R.id.layout);
-        this.layout.setOnClickListener(this);
+
 
        this.patName=view.findViewById(R.id.patName);
        this. patId=view.findViewById(R.id.patId);
        this. patAge=view.findViewById(R.id.patAge);
        this. patSex=view.findViewById(R.id.patSex);
         this.patRace=view.findViewById(R.id.patRace);
+        this.checkBox=view.findViewById(R.id.checkBox);
 
 
 
         }
 
 
-        @Override
-        public void onClick(View view) {
-            if(view==layout){
-               // loginActivityListner.navigateToFragment(ClassConstants.ECG_DISPALY_FRAGMENT);
-            }
-        }
+
     }
 
 
