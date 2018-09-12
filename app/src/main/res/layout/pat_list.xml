@@ -6,8 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_margin="0dp"
-    app:cardBackgroundColor="@android:color/transparent"
     app:cardCornerRadius="2dp"
+    android:clickable="true"
+    android:focusable="true"
     app:cardUseCompatPadding="true"
 
     android:layout_height="wrap_content">
@@ -24,14 +25,27 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:paddingBottom="6dp"
-
+            android:clickable="true"
+            android:focusable="true"
             android:id="@+id/layout"
+
             android:paddingTop="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
 
 
             >
+
+
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_marginStart="10dp"
+                android:visibility="invisible"
+                android:id="@+id/checkBox"
+                android:layout_height="wrap_content" />
+
+
 
 
             <TextView
@@ -51,12 +65,6 @@
                 android:layout_marginStart="10dp"
                 android:text="@string/pat_id" />
 
-            <android.support.v7.widget.AppCompatCheckBox
-                android:layout_width="wrap_content"
-                android:layout_marginStart="10dp"
-                android:visibility="gone"
-                android:id="@+id/checkBox"
-                android:layout_height="wrap_content" />
 
 
             <TextView

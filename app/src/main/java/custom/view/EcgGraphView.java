@@ -19,7 +19,7 @@ public class EcgGraphView extends View {
 
     Paint mPaint;
     int mPixelsPerCm = 0;
-    public  String leadArr[]={"I","II","III","aVR","aVL","aVF","MCL1","MCL2","MCL3","MCL4","MCL5","MCL6"};
+    public  String leadArr[]={"I","II","III","aVR","aVL","aVF","V1","V2","V3","V4","V5","V6"};
 
 
     List<String> EcgLead1;
@@ -36,6 +36,12 @@ public class EcgGraphView extends View {
 
 
     List<String> EcgLeadV6;
+
+
+    int cursorX=0;
+    int cursorY=0;
+
+    Canvas canvas;
 
 
     public EcgGraphView(Context context) {
@@ -63,6 +69,7 @@ public class EcgGraphView extends View {
     protected void onDraw(Canvas mCanvas) {
         super.onDraw(mCanvas);
 
+        canvas=mCanvas;
 
         // mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(1);// default value
@@ -75,7 +82,35 @@ public class EcgGraphView extends View {
         // samples per cm
         final float heightScale = Constants.AMPLITUDE_PER_CM / mPixelsPerCm; // pixels
 
-        mPaint.setColor(Color.BLUE);
+
+        //cursorX=42f;
+        cursorX=20;
+        cursorY=2*mPixelsPerCm;
+
+        mPaint.setColor(Color.WHITE);
+
+        mCanvas.drawLine(cursorX,cursorY,mPixelsPerCm,cursorY,mPaint);
+
+
+       /* cursorX=cursorX+(mPixelsPerCm/10);
+
+        mCanvas.drawLine(cursorX+(mPixelsPerCm/10),cursorY,
+                cursorX+(mPixelsPerCm/10),cursorY+mPixelsPerCm,mPaint);
+*/
+      /*  mCanvas.drawLine(cursorX+(mPixelsPerCm/10),cursorY+mPixelsPerCm,
+                (cursorX+mPixelsPerCm/10)+(mPixelsPerCm/10*3),cursorY+mPixelsPerCm,mPaint);
+
+        mCanvas.drawLine((cursorX+mPixelsPerCm/10)+(mPixelsPerCm/10*3),cursorY+mPixelsPerCm,
+                (cursorX+mPixelsPerCm/10)+(mPixelsPerCm/10*3),cursorY,mPaint);
+
+
+        mCanvas.drawLine((cursorX+mPixelsPerCm/10)+(mPixelsPerCm/10*3),cursorY,
+                (cursorX+mPixelsPerCm/10*3)+2*(mPixelsPerCm/10),cursorY,mPaint);*/
+
+
+
+        mPaint.setColor(Color.GRAY);
+
         //   mCanvas.drawRect(r3, mPaint);
 
 
@@ -88,7 +123,7 @@ public class EcgGraphView extends View {
             mCanvas.drawLine(0, i, getWidth(), i, mPaint);
         }
 
-        mPaint.setColor(0x43AFEB00);// 4FBFFF00);
+        mPaint.setColor(0x004B88);// 3FAFFF00);
         mPaint.setTextSize(12.0f);
 
         int count = 1;
@@ -98,7 +133,7 @@ public class EcgGraphView extends View {
 
 
         for (float i = mPixelsPerCm; i < getWidth(); i += mPixelsPerCm) {
-            mPaint.setColor(Color.GRAY);// 4FBFFF00);
+            mPaint.setColor(0x43AFEB00);// 4FBFFF00);
             mPaint.setStrokeWidth(2.5f);
             mCanvas.drawLine(i, 0, i, getHeight(), mPaint);
 
@@ -114,7 +149,7 @@ public class EcgGraphView extends View {
             mCanvas.drawLine(0, i, getWidth(), i, mPaint);
         }
 
-        mPaint.setColor(Color.BLACK);// Color.WHITE);
+        mPaint.setColor(Color.WHITE);// Color.WHITE);
         // paint.setStyle(Paint.Style.FILL);
         // mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setStrokeWidth(5f);
@@ -196,7 +231,7 @@ public class EcgGraphView extends View {
             }
             mX += widthScale;
 
-            mPaint.setColor(Color.BLACK);
+            mPaint.setColor(Color.WHITE);
 
 
             mPaint.setStrokeWidth(2.5f );
@@ -323,4 +358,18 @@ public class EcgGraphView extends View {
 
         }
 
+
+        public void clearCanvas()
+        {
+            try {
+
+                canvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+
+
+
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
 }

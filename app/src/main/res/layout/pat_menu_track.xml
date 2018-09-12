@@ -3,84 +3,107 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:weightSum="3"
+    android:weightSum="2"
     android:background="@color/bg_grey"
     android:layout_margin="5dp"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:id="@+id/archivedRec"
         android:layout_weight="1"
-        android:background="@drawable/bg_rounded_white"
-        android:layout_margin="5dp"
-        android:orientation="vertical">
+        android:weightSum="2"
+
+        android:orientation="horizontal"
+        android:layout_height="0dp">
 
 
         <TextView
-            android:id="@+id/option1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:id="@+id/archivedRec"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_rounded_white"
+            android:fontFamily="@font/berkshire_swash"
             android:gravity="center"
-            android:textStyle="bold"
             android:text="@string/view_arch_rec"
-            android:textColor="@color/black" />
-    </LinearLayout>
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:background="@drawable/bg_rounded_white"
-
-        android:layout_margin="5dp"
-
-        android:orientation="vertical">
 
         <TextView
             android:id="@+id/option2"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/import_rec_gen"
-            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_rounded_white"
+            android:fontFamily="@font/berkshire_swash"
             android:gravity="center"
-            android:textStyle="bold"
+            android:padding="5dp"
+            android:text="@string/import_rec_gen"
 
-            />
+            android:textAllCaps="false"
 
-    </LinearLayout>
+            android:textColor="@color/black"
+
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+
+
+        </LinearLayout>
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:orientation="horizontal"
         android:layout_weight="1"
-        android:layout_margin="5dp"
+        android:weightSum="2"
+        android:layout_height="0dp">
 
-        android:background="@drawable/bg_rounded_white"
 
-
-        android:gravity="center"
-        android:orientation="vertical">
         <TextView
-            android:id="@+id/option3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/realTimeEcgMeasurement"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_rounded_white"
+            android:fontFamily="@font/berkshire_swash"
+            android:gravity="center"
+
+            android:text="@string/start_rt_ecg"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+
+
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+
+        <TextView
+            android:id="@+id/help"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_rounded_white"
+            android:fontFamily="@font/berkshire_swash"
+            android:gravity="center"
+            android:text="@string/start_rt_ecg"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="@string/start_rt_ecg"
 
 
-            />
+            android:textStyle="italic" />
 
 
     </LinearLayout>
+
 
 </LinearLayout>

@@ -26,6 +26,16 @@
                 android:background="@color/bg_grey"
                 android:layout_height="40dp">
 
+                <TextView
+                    android:layout_width="40dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:text=""
+                    android:gravity="center_vertical"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="0dp"
+                    android:layout_height="35dp" />
+
 
                 <TextView
                     android:layout_width="120dp"

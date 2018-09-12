@@ -70,7 +70,7 @@ public class LoginFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        loginActivityListner.onDataPass("");
+        loginActivityListner.onDataPass(ClassConstants.LOGIN_FRAGMENT);
 
 
         user_guide.setOnTouchListener(new View.OnTouchListener() {

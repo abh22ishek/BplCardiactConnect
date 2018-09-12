@@ -5,15 +5,46 @@
 
     <!--user details strings-->
     <string name="name">Name</string>
+    <string name="search_by">Search By Patient Name or Patient Id </string>
     <string name="age">Age (Years)</string>
     <string name="sex">Sex</string>
     <string name="gender">Gender</string>
     <string name="height">Height(cm)</string>
     <string name="weight">Weight(kg)</string>
+
+
+
+
     <string name="set_name">Set Name</string>
+    <string name="set_id">Set Patient Id</string>
     <string name="set_age">Set Age</string>
     <string name="set_height">Set Height</string>
     <string name="set_weight">Set Weight</string>
+
+
+    <string name="set_pat_ref_doc">Set Reference Doc</string>
+
+    <string name="set_cons_ref_doc">Set Consultation Doc</string>
+
+    <string name="set_systolic">Set Systolic Pressure</string>
+
+    <string name="set_diabolic">Set Diabolic Pressure</string>
+
+
+    <string name="set_pat_drug1">Set Patient Drug1</string>
+
+    <string name="set_pat_drug2">Set Patient Drug2</string>
+
+    <string name="set_pat_race">Set Patient Race</string>
+
+    <string name="set_pacemaker_presence">Set Patient PC</string>
+
+    <string name="set_clinic_diagnosis">Set Clinical Diagnosis</string>
+
+
+
+
+
     <string name="male">Male</string>
     <string name="female">Female</string>
 
@@ -79,6 +110,8 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="field_empty">This field cannot be empty</string>
     <string name="hint_ent_new_pw">Enter your new Password</string>
@@ -94,6 +127,10 @@
     <string name="sign_new_user">Sign As as New User</string>
     <string name="sign_as_other_user">Sign As as Other User</string>
 
+    <string name="new_user">Create New User</string>
+    <string name="existing_user">Select Any Existing User</string>
+
+    <string name="selection">Choose Any</string>
 
     <string name="t_and_c">Terms And Condition</string>
     <string name="signed_t_and_c">I have read the Terms and Conditions</string>
@@ -157,11 +194,21 @@ This is when high blood pressure requires emergency medical attention.
     <string name="pat_name">Patient Name</string>
     <string name="pat_race">Patient Race</string>
     <string name="pat_id">Patient Id</string>
+    <string name="pat_id_">Patient Id :</string>
+    <string name="pat_drug1">Patient Drug1</string>
+    <string name="pat_drug2">Patient Drug2</string>
+    <string name="pat_pc">Pat Pacemaker</string>
 
+    <string name="pat_clinical_diag">Clinical Diagnosis</string>
+    <string name="pat_sys">Pat Systolic(mmHg)</string>
+    <string name="pat_dia">Pat Diabolic(mmHg)</string>
+    <string name="pat_cons_doc">Consultation Doc Name</string>
+
+    <string name="pat_ref_doc">Ref Doc Name</string>
     
     <string name="view_arch_rec">View Archived Records</string>
 
-    <string name="import_rec_gen">Import Record From BPL Cardiact Connect</string>
+    <string name="import_rec_gen">Import Record From BPL Cardiart Connect</string>
 
 
     <string name="start_rt_ecg">Start Real Time Measurement</string>
@@ -179,5 +226,137 @@ This is when high blood pressure requires emergency medical attention.
     <string name="sort_id">Sort By ID</string>
 
     <string name="del">Delete</string>
+    <string name="patient">Patient</string>
+
+    <string name="date">Date :</string>
+    <string name="time">Time :</string>
+
+
+        <string name="search_by_name">Search By Name</string>
+    <string name="search_by_id">Search By Id</string>
+
+        <string-array name="patient_race">
+            <item>Caucasian</item>
+            <item>AFRO_ORIGIN</item>
+            <item>Oriental</item>
+            <item>Other</item>
+            <item>Unknown</item>
+
+        </string-array>
+
+
+
+    <string-array name="search_by">
+        <item> Name</item>
+        <item> Id</item>
+
+
+    </string-array>
+
+
+
+
+    <string-array name="clinic_diag">
+                  
+        <item>MYOCARDIAL INFARCTION</item>
+        <item>MYOCARDIAL ISCHEMIA</item>
+                      
+        <item>HYPERTENSION</item>
+                       
+        <item>CONGENITAL HEART DISEASE</item>
+                       
+        <item>VALVULAR HEART DISEASE</item>
+                      
+        <item>PERICARDITIS</item>
+                     
+        <item>RESPIRATORY DISEASE</item>
+                    
+        <item>ENDOCRINE DISEASE</item>
+                    
+        <item>IMPLANTED PACEMAKER</item>
+                    
+        <item>PULMONARY EMBOLISM</item>
+                   
+        <item>POSTOPERATIVE CARDIAC SURGERY</item>
+                    
+        <item>OTHER</item>
+                        
+        <item>CARDIOMYOPATHY</item>
+                        
+        <item>UNKNOWN</item>
+                        
+        <item>UNDEFINED</item>
+
+    </string-array>
+
+
+
+
+    <string-array name="pat_drug">
+         <item> NO MEDICATION </item>
+                     
+        <item> DIGITALIS </item>
+                       
+        <item>DIURETIC </item>
+                       
+        <item>BETA BLOCKER </item>
+                      
+        <item>QUINIDINE</item>
+                     
+        <item>PROCAINAMIDE </item>
+                    
+        <item>AMIODARONE </item>
+                    
+        <item>DISOPYRAMIDE </item>
+                    
+        <item>LIGNOCAINE </item>
+                   
+        <item>OTHER ANTI ARRHYTHMICS </item>
+                    
+        <item>PSYCHOTROPIC </item>
+                        
+        <item>STEROID </item>
+                        
+        <item>OTHER MEDICATION </item>
+                        
+        <item>UNDEFINED</item>
+
+    </string-array>
+
+
+
+
+    <string name="share_png">Share as .PNG File</string>
+    <string name="share_pdf">Share as .PNG File</string>
+    <string name="share_hl">Share as HL7</string>
+
+
+    <string name="save_png">Save as .PNG File</string>
+
+    <string name="save_pdf">Save as PDF File</string>
+
+    <string name="lead_1">Lead 1</string>
+
+    <string name="lead_2">Lead II</string>
+    <string name="lead_3">Lead III</string>
+    <string name="avr">Lead aVR</string>
+    <string name="avl">Lead aVL</string>
+    <string name="avf">Lead aVF</string>
+
+
+    <string name="leadv1">Lead V1</string>
+    <string name="leadv2">Lead V2</string>
+    <string name="leadv3">Lead V3</string>
+    <string name="leadv4">Lead V4</string>
+    <string name="leadv5">Lead V5</string>
+    <string name="leadv6">Lead V6</string>
+
+    <string name="next">Next</string>
+    <string name="prev">Previous</string>
+
+    <string name="save_hl">Save as HL7</string>
+
+
+
 
 </resources>

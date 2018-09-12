@@ -55,20 +55,20 @@ import store.credentials.*;
 import utility.*;
 
 
-public class BaseLoginActivityClass extends AppCompatActivity implements LoginActivityListner{
+public class BaseLoginActivityClass extends AppCompatActivity implements LoginActivityListner {
 
 
-    private  RoundedImageView UserIcon;
+    private RoundedImageView UserIcon;
 
 
     private TextView appName;
-    private String TAG=BaseLoginActivityClass.class.getSimpleName();
+    private String TAG = BaseLoginActivityClass.class.getSimpleName();
 
     BaseApplicationClass globalVariable;
     private String userIconUri;
 
 
-     ViewFlipper viewFlipper;
+    ViewFlipper viewFlipper;
 
     NavigationView nv;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -80,12 +80,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     ImageView navHeaderIcon;
 
-     Uri NavigationUserIconUri;
+    Uri NavigationUserIconUri;
 
-     List<EcgLEadModel> EcgLeads;
+    List<EcgLEadModel> EcgLeads;
 
-     Observable<List<EcgLEadModel>> mObservable;
-
+    Observable<List<EcgLEadModel>> mObservable;
 
 
     @Override
@@ -94,36 +93,32 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         setContentView(R.layout.base_login_activity_main);
 
         globalVariable = (BaseApplicationClass) getApplicationContext();
-        viewFlipper =  findViewById(R.id.linearParams);
+        viewFlipper = findViewById(R.id.linearParams);
 
 
-        drawerLayout=findViewById(R.id.drawerLayout);
-        UserIcon=findViewById(R.id.hospitalIcon1);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        UserIcon = findViewById(R.id.hospitalIcon1);
         UserIcon.setVisibility(View.GONE);
 
-        appName=findViewById(R.id.appName);
+        appName = findViewById(R.id.appName);
 
         nv = findViewById(R.id.nv);
 
 
         View header = nv.getHeaderView(0);
-         navHeaderIcon = header.findViewById(R.id.navHeaderIcon);
+        navHeaderIcon = header.findViewById(R.id.navHeaderIcon);
 
-        baseLayout=findViewById(R.id.relativeParams);
+        baseLayout = findViewById(R.id.relativeParams);
 
-        loginActivityListner=this;
+        loginActivityListner = this;
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.open, R.string.close);
-
-
-
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
 
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
 
 
         appName.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +128,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
                 viewFlipper.showNext();
                 getCurrentViewFlipperID(BaseLoginActivityClass.this);
-
 
 
             }
@@ -170,26 +164,17 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         });
 
 
-
-
-
-        if(IsUserLoggedIn()){
+        if (IsUserLoggedIn()) {
             welcomeUserFrag();
-        }else{
+        } else {
             loginUserFrag();
         }
-
-
 
 
         UserIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 selectOptions(BaseLoginActivityClass.this);
-
-
             }
         });
 
@@ -198,15 +183,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       MenuInflater  inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_splash_screen, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sortby, menu);
         return true;
     }
 
 
-
-    public void loadAnimations1(ViewFlipper viewFlipper)
-    {
+    public void loadAnimations1(ViewFlipper viewFlipper) {
         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
         Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
 
@@ -215,14 +198,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.age:
-               reloadPatientListFragment(Constants.SORT_BY_AGE);
+                reloadPatientListFragment(Constants.SORT_BY_AGE);
                 break;
 
             case R.id.name:
@@ -238,29 +220,14 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
             case R.id.Ecg:
-               // EcgLeads= Utility.readfile("Cardiart","Ecg.txt");
-                 pd=new ProgressDialog(this);
-                pd.setMessage("Downloading ...");
 
-
-                pd.show();
-                mObservable=Observable.just(Utility.readfile("Cardiart","Ecg.txt")).
-                        subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
-
-                mObservable.subscribe(mObserver);
-
-              //  EcgLeads= Utility.readfile("","");
-
-
-               // reloadEcgDisplayFragment(EcgLeads);
                 break;
-
 
 
             default:
                 break;
         }
-        if(actionBarDrawerToggle.onOptionsItemSelected(item))
+        if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
@@ -268,37 +235,49 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     }
 
-    ProgressDialog pd;
 
-    Observer<List<EcgLEadModel>> mObserver=new Observer<List<EcgLEadModel>>() {
+    private void callEcg() {
+        // EcgLeads= Utility.readfile("Cardiart","Ecg.txt");
+
+        mObservable = Observable.just(Utility.readfile("Cardiart", "Ecg.txt")).
+                subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+
+        mObservable.subscribe(mObserver);
+
+
+        //  EcgLeads= Utility.readfile("","");
+        // reloadEcgDisplayFragment(EcgLeads);
+    }
+
+
+
+
+    Observer<List<EcgLEadModel>> mObserver = new Observer<List<EcgLEadModel>>() {
         @Override
         public void onSubscribe(Disposable d) {
 
-            Logger.log(Level.DEBUG,TAG,"-On Subscribe-()");
+            Logger.log(Level.DEBUG, TAG, "-On Subscribe-()");
         }
 
         @Override
         public void onNext(List<EcgLEadModel> ecgLEadModels) {
-            Logger.log(Level.DEBUG,TAG,"-On Next-()");
+            Logger.log(Level.DEBUG, TAG, "-On Next-()");
 
-            EcgLeads=ecgLEadModels;
+            EcgLeads = ecgLEadModels;
             reloadEcgDisplayFragment(EcgLeads);
         }
 
         @Override
         public void onError(Throwable e) {
-            Logger.log(Level.DEBUG,TAG,"-On Error-()");
+            Logger.log(Level.DEBUG, TAG, "-On Error-()");
 
         }
 
         @Override
         public void onComplete() {
 
-            Logger.log(Level.DEBUG,TAG,"-On Complete-()");
-            if(pd.isShowing())
-            {
-                pd.dismiss();
-            }
+            Logger.log(Level.DEBUG, TAG, "-On Complete-()");
+
 
         }
     };
@@ -308,11 +287,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     public void onDataPass(String data) {
 
 
-        if(data.equalsIgnoreCase(ClassConstants.SIGNUP_FRAGMENT)|| data.equalsIgnoreCase(ClassConstants.WELCOME_USER_FRAGMENT)){
+        if (data.equalsIgnoreCase(ClassConstants.SIGNUP_FRAGMENT) || data.equalsIgnoreCase(ClassConstants.WELCOME_USER_FRAGMENT)) {
             UserIcon.setVisibility(View.VISIBLE);
             appName.setVisibility(View.GONE);
 
-        }else{
+        } else {
             UserIcon.setVisibility(View.GONE);
             appName.setVisibility(View.VISIBLE);
         }
@@ -321,7 +300,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         UserIcon.setImageDrawable(ContextCompat.getDrawable(BaseLoginActivityClass.this, R.drawable.user_icon));
 
 
-        if(data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)){
+        if (data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)) {
             UserIcon.setVisibility(View.GONE);
             viewFlipper.setVisibility(View.VISIBLE);
 
@@ -332,86 +311,134 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
         //
 
-        if(data.equals(ClassConstants.PATIENT_LIST_FRAGMENT)){
+        if (data.equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
             baseLayout.setVisibility(View.GONE);
             return;
         }
 
-        if(data.equals(ClassConstants.ECG_DISPALY_FRAGMENT))
+        if (data.equals(ClassConstants.ECG_DISPALY_FRAGMENT)) {
+            baseLayout.setVisibility(View.GONE);
+            // getSupportActionBar().hide();
+            return;
+        }
+
+
+        if (data.equals(Constants.SHOW_ECG_DATA)) {
+            InsertData task = new InsertData();
+            task.execute(new String[0]);
+            return;
+        }
+
+        if (data.equals(ClassConstants.LOGIN_FRAGMENT)) {
+            baseLayout.setVisibility(View.GONE);
+            return;
+        }
+
+
+        if(data.equalsIgnoreCase(ClassConstants.ECG_GRAPH_FRAGMENT))
         {
             baseLayout.setVisibility(View.GONE);
-           // getSupportActionBar().hide();
             return;
         }
 
+        if (data.equals("back")) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate();
+
+        }
+
+        if(data.equalsIgnoreCase("patient_ecg")){
+            realtimeEcgFrag();
+            return;
+        }
         baseLayout.setVisibility(View.VISIBLE);
 
     }
 
-    Fragment currentFragment=null;
+    Fragment currentFragment = null;
+
+    private void realtimeEcgFrag() {
+
+        android.support.v4.app.FragmentManager fragmentManager;
+        android.support.v4.app.FragmentTransaction fragmentTransaction;
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        EcgGraphViewFragment ecgGraphViewFragment = new EcgGraphViewFragment();
+        fragmentTransaction.replace(R.id.fragmentContainer, ecgGraphViewFragment, ClassConstants.ECG_GRAPH_VIEW_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.ECG_GRAPH_VIEW_FRAGMENT);
+
+        fragmentTransaction.commit();
+    }
 
 
     @Override
     public void OnCurrentFragment(String tag) {
-        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         // Always get Current fragment
         currentFragment = fragmentManager.findFragmentByTag(tag);
-        Logger.log(Level.DEBUG,TAG,"--Navigation Image URI--"+NavigationUserIconUri);
-        int count= fragmentManager.getBackStackEntryCount();
-                Logger.log(Level.DEBUG,TAG,"Back stack frag count in On curreent frag()="+count);
+        Logger.log(Level.DEBUG, TAG, "--Navigation Image URI--" + NavigationUserIconUri);
+        int count = fragmentManager.getBackStackEntryCount();
+        Logger.log(Level.DEBUG, TAG, "Back stack frag count in On curreent frag()=" + count);
 
         if (currentFragment.getClass().getName().equals(ClassConstants.LOGIN_FRAGMENT)) {
 
 
-        }else if(currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
-        {
+        } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT)) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            if(NavigationUserIconUri!=null){
-                loadImageWithGlide(NavigationUserIconUri.toString(),navHeaderIcon);
+            if (NavigationUserIconUri != null) {
+                loadImageWithGlide(NavigationUserIconUri.toString(), navHeaderIcon);
 
             }
-
 
 
         } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
 
             baseLayout.setVisibility(View.GONE);
             return;
-        }
-
-        else if(currentFragment.getClass().getName().equals(ClassConstants.WELCOME_USER_FRAGMENT))
-        {
+        } else if (currentFragment.getClass().getName().equals(ClassConstants.WELCOME_USER_FRAGMENT)) {
 
             //this will clear the back stack and displays no animation on the screen
 
-            Logger.log(Level.DEBUG,TAG,"---Back stack entry count after POP BACK STACK IMMEDIATE---"+count);
+            Logger.log(Level.DEBUG, TAG, "---Back stack entry count after POP BACK STACK IMMEDIATE---" + count);
+        } else if (currentFragment.getClass().getName().equals(ClassConstants.ECG_DISPALY_FRAGMENT)) {
+
+
+        } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_PROFILE_FRAGMENT)) {
+
+            baseLayout.setVisibility(View.GONE);
+            return;
+        } else if (currentFragment.getClass().getName().equals(ClassConstants.EXISTING_PATIENT_FRAGMENT)) {
+            baseLayout.setVisibility(View.GONE);
+            return;
         }
 
 
-        else if(currentFragment.getClass().getName().equals(ClassConstants.ECG_DISPALY_FRAGMENT)){
-
-
+        else if (currentFragment.getClass().getName().equals(ClassConstants.ECG_GRAPH_VIEW_FRAGMENT)) {
+            baseLayout.setVisibility(View.GONE);
+         getSupportActionBar().hide();
+            return;
         }
 
 
-        Logger.log(Level.DEBUG,TAG, "Get Current Fragment="+currentFragment.getClass().getName());
+        Logger.log(Level.DEBUG, TAG, "Get Current Fragment=" + currentFragment.getClass().getName());
         baseLayout.setVisibility(View.VISIBLE);
     }
-
 
 
     @Override
     public void navigateToFragment(String tag) {
 
 
-        android.support.v4.app.FragmentManager fragmentManager ;
+        android.support.v4.app.FragmentManager fragmentManager;
         android.support.v4.app.FragmentTransaction fragmentTransaction;
 
-        fragmentManager=getSupportFragmentManager();
-        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         ECGDisplayFragment ecgDisplayFragment = new ECGDisplayFragment();
-        fragmentTransaction.replace(R.id.fragmentContainer,ecgDisplayFragment);
+        fragmentTransaction.replace(R.id.fragmentContainer, ecgDisplayFragment);
         fragmentTransaction.addToBackStack(ClassConstants.ECG_DISPALY_FRAGMENT);
         fragmentTransaction.commit();
 
@@ -420,29 +447,28 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     // this method will only gets called during signUp or login
     @Override
-    public void setUserName(String userName,String tag) {
+    public void setUserName(String userName, String tag) {
         // Set the global user Name
         globalVariable.setUsername(userName);
 
-        if(TAG.equals(ClassConstants.LOGIN_FRAGMENT)){
+        if (TAG.equals(ClassConstants.LOGIN_FRAGMENT)) {
             return;
         }
 
 
-        StoreCredentialsFile.storeSignUpCredentials(this,userName,TAG);
-        StoreCredentialsFile.store_profile_image(this, userIconUri,TAG,
-                globalVariable.getUsername());
+        StoreCredentialsFile.storeSignUpCredentials(this, userName, TAG);
+        StoreCredentialsFile.store_profile_image(this, userIconUri, TAG, globalVariable.getUsername());
+        Constants.Logged_User_ID = globalVariable.getUsername();
 
 
     }
 
     @Override
     public void displayImage(Uri uri) {
-        if(uri!=null){
-            loadImageWithGlide(uri.toString(),UserIcon);
-            NavigationUserIconUri=uri;
-            }
-        else
+        if (uri != null) {
+            loadImageWithGlide(uri.toString(), UserIcon);
+            NavigationUserIconUri = uri;
+        } else
             UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
     }
 
@@ -454,56 +480,60 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     public boolean isImaggeIconVisible(boolean isVisible) {
 
-        if(!isVisible)
+        if (!isVisible)
 
-        UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
+            UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
         return isVisible;
     }
 
-    boolean [] booleansArr;
+    boolean[] booleansArr;
+
     @Override
     public void getSelectedUser(String data, boolean[] arrays) {
-        booleansArr=new boolean[arrays.length];
+        booleansArr = new boolean[arrays.length];
         //copying one array to another
-        booleansArr=Arrays.copyOf(arrays,arrays.length);
-
+        booleansArr = Arrays.copyOf(arrays, arrays.length);
     }
 
+    @Override
+    public void OnhandlePermissions() {
+        selectOptions(BaseLoginActivityClass.this);
+    }
+
+
     boolean mExit;
-    private final int TIME_ELAPSE=5000;
+    private final int TIME_ELAPSE = 5000;
 
     @Override
     public void onBackPressed() {
 
 
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        int count=fragmentManager.getBackStackEntryCount();
-        Logger.log(Level.DEBUG,TAG,"((--count no. fo Fragments-----))=" +count);
-        Logger.log(Level.DEBUG,TAG,"(((Get Current Fragment in back key))="+currentFragment.getClass().getName());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        int count = fragmentManager.getBackStackEntryCount();
+        Logger.log(Level.DEBUG, TAG, "((--count no. fo Fragments-----))=" + count);
+        Logger.log(Level.DEBUG, TAG, "(((Get Current Fragment in back key))=" + currentFragment.getClass().getName());
 
-        String frag=currentFragment.getClass().getName();
+        String frag = currentFragment.getClass().getName();
 
-        if(frag.equals(ClassConstants.SIGNUP_FRAGMENT) ||
-         frag.equals(ClassConstants.LOGIN_FRAGMENT) || frag.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)
-                || frag.equals(ClassConstants.WELCOME_USER_FRAGMENT)){
+        if (frag.equals(ClassConstants.SIGNUP_FRAGMENT) ||
+                frag.equals(ClassConstants.LOGIN_FRAGMENT) || frag.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)
+                || frag.equals(ClassConstants.WELCOME_USER_FRAGMENT)) {
             finish();
             return;
         }
 
 
-        if( frag.equals(ClassConstants.PATIENT_LIST_FRAGMENT))
-        {
+        if (frag.equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
         /*    final Strname=ClassConstants.PATIENT_MENU_TRACK_FRAGMENT;
             fragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
-        for(int i = 2; i < count; ++i) {
+            for (int i = 2; i < count; ++i) {
                 fragmentManager.popBackStackImmediate();
             }
-        return;
+            return;
         }
 
 
-        if( frag.equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT))
-        {
+        if (frag.equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT)) {
 
 
             if (mExit) {
@@ -519,14 +549,14 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                     public void run() {
                         mExit = false;
                     }
-                },TIME_ELAPSE);
+                }, TIME_ELAPSE);
             }
 
 
-        }else{
-            if(fragmentManager.getBackStackEntryCount()>1) {
+        } else {
+            if (fragmentManager.getBackStackEntryCount() > 1) {
                 fragmentManager.popBackStack();
-            }else
+            } else
                 //super.onBackPressed();
                 finish();
         }
@@ -544,42 +574,40 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if (requestCode == Constants.SELECT_PICTURE && resultCode == RESULT_OK && null != data) {
             Uri uri = data.getData();
-            userIconUri=uri.toString();
+            userIconUri = uri.toString();
 
-            NavigationUserIconUri=uri;
-            if(uri!=null)
-                loadImageWithGlide(uri.toString(),UserIcon);
+            NavigationUserIconUri = uri;
+            if (uri != null)
+                loadImageWithGlide(uri.toString(), UserIcon);
 
-        }
-
-        else if(requestCode==Constants.CAMERA_CODE && resultCode==RESULT_OK)
-        {
+        } else if (requestCode == Constants.CAMERA_CODE && resultCode == RESULT_OK) {
             String uri;
-            if(file.exists())
-            {
+            if (file.exists()) {
                 Log.i("**Absolute path**=", "" + file.getAbsolutePath());
-                uri=file.getAbsolutePath();
+                uri = file.getAbsolutePath();
 
-                NavigationUserIconUri=Uri.parse(uri);
+                NavigationUserIconUri = Uri.parse(uri);
 
-                userIconUri="file://"+uri;
-                loadImageWithGlide(uri,UserIcon);
+                userIconUri = "file://" + uri;
+                loadImageWithGlide(uri, UserIcon);
 
 
-
-            }else{
-                userIconUri="no_image";
-                NavigationUserIconUri=null;
+            } else {
+                userIconUri = "no_image";
+                NavigationUserIconUri = null;
                 UserIcon.setImageDrawable(this.getResources().getDrawable(R.drawable.user_icon));
             }
 
 
+        } else {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(ClassConstants.PATIENT_PROFILE_FRAGMENT);
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
 
     }
 
 
-    private void loadImageWithGlide(String uri, ImageView imageView){
+    private void loadImageWithGlide(String uri, ImageView imageView) {
 
 
         //noinspection SpellCheckingInspection
@@ -595,14 +623,14 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
                         super.onResourceReady(resource, animation);
 
-                        Logger.log(Level.DEBUG,TAG,"Glide loaded the image successfully");
+                        Logger.log(Level.DEBUG, TAG, "Glide loaded the image successfully");
                     }
 
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         super.onLoadFailed(e, errorDrawable);
 
-                        Logger.log(Level.ERROR,TAG,e.toString());
+                        Logger.log(Level.ERROR, TAG, e.toString());
                     }
                 });
 
@@ -612,6 +640,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     List<String> options;
     Dialog dialog;
     File file;
+
     private void selectOptions(final Context context) {
 
 
@@ -624,20 +653,18 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
 
-
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(context,android.R.layout.simple_list_item_1,options);
-        if(dialog==null)
-        {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, options);
+        if (dialog == null) {
             dialog = new Dialog(context);
         }
 
 
-        dialog.getWindow().getAttributes().windowAnimations =R.style.DialogBoxAnimation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBoxAnimation;
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.custom_list);
 
-        final ListView content= dialog.findViewById(R.id.list_content);
-        final TextView header=  dialog.findViewById(R.id.header);
+        final ListView content = dialog.findViewById(R.id.list_content);
+        final TextView header = dialog.findViewById(R.id.header);
 
 
         content.setAdapter(adapter);
@@ -646,15 +673,14 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if(adapterView.getItemAtPosition(i).equals(getString(R.string.def)))
-                {
+                if (adapterView.getItemAtPosition(i).equals(getString(R.string.def))) {
+
                     UserIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.user_icon));
 
 
-                }else if(adapterView.getItemAtPosition(i).equals(getString(R.string.camera)))
-                {
+                } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.camera))) {
                     selectCameraOptions();
-                }else{
+                } else {
                     selectPicsFromGallery();
 
                 }
@@ -667,15 +693,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-
-
-    private void selectPicsFromGallery(){
+    private void selectPicsFromGallery() {
         Intent intent;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        }else{
+        } else {
             intent = new Intent(Intent.ACTION_GET_CONTENT);
         }
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
@@ -686,7 +710,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-    private void selectCameraOptions(){
+    private void selectCameraOptions() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -696,20 +720,17 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                     Constants.CAMERA_REQUEST_CODE);
 
 
-        }
-        else
-        {
-            file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "test.jpg"+System.currentTimeMillis());
-            Uri tempUri=Uri.fromFile(file);
+        } else {
+            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    "test.jpg" + System.currentTimeMillis());
+            Uri tempUri = Uri.fromFile(file);
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,tempUri);
-            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);
-            startActivityForResult(intent,Constants.CAMERA_CODE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+            startActivityForResult(intent, Constants.CAMERA_CODE);
         }
     }
-
 
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -724,26 +745,22 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             Logger.log(Level.DEBUG, TAG, "grant results[]=" + grantResult);
 
         }
-        if(requestCode==Constants.CAMERA_REQUEST_CODE)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED
+        if (requestCode == Constants.CAMERA_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED
                     ) {
-                file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"test.jpg"+System.currentTimeMillis());
-                Uri uri=Uri.fromFile(file);
+                file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "test.jpg" + System.currentTimeMillis());
+                Uri uri = Uri.fromFile(file);
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
                 startActivityForResult(intent, Constants.CAMERA_CODE);
-            }
-
-            else if(grantResults[0]==PackageManager.PERMISSION_DENIED ||grantResults[1]==PackageManager.PERMISSION_DENIED)
+            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED || grantResults[1] == PackageManager.PERMISSION_DENIED)
 
             {
-                if(ActivityCompat.shouldShowRequestPermissionRationale(BaseLoginActivityClass.this,Manifest.permission.CAMERA)
-                        || ActivityCompat.shouldShowRequestPermissionRationale(BaseLoginActivityClass.this,Manifest.permission.WRITE_EXTERNAL_STORAGE))
-                {
-                    Toast.makeText(BaseLoginActivityClass.this,getString(R.string.per_nec),Toast.LENGTH_SHORT).show();
+                if (ActivityCompat.shouldShowRequestPermissionRationale(BaseLoginActivityClass.this, Manifest.permission.CAMERA)
+                        || ActivityCompat.shouldShowRequestPermissionRationale(BaseLoginActivityClass.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    Toast.makeText(BaseLoginActivityClass.this, getString(R.string.per_nec), Toast.LENGTH_SHORT).show();
                     showDialogOK("Camera and Write External Storage Permission required for this app for User Icon",
                             new DialogInterface.OnClickListener() {
                                 @Override
@@ -760,22 +777,17 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                                     }
                                 }
                             });
-                }
-                else
-                {
+                } else {
                     Toast.makeText(this, "Go to settings And enable permissions", Toast.LENGTH_LONG)
                             .show();
 
                 }
 
 
-
             }
 
 
         }
-
-
 
 
     }
@@ -792,21 +804,20 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     String mUsername;
 
-    private boolean IsUserLoggedIn()
-    {
+    private boolean IsUserLoggedIn() {
         boolean b;
 
         SharedPreferences login_credentials;
         login_credentials = this.getSharedPreferences(Constants.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
 
-        mUsername=login_credentials.getString(Constants.USER_NAME, null);
-        String mPwd= login_credentials.getString(Constants.PASSWORD, null);
+        mUsername = login_credentials.getString(Constants.USER_NAME, null);
+        String mPwd = login_credentials.getString(Constants.PASSWORD, null);
 
 
-        if(mUsername!=null)
-            b=true;
+        if (mUsername != null)
+            b = true;
         else
-            b=false;
+            b = false;
 
         Logger.log(Level.DEBUG, TAG, "get value stored in a shared preference s file **User ID**" + mUsername);
 
@@ -816,14 +827,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-    public  void loggedOut(Context context)
-    {
+    public void loggedOut(Context context) {
         SharedPreferences signup_credentials;
         //=SignUpActivity.this.getPreferences(Context.MODE_PRIVATE) ;
-        signup_credentials=context.getSharedPreferences(Constants.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
+        signup_credentials = context.getSharedPreferences(Constants.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = signup_credentials.edit();
-        editor.putString(Constants.USER_NAME,null);
-        editor.putString(Constants.PASSWORD,null);
+        editor.putString(Constants.USER_NAME, null);
+        editor.putString(Constants.PASSWORD, null);
         editor.apply();
         Logger.log(Level.DEBUG, context.getClass().getSimpleName(), "shared preference s file all values is set to null");
     }
@@ -831,9 +841,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     android.support.v7.app.AlertDialog alertDialog;
 
 
-
     private void logOutConfirmDialog(final Context context) {
-
 
 
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
@@ -857,41 +865,36 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-    private void loginUserFrag()
-    {
-        android.support.v4.app.FragmentManager fragmentManager ;
+    private void loginUserFrag() {
+        android.support.v4.app.FragmentManager fragmentManager;
         android.support.v4.app.FragmentTransaction fragmentTransaction;
-        fragmentManager=getSupportFragmentManager();
-        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
-        fragmentTransaction.replace(R.id.fragmentContainer,loginFragment,ClassConstants.LOGIN_FRAGMENT);
+        fragmentTransaction.replace(R.id.fragmentContainer, loginFragment, ClassConstants.LOGIN_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.LOGIN_FRAGMENT);
         fragmentTransaction.commit();
     }
 
 
-
-    private void welcomeUserFrag()
-    {
-        android.support.v4.app.FragmentManager fragmentManager ;
+    private void welcomeUserFrag() {
+        android.support.v4.app.FragmentManager fragmentManager;
         android.support.v4.app.FragmentTransaction fragmentTransaction;
-        fragmentManager=getSupportFragmentManager();
-        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         WelcomeUserFragment welcomeUserFragment = new WelcomeUserFragment();
 
-        Bundle bundle=new Bundle();
-        bundle.putString(Constants.USER_NAME,mUsername);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.USER_NAME, mUsername);
         welcomeUserFragment.setArguments(bundle);
 
-        fragmentTransaction.replace(R.id.fragmentContainer,welcomeUserFragment,ClassConstants.WELCOME_USER_FRAGMENT);
+        fragmentTransaction.replace(R.id.fragmentContainer, welcomeUserFragment, ClassConstants.WELCOME_USER_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.WELCOME_USER_FRAGMENT);
         fragmentTransaction.commit();
     }
 
 
-
-    private void builDynamicImageViews(Context context, LinearLayout layout)
-    {
+    private void builDynamicImageViews(Context context, LinearLayout layout) {
 
         /*for(int i=0;i<5;i++)
         {
@@ -934,15 +937,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-
-    private List<String>  mapUserIDICon(Context context)
-    {
+    private List<String> mapUserIDICon(Context context) {
 
 
-        List<String> userList=new ArrayList<>();
-        List<String > userIconsUri=new ArrayList<>();
-            SharedPreferences sharedPreferences;
-            sharedPreferences = context.getSharedPreferences(Constants.PREFERENCE_PROFILE_IMAGE, Context.MODE_PRIVATE);
+        List<String> userList = new ArrayList<>();
+        List<String> userIconsUri = new ArrayList<>();
+        SharedPreferences sharedPreferences;
+        sharedPreferences = context.getSharedPreferences(Constants.PREFERENCE_PROFILE_IMAGE, Context.MODE_PRIVATE);
 
 
         Map<String, ?> allEntries = sharedPreferences.getAll();
@@ -955,43 +956,40 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
 
+        return userIconsUri;
 
-            return userIconsUri;
-
-        }
-
+    }
 
 
     RoundedImageView roundedImageView;
-    private void ShowViewFlipper(ViewFlipper viewFlipper,Context context)
-        {
-            List<String>UriList=mapUserIDICon(BaseLoginActivityClass.this);
-            Uri uri;
 
-            for(int i=0;i<UriList.size();i++)
-            {
-                roundedImageView = new RoundedImageView(context);
-                uri=Uri.parse(UriList.get(i));
-                loadImageWithGlide(uri.toString(),roundedImageView);
-                roundedImageView.setId(i);
-                viewFlipper.addView(roundedImageView);
+    private void ShowViewFlipper(ViewFlipper viewFlipper, Context context) {
+        List<String> UriList = mapUserIDICon(BaseLoginActivityClass.this);
+        Uri uri;
 
-                }
-
+        for (int i = 0; i < UriList.size(); i++) {
+            roundedImageView = new RoundedImageView(context);
+            uri = Uri.parse(UriList.get(i));
+            loadImageWithGlide(uri.toString(), roundedImageView);
+            roundedImageView.setId(i);
+            viewFlipper.addView(roundedImageView);
 
         }
 
 
-    public void getCurrentViewFlipperID (Context context) {
+    }
+
+
+    public void getCurrentViewFlipperID(Context context) {
 
         int index = -1;
-        List<String>UriList=mapUserIDICon(BaseLoginActivityClass.this);
+        List<String> UriList = mapUserIDICon(BaseLoginActivityClass.this);
 
 
         for (int i = 0; i < UriList.size(); i++) {
 
-            if(i==viewFlipper.getCurrentView().getId()){
-                index=i;
+            if (i == viewFlipper.getCurrentView().getId()) {
+                index = i;
             }
         }
 
@@ -1002,15 +1000,12 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
         Uri uri = Uri.parse(UriList.get(index));
-        Logger.log(Level.DEBUG,TAG,"--GET URI from current View Flipper---"+uri);
+        Logger.log(Level.DEBUG, TAG, "--GET URI from current View Flipper---" + uri);
 
 
-        getCurrentUserIdFromCurrentViewFlipper(uri.toString(),context);
+        getCurrentUserIdFromCurrentViewFlipper(uri.toString(), context);
 
     }
-
-
-
 
 
     private String getCurrentUserIdFromCurrentViewFlipper(String uriAsValue, Context context) {
@@ -1018,37 +1013,34 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences(Constants.PREFERENCE_PROFILE_IMAGE, Context.MODE_PRIVATE);
 
-        String currentUserId="";
+        String currentUserId = "";
 
         Map<String, ?> allEntries = sharedPreferences.getAll();
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
             Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
             if (uriAsValue.equals(entry.getValue())) {
-                currentUserId= entry.getKey();
+                currentUserId = entry.getKey();
                 break;
             }
 
 
         }
-        Logger.log(Level.DEBUG,TAG,"--Get current UserID mapped from Current Icons display--="+currentUserId);
+        Logger.log(Level.DEBUG, TAG, "--Get current UserID mapped from Current Icons display--=" + currentUserId);
         reloadSignAsNewUserFragment(currentUserId);
         return currentUserId;
     }
 
 
-
-
-    private void reloadSignAsNewUserFragment(String userId)
-    {
+    private void reloadSignAsNewUserFragment(String userId) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         SignAsNewUserFragment signUpFragment = new SignAsNewUserFragment();
-        Bundle bundle =new Bundle();
-        bundle.putString(Constants.USER_NAME,userId);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.USER_NAME, userId);
         signUpFragment.setArguments(bundle);
 
-        fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
+        fragmentTransaction.replace(R.id.fragmentContainer, signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
@@ -1056,19 +1048,16 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-
-
-    private void reloadEcgDisplayFragment(List<EcgLEadModel> EcgLeads)
-    {
+    private void reloadEcgDisplayFragment(List<EcgLEadModel> EcgLeads) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         ECGDisplayFragment ecgDisplayFragment = new ECGDisplayFragment();
-        Bundle bundle =new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.CUSTOM_DATA, (Serializable) EcgLeads);
         ecgDisplayFragment.setArguments(bundle);
 
-        fragmentTransaction.replace(R.id.fragmentContainer,ecgDisplayFragment, ClassConstants.ECG_DISPALY_FRAGMENT);
+        fragmentTransaction.replace(R.id.fragmentContainer, ecgDisplayFragment, ClassConstants.ECG_DISPALY_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.ECG_DISPALY_FRAGMENT);
         fragmentTransaction.commit();
 
@@ -1076,18 +1065,17 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-    private void reloadPatientListFragment(String SortBy)
-    {
+    private void reloadPatientListFragment(String SortBy) {
         android.support.v4.app.FragmentManager fragmentManager = Objects.requireNonNull(BaseLoginActivityClass.this).getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         PatientListFragment patientListFragment = new PatientListFragment();
 
 
-        Bundle bundle=new Bundle();
-        bundle.putString(Constants.SORT_BY,SortBy);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.SORT_BY, SortBy);
         patientListFragment.setArguments(bundle);
 
-        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment,ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.replace(R.id.fragmentContainer, patientListFragment, ClassConstants.PATIENT_LIST_FRAGMENT);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -1098,15 +1086,78 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         super.onConfigurationChanged(newConfig);
 
 
-        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE)
-        {
-         Logger.log(Level.INFO,TAG,"LANDSCAPE ORIENTATION");
-        }else if(newConfig.orientation==Configuration.ORIENTATION_PORTRAIT){
-            Logger.log(Level.INFO,TAG,"PORTRAIT ORIENTATION");
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Logger.log(Level.INFO, TAG, "LANDSCAPE ORIENTATION");
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Logger.log(Level.INFO, TAG, "PORTRAIT ORIENTATION");
 
-        }else{
-            Logger.log(Level.INFO,TAG,"UNSPECIFIED ORIENTATION");
+        } else {
+            Logger.log(Level.INFO, TAG, "UNSPECIFIED ORIENTATION");
 
         }
     }
+
+
+    @SuppressLint("StaticFieldLeak")
+    class InsertData extends AsyncTask<String, String, String> {
+
+        ProgressDialog progressDialog;
+
+        String isloaded = "false";
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            try {
+
+                callEcg();
+                isloaded = "true";
+            } catch (Exception e) {
+                isloaded = "false";
+                e.printStackTrace();
+            }
+
+
+            return isloaded;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if (progressDialog == null) {
+                progressDialog = new ProgressDialog(BaseLoginActivityClass.this);
+                progressDialog.setMessage("Please wait ......");
+
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+
+            }
+
+
+        }
+
+
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+                if (isloaded.equalsIgnoreCase("true")) {
+                    Toast.makeText(BaseLoginActivityClass.this,
+                            "ECG", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+            }
+        }
+    }
+
 }

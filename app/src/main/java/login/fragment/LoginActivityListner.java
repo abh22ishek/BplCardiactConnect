@@ -18,4 +18,6 @@ public interface LoginActivityListner {
 
     boolean isImaggeIconVisible(boolean isVisible);
     void getSelectedUser(String data, boolean[] arrays);
+
+    void OnhandlePermissions();
 }

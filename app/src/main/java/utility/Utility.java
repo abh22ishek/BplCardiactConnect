@@ -8,6 +8,7 @@ import android.util.*;
 import java.io.*;
 import java.util.*;
 
+import constants.*;
 import database.*;
 import gennx.model.*;
 import logger.*;
@@ -16,14 +17,13 @@ public class Utility {
 
     private final String TAG=Utility.class.getSimpleName();
 
+
+
+
     public static synchronized    List<EcgLEadModel> readfile(String filedir, String filename)
-
     {
-
         String ecgData="";
-
         List<List<String>> ecgList = new ArrayList<>();
-
         List<EcgLEadModel> EcgmodelList=new ArrayList<>();
 
 
@@ -124,7 +124,6 @@ public class Utility {
         }
         for (int i=5;i<arr1.length;i=i+8)
         {
-
             EcgLeadV4.add(arr1[i].replace("\n",""));
         }
         for (int i=6;i<arr1.length;i=i+8)
@@ -202,15 +201,10 @@ public class Utility {
         try {
             final SQLiteDatabase database= DatabaseManager.getInstance().openDatabase();
 
-            for(int i=0;i<200;i++){
-                database.insert(FeedReaderDbHelper.TABLE_NAME_PATIENT, null,
-                        addPatientData(
-
-                                "Patient 2", "222222","","Male",ecgData));
+            for(int i=0;i<10;i++){
+                database.insert(FeedReaderDbHelper.TABLE_NAME_PATIENTS_RECORD, null,
+                        addPatientData1(Constants.Logged_User_ID,"Patient 2", "222222","",ecgData));
             }
-
-
-
 
             Logger.log(Log.DEBUG,"--","Patient Record inserted");
         }catch (Exception e){
@@ -219,22 +213,65 @@ public class Utility {
 
     }
 
-    private static ContentValues addPatientData(String patname, String patId, String test_time,
-                                   String gender, String ecg)
+    private static ContentValues addPatientData(String patname, String patid, String test_time,String gender,String  age, String height,
+                                                String weight,String pacemaker,String patRace,String drug1,String drug2, String clinicDiag,
+                                                String systolic, String diabolic,String consulDoc, String refDoc
+    ,String ecg)
     {
         ContentValues values = new ContentValues();
-        values.put(FeedReaderDbHelper.PATIENT_NAME, patname);
-        values.put(FeedReaderDbHelper.PATIENT_ID, patId);
-        values.put(FeedReaderDbHelper.PATIENT_TEST_TIME, test_time);
-        values.put(FeedReaderDbHelper.PATIENT_GENDER, gender);
-        values.put(FeedReaderDbHelper.PATIENT_ECG_DATA, ecg);
+        values.put(FeedReaderDbHelper.PATIENT_NAME,patname);
+        values.put(FeedReaderDbHelper.PATIENT_ID,patid);
+        values.put(FeedReaderDbHelper.PATIENT_TEST_TIME,test_time);
 
+        values.put(FeedReaderDbHelper.PATIENT_GENDER,gender);
+        values.put(FeedReaderDbHelper.PATIENT_AGE,age);
+        values.put(FeedReaderDbHelper.PATIENT_HEIGHT,height);
+        values.put(FeedReaderDbHelper.PATIENT_WEIGHT,weight);
+
+
+        values.put(FeedReaderDbHelper.PATIENT_RACE,patRace);
+        values.put(FeedReaderDbHelper.PATIENT_PACEMAKER,pacemaker);
+
+        values.put(FeedReaderDbHelper.PATIENT_DRUG1,drug1);
+        values.put(FeedReaderDbHelper.PATIENT_DRUG2,drug2);
+
+        values.put(FeedReaderDbHelper.PATIENT_CLINICAL_DIAGNOSIS,clinicDiag);
+
+        values.put(FeedReaderDbHelper.PATIENT_SYSTOLIC_DATA,systolic);
+        values.put(FeedReaderDbHelper.PATIENT_DIABOLIC_DATA,diabolic);
+
+        values.put(FeedReaderDbHelper.PATIENT_CONSULTATTION_DOC,consulDoc);
+        values.put(FeedReaderDbHelper.PATIENT_REF_DOC,refDoc);
+
+
+        values.put(FeedReaderDbHelper.PATIENT_ECG_DATA,ecg);
         return values;
 
     }
 
 
+    private static ContentValues addPatientData1(String uName,String patname, String patid, String test_time,String ecg)
+    {
+        ContentValues values = new ContentValues();
+        values.put(FeedReaderDbHelper.USER_NAME,uName);
+        values.put(FeedReaderDbHelper.PATIENT_NAME,patname);
+        values.put(FeedReaderDbHelper.PATIENT_ID,patid);
+        values.put(FeedReaderDbHelper.PATIENT_TEST_TIME,test_time);
 
 
+        values.put(FeedReaderDbHelper.PATIENT_ECG_DATA,ecg);
+        return values;
+
+    }
+
+
+    public static int getColorWrapper(Context context, int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getColor(id);
+        } else {
+            //noinspection deprecation
+            return context.getResources().getColor(id);
+        }
+    }
 
 }

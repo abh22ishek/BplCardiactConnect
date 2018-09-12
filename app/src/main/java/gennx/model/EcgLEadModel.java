@@ -15,7 +15,13 @@ public class EcgLEadModel implements Serializable{
     List<String> EcgLeadV4;
     List<String> EcgLeadV5;
     List<String> EcgLeadV6;
+
+
     private static final long serialVersionUID = 142L;
+
+
+
+
     public List<String> getEcgLead1() {
         return EcgLead1;
     }

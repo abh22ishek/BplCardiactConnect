@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/sharePng"
+            android:icon="@color/button_color"
+            android:title="@string/share_png" />
+
+
+    <item
+        android:id="@+id/sharePDF"
+        android:icon="@color/button_color"
+        android:title="@string/share_hl" />
+
+
+    <item
+        android:id="@+id/shareHL7"
+        android:icon="@color/button_color"
+        android:title="@string/share_hl" />
+
+
+    <item
+        android:id="@+id/savePng"
+        android:icon="@color/button_color"
+        android:title="@string/save_png" />
+
+
+    <item
+        android:id="@+id/savePdf"
+        android:icon="@color/button_color"
+        android:title="@string/save_pdf" />
+
+
+    <item
+        android:id="@+id/saveHl7"
+        android:icon="@color/button_color"
+        android:title="@string/save_hl" />
+
+
+
+</menu>

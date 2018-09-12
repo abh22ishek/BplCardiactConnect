@@ -13,6 +13,7 @@ import constants.*;
 import login.fragment.*;
 import model.*;
 import patient.list.*;
+import utility.*;
 
 
 public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerView.CustomViewHolder>{
@@ -46,7 +47,7 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull  CustomViewHolder holder,  int position) {
+    public void onBindViewHolder(@NonNull final CustomViewHolder holder, int position) {
 
 
        final int pos=position;
@@ -63,9 +64,7 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
         if(iselection)
         {
             holder.checkBox.setVisibility(View.VISIBLE);
-            holder.patAge.setVisibility(View.INVISIBLE);
-            holder.patSex.setVisibility(View.INVISIBLE);
-            holder.patRace.setVisibility(View.INVISIBLE);
+
         }
 
 
@@ -103,6 +102,13 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
             }
 
 
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.layout.setBackgroundColor(Utility.getColorWrapper(context,R.color.header_itltle_color));
+                    loginActivityListner.onDataPass(Constants.SHOW_ECG_DATA);
+                }
+            });
 
 
 
@@ -136,6 +142,7 @@ public class PatientRecyclerView extends RecyclerView.Adapter<PatientRecyclerVie
        this. patSex=view.findViewById(R.id.patSex);
         this.patRace=view.findViewById(R.id.patRace);
         this.checkBox=view.findViewById(R.id.checkBox);
+
 
 
 

@@ -27,4 +27,14 @@ public class ClassConstants {
     public static final String ECG_DISPALY_FRAGMENT= ECGDisplayFragment.class.getName();
 
 
+    public static final String PATIENT_PROFILE_FRAGMENT= PatientProfileFragment.class.getName();
+
+    public static final String EXISTING_PATIENT_FRAGMENT= ExistingPatientFragment.class.getName();
+
+
+    public static final String ECG_GRAPH_FRAGMENT= EcgGraphFragment.class.getName();
+
+    public static final String ECG_GRAPH_VIEW_FRAGMENT= EcgGraphViewFragment.class.getName();
+
+
 }

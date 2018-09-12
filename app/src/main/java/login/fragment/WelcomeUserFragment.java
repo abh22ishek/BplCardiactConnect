@@ -68,6 +68,7 @@ public class WelcomeUserFragment extends Fragment {
 
             mUsername = getArguments().getString(Constants.USER_NAME);
             welcomeText.setText("Welcome "+mUsername);
+            Constants.Logged_User_ID=mUsername;
 
         }
 
@@ -181,7 +182,6 @@ public class WelcomeUserFragment extends Fragment {
         Bundle bundle =new Bundle();
         bundle.putString(Constants.USER_NAME,"");
         signUpFragment.setArguments(bundle);
-
         fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
 

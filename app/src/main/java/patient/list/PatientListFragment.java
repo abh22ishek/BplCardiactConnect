@@ -12,6 +12,7 @@ import java.util.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
+import database.*;
 import logger.*;
 
 import login.fragment.*;
@@ -52,13 +53,11 @@ private List<PatientModel> patientListSortedByName;
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loginActivityListner.onDataPass(ClassConstants.PATIENT_LIST_FRAGMENT);
-       loginActivityListner.OnCurrentFragment(ClassConstants.PATIENT_LIST_FRAGMENT);
+        loginActivityListner.OnCurrentFragment(ClassConstants.PATIENT_LIST_FRAGMENT);
 
         if((Objects.requireNonNull(getArguments())).getString(Constants.SORT_BY)!=null){
             soretedVal= getArguments().getString(Constants.SORT_BY);
         }
-
-
         populateRecyclerView();
 
     }
@@ -94,65 +93,29 @@ private List<PatientModel> patientListSortedByName;
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerViewAdapter);
 
-
-    }
+        }
 
 
 
     private List<PatientModel> PatientModelList;
-
-
-
     private List<PatientModel> populatePatientList()
     {
        PatientModelList=new ArrayList<>();
 
 
-           PatientModelList.add(new PatientModel(111111,"Patient 1",27,"Male","Asian",
-                    " Doc 1","Doc 2"));
-        PatientModelList.add(new PatientModel(111122,"Patient 2",23,"Male","Asian",
-                " Doc 1","Doc 2"));
-        PatientModelList.add(new PatientModel(111134,"Patient 3",24,"Female","Asian",
-                " Doc 1","Doc 2"));
+            try {
+                DatabaseManager.getInstance().openDatabase();
+                PatientModelList= DatabaseManager.getInstance().getAllPatientsFromDB();
 
-        PatientModelList.add(new PatientModel(999999,"Mr. Prembrooke",37,"Male","Asian",
-                " Doc 1","Doc 2"));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-        PatientModelList.add(new PatientModel(555555,"Angelica D",45,"Female","Asian",
-                " Doc 1","Doc 2"));
-
-        PatientModelList.add(new PatientModel(121453,"Robinson J",19,"Male","Asian",
-                " Doc 1","Doc 2"));
-
-
-        PatientModelList.add(new PatientModel(111190,"Patient 4",44,"Male","Asian",
-                " Doc 1","Doc 2"));
-
-        PatientModelList.add(new PatientModel(111199,"Akash Mishra",65,"Male","Asian",
-                " Doc 1","Doc 2"));
-
-        PatientModelList.add(new PatientModel(111222,"Yasmeen Apse",21,"Male","Asian",
-                " Doc 1","Doc 2"));
-
-        PatientModelList.add(new PatientModel(128924,"Mickey Mouse",98,"Male","Asian",
-                " Doc 1","Doc 2"));
-
-        PatientModelList.add(new PatientModel(329321,"Donald Duck",12,"Male","Asian",
-                " Doc 1","Doc 2"));
-        PatientModelList.add(new PatientModel(121323,"Snowhite 1",53,"Female","Indian",
-                " Doc 1","Doc 2"));
-        PatientModelList.add(new PatientModel(111189,"Snowwhite 2",23,"Female","Indian",
-                " Doc 1","Doc 2"));
-
-        PatientModelList.add(new PatientModel(111490,"Mrs Johnson",45,"Male","Asian",
-                " Doc 1","Doc 2"));
-        PatientModelList.add(new PatientModel(111143,"Rosa Park",43,"Female","American",
-                " Doc 1","Doc 2"));
+            return PatientModelList;
 
 
 
 
-        return PatientModelList;
     }
 
 
@@ -167,7 +130,6 @@ private List<PatientModel> patientListSortedByName;
             patientListSortedByName.add(str);
         }
 
-
         return patientListSortedByName;
     }
 
@@ -181,8 +143,7 @@ private List<PatientModel> patientListSortedByName;
             Logger.log(Level.DEBUG, ClassConstants.PATIENT_LIST_FRAGMENT,"Sort BY AGE---))"+str);
 
             patientListSortedByAGE.add(str);
-
-        }
+            }
         return patientListSortedByAGE;
     }
 
@@ -194,10 +155,11 @@ private List<PatientModel> patientListSortedByName;
 
         for(PatientModel str: patientModelList){
             Logger.log(Level.DEBUG, ClassConstants.PATIENT_LIST_FRAGMENT,"Sort BY ID---))"+str);
-
             patientListSortedByID.add(str);
 
         }
+
+
         return patientListSortedByID;
     }
 

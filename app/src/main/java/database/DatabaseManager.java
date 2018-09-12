@@ -7,11 +7,29 @@ import android.database.sqlite.*;
 import java.util.*;
 
 import logger.*;
+import model.*;
 
 import static database.FeedReaderDbHelper.PASSWORD;
+import static database.FeedReaderDbHelper.PATIENT_AGE;
+import static database.FeedReaderDbHelper.PATIENT_CLINICAL_DIAGNOSIS;
+import static database.FeedReaderDbHelper.PATIENT_CONSULTATTION_DOC;
+import static database.FeedReaderDbHelper.PATIENT_DIABOLIC_DATA;
+import static database.FeedReaderDbHelper.PATIENT_DRUG1;
+import static database.FeedReaderDbHelper.PATIENT_DRUG2;
+import static database.FeedReaderDbHelper.PATIENT_GENDER;
+import static database.FeedReaderDbHelper.PATIENT_HEIGHT;
+import static database.FeedReaderDbHelper.PATIENT_ID;
+import static database.FeedReaderDbHelper.PATIENT_NAME;
+import static database.FeedReaderDbHelper.PATIENT_PACEMAKER;
+import static database.FeedReaderDbHelper.PATIENT_RACE;
+import static database.FeedReaderDbHelper.PATIENT_REF_DOC;
+import static database.FeedReaderDbHelper.PATIENT_SYSTOLIC_DATA;
+import static database.FeedReaderDbHelper.PATIENT_TEST_TIME;
+import static database.FeedReaderDbHelper.PATIENT_WEIGHT;
 import static database.FeedReaderDbHelper.SECURITY_Q_1;
 import static database.FeedReaderDbHelper.SECURITY_Q_2;
 import static database.FeedReaderDbHelper.SECURITY_Q_3;
+import static database.FeedReaderDbHelper.TABLE_NAME_PATIENT_PROFILE;
 import static database.FeedReaderDbHelper.TABLE_NAME_USERS;
 import static database.FeedReaderDbHelper.USER_NAME;
 
@@ -238,7 +256,51 @@ public class DatabaseManager {
     }
 
 
+    public boolean isPatientIdExists(String patientId)
+    {
+        boolean b=false;
 
+        Cursor cursor=null;
+        try{
+            cursor=mDatabase.query(FeedReaderDbHelper.TABLE_NAME_PATIENT_PROFILE, null,
+                    PATIENT_ID+"=?", new String[]{patientId}, null,
+                    null, null);
+
+            Logger.log(Level.INFO, "Get count of username exists=", "" +  cursor.getCount());
+            if(cursor.getCount()>=1)
+            {
+                b=true;
+                Logger.log(Level.INFO,TAG,"Patient Id already exists inside table");
+
+            }
+
+            return b;
+        }
+
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        finally {
+            try {
+                if(cursor!=null)
+                    cursor.close();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+
+
+
+
+        Logger.log(Level.INFO,TAG,"Patient Id  is new  inside table");
+        return b;
+
+
+    }
 
     // to update password into the database
 
@@ -250,4 +312,65 @@ public class DatabaseManager {
     }
 
 
+
+
+
+    public List<PatientModel> getAllPatientsFromDB()
+    {
+        List<PatientModel> patientModelList=new ArrayList<>();
+
+        Cursor cursor;
+
+           // cursor=mDatabase.query(TABLE_NAME_PATIENT_PROFILE,
+               //     null,USER_NAME_+"=?",new String[]{username},null,null,null);
+
+          cursor = mDatabase.rawQuery("select * from " + TABLE_NAME_PATIENT_PROFILE, null);
+
+        Logger.log(Level.DEBUG, TAG, TABLE_NAME_PATIENT_PROFILE+"(((Get profile count=)))" + cursor.getCount()+"--column count" +
+                +cursor.getColumnCount()+"");
+
+
+        while (cursor.moveToNext())
+        {
+            PatientModel m=new PatientModel();
+            m.setPatName(cursor.getString(cursor.getColumnIndex(PATIENT_NAME)));
+           // m.setUserName(cursor.getString(cursor.getColumnIndex(USER_NAME_)));
+            m.setPatId(cursor.getInt(cursor.getColumnIndex(PATIENT_ID)));
+            m.setTime(cursor.getString(cursor.getColumnIndex(PATIENT_TEST_TIME)));
+            m.setGender(cursor.getString(cursor.getColumnIndex(PATIENT_GENDER)));
+            m.setPatAge(cursor.getInt(cursor.getColumnIndex(PATIENT_AGE)));
+
+            m.setHeight(cursor.getString(cursor.getColumnIndex(PATIENT_HEIGHT)));
+            m.setWeight(cursor.getString(cursor.getColumnIndex(PATIENT_WEIGHT)));
+
+
+
+            m.setPatRace(cursor.getString(cursor.getColumnIndex(PATIENT_RACE)));
+            m.setPacemaker(cursor.getString(cursor.getColumnIndex(PATIENT_PACEMAKER)));
+
+            m.setDrug1(cursor.getString(cursor.getColumnIndex(PATIENT_DRUG1)));
+            m.setDrug2(cursor.getString(cursor.getColumnIndex(PATIENT_DRUG2)));
+
+            m.setClinicDiagnosis(cursor.getString(cursor.getColumnIndex(PATIENT_CLINICAL_DIAGNOSIS)));
+            m.setSystolic(cursor.getString(cursor.getColumnIndex(PATIENT_SYSTOLIC_DATA)));
+
+            m.setDiabolic(cursor.getString(cursor.getColumnIndex(PATIENT_DIABOLIC_DATA)));
+            m.setConsultName(cursor.getString(cursor.getColumnIndex(PATIENT_CONSULTATTION_DOC)));
+
+            m.setPatRefDoc(cursor.getString(cursor.getColumnIndex(PATIENT_REF_DOC)));
+
+
+
+
+
+            patientModelList.add(m);
+        }
+
+        cursor.close();
+
+
+        Logger.log(Level.DEBUG, TAG, "patientModelList length=" + patientModelList.size());
+
+        return patientModelList;
+    }
 }
