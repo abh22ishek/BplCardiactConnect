@@ -41,7 +41,8 @@ public class ECGDisplayFragment extends Fragment {
     List<EcgLEadModel> ecgLEadModelList;
     ScrollView iv_scroll;
     FabSpeedDial fabSpeedDial;
-
+    private ArrayList<Integer> LeadI,Lead4,Lead5,Lead6;
+    private ArrayList<Integer> LeadX11,LeadII,LeadIII,LeadaVR,LeadV11,LeadVIII,LeadIX,LeadX,LeadXI;
 
 
     @Override
@@ -74,6 +75,21 @@ public class ECGDisplayFragment extends Fragment {
 
 
 
+        computeLead1ECG(ecgLEadModelList.get(0).getEcgLead1());
+
+        //
+        computeLead2ECG(ecgLEadModelList.get(0).getEcgLead2());
+        computeLead7ECG(ecgLEadModelList.get(0).getEcgLeadV1());
+       // computeLead7ECG(ecgLEadModelList.get(0).getEcgLeadV1());
+        computeLead8ECG(ecgLEadModelList.get(0).getEcgLeadV2());
+        computeLead9ECG(ecgLEadModelList.get(0).getEcgLeadV3());
+        computeLead10ECG(ecgLEadModelList.get(0).getEcgLeadV4());
+        computeLead11ECG(ecgLEadModelList.get(0).getEcgLeadV5());
+        computeLead12ECG(ecgLEadModelList.get(0).getEcgLeadV6());
+
+
+
+
         fabSpeedDial.setMenuListener(new SimpleMenuListenerAdapter() {
             @Override
             public boolean onPrepareMenu(NavigationMenu navigationMenu) {
@@ -88,8 +104,8 @@ public class ECGDisplayFragment extends Fragment {
                 //TODO: Start some activity
                 if(menuItem.getItemId()==R.id.savePng)
                 {
-                    //captureScreen("Big boss ","small");
-                    ecgGraphView.clearCanvas();
+                    captureScreen("Big boss ","small");
+                  //  ecgGraphView.clearCanvas();
 
                 }else if(menuItem.getItemId()==R.id.savePdf)
                 {
@@ -105,7 +121,7 @@ public class ECGDisplayFragment extends Fragment {
 
 
 
-        Thread t = new Thread() {
+      /*  Thread t = new Thread() {
 
             @Override
             public void run() {
@@ -130,7 +146,7 @@ public class ECGDisplayFragment extends Fragment {
             }
         };
 
-        t.start();
+        t.start();*/
 
 
     }
@@ -318,6 +334,7 @@ public class ECGDisplayFragment extends Fragment {
                  progressDialog = new ProgressDialog(getActivity());
                  progressDialog.setMessage("Please wait ......");
 
+                 progressDialog.setCancelable(false);
                  progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                  progressDialog.show();
 
@@ -359,8 +376,9 @@ public class ECGDisplayFragment extends Fragment {
         float widthScale = 0;
         float heightScale = 0;
         float graphHeight = 42.51f;
-        String leadArr[]={"I","II","III","aVR","aVL","aVF","V1","V2","V3","V4","V5","V6"};
 
+
+        String leadArr[]={"V6","V5","V4","V3","V2","V1","aVF","aVL","aVR","III","II","I"};
 
 
         float page_height = page.getMediaBox().getHeight();
@@ -369,7 +387,7 @@ public class ECGDisplayFragment extends Fragment {
 
         PDFBoxResourceLoader.init(getActivity());
 
-        String fileNameDirectory = "ECG_PDF_SNOW";
+        String fileNameDirectory = "BPL_CARDIART";
 
         File file = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath(), fileNameDirectory);
 
@@ -384,7 +402,7 @@ public class ECGDisplayFragment extends Fragment {
 
         String path = "";
         try {
-            path = file + "/" + "SNOWWHITE" + "_" + "_LPP_ECG.pdf";
+            path = file + "/" + "Cardiart" + "_" + "_LPP1_ECG.pdf";
         } catch (Exception e) {
             e.printStackTrace();
             Log.i("***Error in File**", "Unable to get File path");
@@ -493,20 +511,20 @@ public class ECGDisplayFragment extends Fragment {
             // remove second box
 
 
-           /* contentStream.moveTo(rect_width+cursorX-20,marginLowerLine);
+            /*contentStream.moveTo(rect_width+cursorX-20,marginLowerLine);
             contentStream.lineTo(rect_width+cursorX-20,marginUpperLine+15);
-            contentStream.stroke();*/
+            contentStream.stroke();
+*/
 
 
-
-                showGridsForMainEcg(contentStream);
+            showGridsForMainEcg(contentStream);
 
 
 
             // Find out the pixel density
             widthScale = unit_per_cm / (float) 400; // 100 ... 0.28
             // samples per cm
-            heightScale = (float) 392 / unit_per_cm; // pixels  328/63=5.2
+            heightScale = (float) 392/ unit_per_cm; // pixels  328/63=5.2
 
             //float mX=56.69f;
             //float mP1=0f;
@@ -540,7 +558,7 @@ public class ECGDisplayFragment extends Fragment {
 
             float mP12 = 10f, mPp12 = 10f;
 
-            float mX = 60f + unit_per_cm; // add 1 cm to  starting point
+            float mX = 60f+unit_per_cm; // add 1 cm to  starting point
 
             mP1 = mP2 = mP3 = 0;
             mP4 = mP5 = mP6 = mP7 = mP8 = mP9 = mP10 = mP11 = mP12 = 0;
@@ -583,57 +601,8 @@ public class ECGDisplayFragment extends Fragment {
 
             for (int i = 0; i < 10000; i++) {
 
-                if (noOfLeads >= 6) {
-                    mP7 = (7 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i)) / heightScale);
-                    contentStream.setStrokingColor(AWTColor.black);
-                    contentStream.moveTo(mPx7, mPp7);
-                    contentStream.lineTo(mX, mP7);
-                    contentStream.stroke();
 
-                    mPx7 = mX;
-                    mPp7 = mP7;
-
-                }
-
-
-                if (noOfLeads >= 5) {
-
-                    if(i<2000){
-                        mP8 = (8 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i)) / heightScale);
-                        contentStream.setStrokingColor(AWTColor.black);
-                        contentStream.moveTo(mPx8, mPp8);
-                        contentStream.lineTo(mX, mP8);
-                        contentStream.stroke();
-
-                        mPx8 = mX;
-                        mPp8 = mP8;
-                    }
-
-
-                }
-                if (noOfLeads >= 4) {
-
-                    if(i<5900){
-
-                        mP9 = (9 * graphHeight) +(Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i))/ heightScale);
-                        contentStream.setStrokingColor(AWTColor.black);
-                        contentStream.moveTo(mPx9, mPp9);
-                        contentStream.lineTo(mX, mP9);
-                        contentStream.stroke();
-
-                        mPx9 = mX;
-                        mPp9 = mP9;
-
-                    }
-
-
-
-
-                }
-
-
-                if (noOfLeads >= 12) {
-                    mP1 = (1 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i))/ heightScale);
+                mP1 = (1 * graphHeight) + (LeadI.get(i)/ heightScale);
                     contentStream.setStrokingColor(AWTColor.black);
                     contentStream.moveTo(mPx1, mPp1);
                     contentStream.lineTo(mX, mP1);
@@ -642,11 +611,20 @@ public class ECGDisplayFragment extends Fragment {
                     mPx1 = mX;
                     mPp1 = mP1;
 
-                }
+
+                mP2 = (2 * graphHeight) + (LeadII.get(i) / heightScale);
+                contentStream.setStrokingColor(AWTColor.black);
+                contentStream.moveTo(mPx2, mPp2);
+                contentStream.lineTo(mX, mP2);
+                contentStream.stroke();
+
+                mPx2 = mX;
+                mPp2 = mP2;
 
 
-                if (noOfLeads >= 10) {
-                    mP3 = (3 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i)) / heightScale);
+
+
+                    mP3 = (3 * graphHeight) + (LeadI.get(i)/ heightScale);
                     contentStream.setStrokingColor(AWTColor.black);
                     contentStream.moveTo(mPx3, mPp3);
                     contentStream.lineTo(mX, mP3);
@@ -655,24 +633,16 @@ public class ECGDisplayFragment extends Fragment {
                     mPx3 = mX;
                     mPp3 = mP3;
 
-                }
 
 
-                if (noOfLeads >= 11) {
-                    mP2 = (2 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i)) / heightScale);
-                    contentStream.setStrokingColor(AWTColor.black);
-                    contentStream.moveTo(mPx2, mPp2);
-                    contentStream.lineTo(mX, mP2);
-                    contentStream.stroke();
-
-                    mPx2 = mX;
-                    mPp2 = mP2;
-
-                }
 
 
-                if (noOfLeads >= 9) {
-                    mP4 = (4 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i)) / heightScale);
+
+
+
+
+
+                    mP4 = (4 * graphHeight) + (LeadI.get(i) / heightScale);
                     contentStream.setStrokingColor(AWTColor.black);
                     contentStream.moveTo(mPx4, mPp4);
                     contentStream.lineTo(mX, mP4);
@@ -681,10 +651,10 @@ public class ECGDisplayFragment extends Fragment {
                     mPx4 = mX;
                     mPp4 = mP4;
 
-                }
 
-                if (noOfLeads >= 8) {
-                    mP5 = (5 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i)) / heightScale);
+
+
+                    mP5 = (5 * graphHeight) + (LeadI.get(i) / heightScale);
                     contentStream.setStrokingColor(AWTColor.black);
                     contentStream.moveTo(mPx5, mPp5);
                     contentStream.lineTo(mX, mP5);
@@ -693,23 +663,54 @@ public class ECGDisplayFragment extends Fragment {
                     mPx5 = mX;
                     mPp5 = mP5;
 
-                }
-
-                if (noOfLeads >= 7) {
-                    mP6 = (6 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i)) / heightScale);
-                    contentStream.setStrokingColor(AWTColor.black);
-                    contentStream.moveTo(mPx6, mPp6);
-                    contentStream.lineTo(mX, mP6);
-                    contentStream.stroke();
-
-                    mPx6 = mX;
-                    mPp6 = mP6;
-
-                }
 
 
-                if (noOfLeads >= 3) {
-                    mP10 = (10 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i))/ heightScale);
+                mP6 = (6 * graphHeight) + (LeadI.get(i) / heightScale);
+                contentStream.setStrokingColor(AWTColor.black);
+                contentStream.moveTo(mPx6, mPp6);
+                contentStream.lineTo(mX, mP6);
+                contentStream.stroke();
+
+                mPx6 = mX;
+                mPp6 = mP6;
+
+                mP7 = (7 * graphHeight) + (LeadV11.get(i) / heightScale);
+                contentStream.setStrokingColor(AWTColor.black);
+                contentStream.moveTo(mPx7, mPp7);
+                contentStream.lineTo(mX, mP7);
+                contentStream.stroke();
+
+                mPx7 = mX;
+                mPp7 = mP7;
+
+
+
+
+                    // lead 5
+
+                mP8 = (8 * graphHeight) + (LeadVIII.get(i) / heightScale);
+                contentStream.setStrokingColor(AWTColor.black);
+                contentStream.moveTo(mPx8, mPp8);
+                contentStream.lineTo(mX, mP8);
+                contentStream.stroke();
+
+                mPx8 = mX;
+                mPp8 = mP8;
+
+
+
+                // lead 4
+                mP9 = (9 * graphHeight) +(LeadIX.get(i)/ heightScale);
+                contentStream.setStrokingColor(AWTColor.black);
+                contentStream.moveTo(mPx9, mPp9);
+                contentStream.lineTo(mX, mP9);
+                contentStream.stroke();
+
+                mPx9 = mX;
+                mPp9 = mP9;
+
+
+                    mP10 = (10 * graphHeight) + (LeadX.get(i)/ heightScale);
                     contentStream.setStrokingColor(AWTColor.black);
                     contentStream.moveTo(mPx10, mPp10);
                     contentStream.lineTo(mX, mP10);
@@ -718,10 +719,10 @@ public class ECGDisplayFragment extends Fragment {
                     mPx10 = mX;
                     mPp10 = mP10;
 
-                }
 
-                if (noOfLeads >= 2) {
-                    mP11 = (11 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i))/ heightScale);
+
+
+                    mP11 = (11 * graphHeight) + (LeadXI.get(i)/ heightScale);
                     contentStream.setStrokingColor(AWTColor.black);
                     contentStream.moveTo(mPx11, mPp11);
                     contentStream.lineTo(mX, mP11);
@@ -730,10 +731,10 @@ public class ECGDisplayFragment extends Fragment {
                     mPx11 = mX;
                     mPp11 = mP11;
 
-                }
 
-                if (noOfLeads >= 1) {
-                    mP12 = (12 * graphHeight) + (Integer.parseInt(ecgLEadModelList.get(0).getEcgLeadV1().get(i)) / heightScale);
+
+
+                    mP12 = (12 * graphHeight) + (LeadX11.get(i) / heightScale);
                     contentStream.setStrokingColor(AWTColor.black);
                     contentStream.moveTo(mPx12, mPp12);
                     contentStream.lineTo(mX, mP12);
@@ -742,7 +743,7 @@ public class ECGDisplayFragment extends Fragment {
                     mPx12 = mX;
                     mPp12 = mP12;
 
-                }
+
 
                 mX = mX + widthScale;
                 // System.out.println("count mx="+count++  +"mX value="+mX);
@@ -752,17 +753,20 @@ public class ECGDisplayFragment extends Fragment {
 
 
             cursorX = 60;
-            for (int x = 1; x <= leadArr.length; x++) {
+            for (int x =0; x<leadArr.length; x++) {
                 contentStream.setNonStrokingColor(0, 0, 0); //black text
                 contentStream.beginText();
                 contentStream.setFont(font, 10);
                 if (x == 7) {
-                    contentStream.moveTextPositionByAmount(cursorX, (x * graphHeight));
-                } else {
-                    contentStream.moveTextPositionByAmount(cursorX, (x * graphHeight) + 4f);
+                    contentStream.moveTextPositionByAmount(cursorX, ((x+1) * graphHeight));
+                }
+                else
+                {
+                    contentStream.moveTextPositionByAmount(cursorX, ((x+1) * graphHeight) + 4f);
                 }
 
-                contentStream.drawString(leadArr[x - 1]);
+                Logger.log(Level.DEBUG,"==",leadArr[x] +" Y pos="+(x+1)*graphHeight);
+                contentStream.drawString(leadArr[x]);
                 contentStream.endText();
             }
 
@@ -831,5 +835,339 @@ public class ECGDisplayFragment extends Fragment {
         }
 
 
+    }
+
+
+
+
+    private List<Integer> computeLead1ECG(List<String> EcgLead) {
+        LeadI = new ArrayList<>();
+        int index = 0;
+        int sample = 0;
+        for (String str : EcgLead) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //   sample = sample / 2;
+
+                    LeadI.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+
+
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadI.size());
+        return LeadI;
+    }
+
+
+    private List<Integer> computeLead2ECG(List<String> EcgLead2) {
+        LeadII = new ArrayList<>();
+        int index = 0, sample = 0;
+        for (String str : EcgLead2) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //  sample = sample / 2;
+
+                    LeadII.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadII.size());
+        return LeadII;
+    }
+
+
+    private List<Integer> computeLead3ECG(int EcgLead3[]) {
+        LeadIII = new ArrayList<>();
+        int index = 0,sample=0;
+        for (int i=0;i<EcgLead3.length;i++) {
+
+            try {
+
+                sample=EcgLead3[i];
+                sample = sample * 2;
+                sample = sample / 3;
+                LeadIII.add(sample);
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                Log.i("Print i=", "" + index);
+            }
+
+
+            if (index > 10001)
+                break;
+        }
+
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadIII.size());
+        return LeadIII;
+    }
+
+
+    private List<Integer> computeLeadaVRECG(List<String> EcgLeadaVR) {
+        LeadaVR = new ArrayList<>();
+        int index = 0, sample = 0;
+        for (String str : EcgLeadaVR) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //   sample = sample / 2;
+
+                    LeadaVR.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadaVR.size());
+        return LeadaVR;
+    }
+
+
+    private List<Integer> computeLead7ECG(List<String> EcgLead7) {
+        LeadV11 = new ArrayList<>();
+        int index = 0, sample = 0;
+        for (String str : EcgLead7) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //  sample = sample / 2;
+
+
+                    LeadV11.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadV11.size());
+        return LeadV11;
+    }
+
+
+    private List<Integer> computeLead8ECG(List<String> EcgLead8) {
+        LeadVIII = new ArrayList<>();
+        int index = 0, sample = 0;
+        for (String str : EcgLead8) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //sample = sample / 2;
+
+
+                    LeadVIII.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadVIII.size());
+        return LeadVIII;
+    }
+
+
+
+    private List<Integer> computeLead9ECG(List<String> EcgLead9) {
+        LeadIX = new ArrayList<>();
+        int index = 0, sample = 0;
+        for (String str : EcgLead9) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //   sample = sample / 2;
+
+                    LeadIX.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadIX.size());
+        return LeadIX;
+    }
+
+
+    private List<Integer> computeLead10ECG(List<String> EcgLead10) {
+        LeadX = new ArrayList<>();
+        int index = 0, sample = 0;
+        for (String str : EcgLead10) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //  sample = sample / 2;
+
+
+                    LeadX.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadX.size());
+        return LeadX;
+    }
+
+
+    private List<Integer> computeLead11ECG(List<String> EcgLead11) {
+        LeadXI = new ArrayList<>();
+        int index = 0, sample = 0;
+
+        for (String str : EcgLead11) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //  sample = sample / 2;
+
+
+                    LeadXI.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadXI.size());
+        return LeadXI;
+    }
+
+
+    private List<Integer> computeLead12ECG(List<String> EcgLead12) {
+        LeadX11 = new ArrayList<>();
+        int index = 0, sample = 0;
+        for (String str : EcgLead12) {
+            if (str != null && !str.isEmpty()) {
+                index++;
+                try {
+
+                    sample = Integer.parseInt(str) - 2048;
+
+                    sample = sample * 2;
+                    sample = sample / 3;
+                    //   sample = sample / 2;
+                    LeadX11.add(sample);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.i("value ", "" + str);
+                    Log.i("Print i=", "" + index);
+                }
+
+
+                if (index > 10001)
+                    break;
+            }
+        }
+
+
+        Log.i("Ecg lead length -2048 =", "" + LeadX11.size());
+        return LeadX11;
     }
 }

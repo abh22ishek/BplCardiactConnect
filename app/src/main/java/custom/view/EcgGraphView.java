@@ -41,9 +41,19 @@ public class EcgGraphView extends View {
     int cursorX=0;
     int cursorY=0;
 
-    Canvas canvas;
+    Canvas mCanvas;
 
+    Bitmap mGraphImg;
+    /** The r1. */
+    private Rect r1;
 
+    /** The r2. */
+    private Rect r2;
+
+    /** The r3. */
+    private Rect r3;
+
+    boolean mDoPaint;
     public EcgGraphView(Context context) {
         super(context);
         init();
@@ -66,10 +76,38 @@ public class EcgGraphView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas mCanvas) {
-        super.onDraw(mCanvas);
+    protected void onDraw(Canvas c) {
+        super.onDraw(c);
+        if (null == mGraphImg) {
+            /*
+             * Used Bitmap.Config.ALPHA_8 instead Bitmap.Config.ARGB_8888 to
+             * avoid OutOfMemory exception in the application on various phones
+             * for example (Samsung Note 2,Micromax Bolt, LG Optimal)
+             */
+            mGraphImg = Bitmap.createBitmap(this.getWidth(), this.getHeight(),
+                    Bitmap.Config.ALPHA_8);
+        }
+        if (null == mCanvas) {
+            mCanvas = new Canvas(mGraphImg);
+        }
 
-        canvas=mCanvas;
+        if (null == r1) {
+            r1 = new Rect(0, 0, getWidth(), getHeight());
+        }
+
+        if (null == r2) {
+            r2 = new Rect(0, 0, getWidth(), getHeight());
+        }
+
+        if (null == r3) {
+            r3 = new Rect(0, 0, getWidth(), getHeight());
+        }
+
+
+        if (null != mGraphImg && mDoPaint) {
+            c.drawBitmap(mGraphImg, r1, r2, mPaint);
+            return;
+        }
 
         // mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(1);// default value
@@ -82,7 +120,8 @@ public class EcgGraphView extends View {
         // samples per cm
         final float heightScale = Constants.AMPLITUDE_PER_CM / mPixelsPerCm; // pixels
 
-
+        mPaint.setColor(0X0082CB00);
+        mCanvas.drawRect(r3, mPaint);
         //cursorX=42f;
         cursorX=20;
         cursorY=2*mPixelsPerCm;
@@ -328,6 +367,9 @@ public class EcgGraphView extends View {
             mPx1 = mPx2 = mPx3 = mPx4 = mPx5 = mPx6 = mPx7 = mPx8 = mPx9 = mPx10 = mPx11 = mPx12 = mX;
         }
 
+
+        c.drawBitmap(mGraphImg, r1, r2, mPaint);
+        mDoPaint=true;
     }
 
 
@@ -363,7 +405,8 @@ public class EcgGraphView extends View {
         {
             try {
 
-                canvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+                mCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+                mDoPaint=false;
 
 
 

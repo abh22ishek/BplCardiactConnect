@@ -23,11 +23,23 @@ public class RealTimeEcgView extends View {
     int width;
     int height;
 
+    Canvas mCanvas;
 
+    Bitmap mGraphImg;
+    /** The r1. */
+    private Rect r1;
+
+    /** The r2. */
+    private Rect r2;
+
+    /** The r3. */
+    private Rect r3;
+
+    boolean mDoPaint;
     int count=0;
 
     List<Float> floatListpoints;
-    private Float[] points;
+    private float[] points;
 
     public RealTimeEcgView(Context context) {
         super(context);
@@ -59,8 +71,38 @@ public class RealTimeEcgView extends View {
 
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    protected void onDraw(Canvas c) {
+        super.onDraw(c);
+        if (null == mGraphImg) {
+            /*
+             * Used Bitmap.Config.ALPHA_8 instead Bitmap.Config.ARGB_8888 to
+             * avoid OutOfMemory exception in the application on various phones
+             * for example (Samsung Note 2,Micromax Bolt, LG Optimal)
+             */
+            mGraphImg = Bitmap.createBitmap(this.getWidth(), this.getHeight(),
+                    Bitmap.Config.ALPHA_8);
+        }
+        if (null == mCanvas) {
+            mCanvas = new Canvas(mGraphImg);
+        }
+
+        if (null == r1) {
+            r1 = new Rect(0, 0, getWidth(), getHeight());
+        }
+
+        if (null == r2) {
+            r2 = new Rect(0, 0, getWidth(), getHeight());
+        }
+
+        if (null == r3) {
+            r3 = new Rect(0, 0, getWidth(), getHeight());
+        }
+
+
+        if (null != mGraphImg && mDoPaint) {
+            c.drawBitmap(mGraphImg, r1, r2, mPaint);
+            return;
+        }
 
          width=getWidth();
          height=getHeight();
@@ -70,8 +112,11 @@ public class RealTimeEcgView extends View {
         //
 
         mPaint.setStrokeWidth(10f);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(0X0082CB00);
 
+
+
+        mCanvas.drawRect(r3, mPaint);
         int baseXpoint=mPixelsPerCm;
         int fixedSamplesofXaxis=400;
 
@@ -85,13 +130,16 @@ public class RealTimeEcgView extends View {
 
 
 
-
-            canvas.drawPoint(xValue,yValue+baseXpoint,mPaint);
-
-
+         mPaint.setColor(Color.CYAN);
+         mCanvas.drawPoint(xValue,yValue+baseXpoint,mPaint);
 
 
 
+
+         Logger.log(Level.DEBUG,":)","Hello OnDraw()");
+
+        c.drawBitmap(mGraphImg, r1, r2, mPaint);
+        mDoPaint=true;
     }
 
 
@@ -103,27 +151,44 @@ public class RealTimeEcgView extends View {
         count++;
         yValue=y;
         floatListpoints.add((float) y);
-        if(xValue<width)
-        {
-            xValue++;
+        if(xValue>width) {
 
-        }else{
             floatListpoints.clear();
-            xValue=0;
+            xValue = 0;
+            clearCanvas();
         }
 
-        Logger.log(Level.DEBUG,"--","floatListpoints list size="+floatListpoints.size());
-        newFloatArray(floatListpoints.size());
+        xValue++;
+      //  Logger.log(Level.DEBUG,"--","floatListpoints list size="+floatListpoints.size());
+        mDoPaint=false;
+        invalidate();
+
+        //newFloatArray(floatListpoints.size());
 
     }
 
 
-    public Float[] newFloatArray(int size) {
+    public float[] newFloatArray(int size) {
      //    points = new float[size];
 
-         points=floatListpoints.toArray(new Float[size]);
+       //  points=floatListpoints.toArray(new Float[size]);
         Logger.log(Level.DEBUG,"--","points array size="+points.length);
         invalidate();
         return points;
     }
+
+
+    public void clearCanvas()
+    {
+        try {
+
+            mCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+            mDoPaint=false;
+
+            }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 }

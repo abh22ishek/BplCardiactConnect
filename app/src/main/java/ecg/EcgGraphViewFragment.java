@@ -5,11 +5,14 @@ import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
 import android.view.*;
+import android.widget.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import logger.*;
 import login.fragment.*;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class EcgGraphViewFragment extends Fragment {
 
@@ -31,6 +34,10 @@ public class EcgGraphViewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ecg_graph_view, container, false);
         realTimeEcgView = view.findViewById(R.id.realTimeEcgView);
+        final RealTimeEcgView v = new RealTimeEcgView(getActivity());
+        final RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT,
+                MATCH_PARENT);
+        v.setLayoutParams(lp);
         return view;
 
     }
@@ -45,6 +52,7 @@ public class EcgGraphViewFragment extends Fragment {
 
 
 
+
         Thread t = new Thread() {
 
             @Override
@@ -52,6 +60,7 @@ public class EcgGraphViewFragment extends Fragment {
                 try {
                     while (!isInterrupted()) {
                         Thread.sleep(3000);
+
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -59,6 +68,7 @@ public class EcgGraphViewFragment extends Fragment {
 
                                 for(int i=0;i<LeadData.LEADArray.length;i++){
                                     realTimeEcgView.drawpoints(LeadData.LEADArray[i]);
+
                                 }
 
                             }
@@ -68,6 +78,7 @@ public class EcgGraphViewFragment extends Fragment {
                 }
             }
         };
+
 
         t.start();
 
