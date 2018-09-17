@@ -32,7 +32,7 @@ public class SplashScreenActivity extends Activity {
             decorView.setSystemUiVisibility(uiOptions);
             setContentView(R.layout.activity_splash_screen);
 
-        globalVariable = (BaseApplicationClass) getApplicationContext();
+            globalVariable = (BaseApplicationClass) getApplicationContext();
 
     }
 

@@ -18,10 +18,15 @@ public class RealTimeEcgView extends View {
     public  String leadArr[]={"I","II","III","aVR","aVL","aVF","V1","V2","V3","V4","V5","V6"};
 
     float xMargin;
-    float yValue;
-    float xValue;
-    int width;
-    int height;
+    float yValue=0;
+    float xValue=0;
+
+    float newYValue=0;
+    float newXvalue=0;
+
+
+    int mWidth;
+    int mHeight;
 
     Canvas mCanvas;
 
@@ -38,9 +43,13 @@ public class RealTimeEcgView extends View {
     boolean mDoPaint;
     int count=0;
 
+    int baseXpoint=0;
     List<Float> floatListpoints;
     private float[] points;
+    boolean mSizechanged;
 
+    Path mPath;
+     float heightScale;
     public RealTimeEcgView(Context context) {
         super(context);
         init();
@@ -62,23 +71,29 @@ public class RealTimeEcgView extends View {
 
     private void init() {
         mPaint = new Paint();
-        floatListpoints=new ArrayList<>();
+       // floatListpoints=new ArrayList<>();
         final float density = getResources().getDisplayMetrics().densityDpi;
 
         mPixelsPerCm = (int) (density / Constants.CMS_PER_INCH + 0.5f);
 
+      heightScale = Constants.AMPLITUDE_PER_CM / mPixelsPerCm; //
         }
 
 
     @Override
     protected void onDraw(Canvas c) {
-        super.onDraw(c);
-        if (null == mGraphImg) {
-            /*
-             * Used Bitmap.Config.ALPHA_8 instead Bitmap.Config.ARGB_8888 to
+
+
+        if(pxCount<=1)
+        {
+            return;
+        }
+      if (null == mGraphImg) {
+
+             /** Used Bitmap.Config.ALPHA_8 instead Bitmap.Config.ARGB_8888 to
              * avoid OutOfMemory exception in the application on various phones
              * for example (Samsung Note 2,Micromax Bolt, LG Optimal)
-             */
+            */
             mGraphImg = Bitmap.createBitmap(this.getWidth(), this.getHeight(),
                     Bitmap.Config.ALPHA_8);
         }
@@ -92,6 +107,7 @@ public class RealTimeEcgView extends View {
 
         if (null == r2) {
             r2 = new Rect(0, 0, getWidth(), getHeight());
+
         }
 
         if (null == r3) {
@@ -99,71 +115,107 @@ public class RealTimeEcgView extends View {
         }
 
 
-        if (null != mGraphImg && mDoPaint) {
+        if (null != mGraphImg && mDoPaint && !mDrawPoints) {
             c.drawBitmap(mGraphImg, r1, r2, mPaint);
             return;
         }
 
-         width=getWidth();
-         height=getHeight();
+
+
 
 
 
         //
 
-        mPaint.setStrokeWidth(10f);
+
         mPaint.setColor(0X0082CB00);
 
 
 
         mCanvas.drawRect(r3, mPaint);
-        int baseXpoint=mPixelsPerCm;
+
         int fixedSamplesofXaxis=400;
 
-         xMargin=width/fixedSamplesofXaxis;
-
-
-
-         baseXpoint=height/2;
 
 
 
 
 
-         mPaint.setColor(Color.CYAN);
-         mCanvas.drawPoint(xValue,yValue+baseXpoint,mPaint);
+
+
+        mPaint.setColor(Color.WHITE);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(2f);
+        mPaint.setAntiAlias(true);
+        Logger.log(Level.DEBUG,":)","Hello OnDraw()");
+
+
+        if(mDrawPoints){
+
+
+
+            yValue=baseXpoint;
+
+            newXvalue++;
+
+            for(int i=0;i<floatListpoints.size();i++){
+               // mCanvas.drawPoint(xValue,yValue+baseXpoint,mPaint);
+                newYValue=floatListpoints.get(i);
+                float newxy=(newYValue+baseXpoint);
+                mCanvas.drawLine(xValue,yValue,newXvalue,newxy,mPaint);
+
+                xValue=newXvalue;
+                yValue=newYValue+baseXpoint;
+                newXvalue+=10;
+            }
+            Logger.log(Level.DEBUG,"--","floatListpoints list size="+floatListpoints.size());
 
 
 
 
-         Logger.log(Level.DEBUG,":)","Hello OnDraw()");
+            c.drawBitmap(mGraphImg, r1, r2, mPaint);
 
-        c.drawBitmap(mGraphImg, r1, r2, mPaint);
-        mDoPaint=true;
+
+            mDoPaint=true;
+            mDrawPoints=false;
+        }
+
+
+
+
+
+
+
+
+
     }
 
 
 
-
-    public void drawpoints(int y)
+boolean mDrawPoints;
+    public void drawpoints(List<Float> buffer)
     {
 
         count++;
-        yValue=y;
-        floatListpoints.add((float) y);
-        if(xValue>width) {
+      //  yValue=y;
+        //floatListpoints.add((float) y);
+        if(newXvalue>mWidth) {
 
             floatListpoints.clear();
-            xValue = 0;
+            newXvalue = 0;
+            xValue=0;
             clearCanvas();
+            floatListpoints=null;
+
         }
 
-        xValue++;
-      //  Logger.log(Level.DEBUG,"--","floatListpoints list size="+floatListpoints.size());
+
+        mDrawPoints=true;
         mDoPaint=false;
+        floatListpoints=buffer;
         invalidate();
 
-        //newFloatArray(floatListpoints.size());
+       // newFloatArray(floatListpoints.size());
 
     }
 
@@ -177,6 +229,14 @@ public class RealTimeEcgView extends View {
         return points;
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+
+
+
+    }
 
     public void clearCanvas()
     {
@@ -185,10 +245,24 @@ public class RealTimeEcgView extends View {
             mCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
             mDoPaint=false;
 
-            }catch (Exception e)
+        }
+
+        catch (Exception e)
         {
             e.printStackTrace();
         }
     }
 
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Logger.log(Level.DEBUG,"---","--On size() changed--");
+       pxCount++;
+        mWidth=w;
+        mHeight=h;
+        baseXpoint=mHeight/2;
+    }
+
+    int pxCount=0;
 }

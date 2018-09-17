@@ -401,6 +401,13 @@ public class EcgGraphView extends View {
         }
 
 
+    public Bitmap takeSnapshot() {
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        draw(canvas);
+        return bitmap;
+    }
+
         public void clearCanvas()
         {
             try {

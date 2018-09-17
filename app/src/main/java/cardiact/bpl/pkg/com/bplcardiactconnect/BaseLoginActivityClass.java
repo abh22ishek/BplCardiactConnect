@@ -338,6 +338,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         if(data.equalsIgnoreCase(ClassConstants.ECG_GRAPH_FRAGMENT))
         {
             baseLayout.setVisibility(View.GONE);
+
+
             return;
         }
 
@@ -348,6 +350,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
         if(data.equalsIgnoreCase("patient_ecg")){
+
+
             realtimeEcgFrag();
             return;
         }
@@ -358,6 +362,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     Fragment currentFragment = null;
 
     private void realtimeEcgFrag() {
+
 
         android.support.v4.app.FragmentManager fragmentManager;
         android.support.v4.app.FragmentTransaction fragmentTransaction;
@@ -370,6 +375,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.addToBackStack(ClassConstants.ECG_GRAPH_VIEW_FRAGMENT);
 
         fragmentTransaction.commit();
+        setRequestedOrientation(
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
 
