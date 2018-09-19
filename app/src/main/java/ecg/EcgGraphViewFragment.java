@@ -20,7 +20,6 @@ public class EcgGraphViewFragment extends Fragment {
 
 
     LoginActivityListner loginActivityListner;
-
     RealTimeEcgView realTimeEcgView;
 
     @Override
@@ -52,13 +51,37 @@ public class EcgGraphViewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loginActivityListner.OnCurrentFragment(ClassConstants.ECG_GRAPH_VIEW_FRAGMENT);
+        b=true;
 
 
 
-        floatList=new ArrayList<>();
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Logger.log(Level.DEBUG,"----","On Pause ()---");
+      //  b=false;
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        Logger.log(Level.DEBUG,"----","On Stop ()---");
+    //    b=false;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Logger.log(Level.DEBUG,"----","On Resume ()---");
 
         b=true;
+        floatList=new ArrayList<>();
 
         Thread t = new Thread() {
 
@@ -67,7 +90,14 @@ public class EcgGraphViewFragment extends Fragment {
                 try {
                     while (b) {
 
-                        sleep(200);
+                        sleep(1000);
+
+                        if(getActivity()==null)
+                        {
+                            Logger.log(Level.DEBUG,"---","Get Activity returns null");
+                            return;
+                        }
+
 
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -76,9 +106,11 @@ public class EcgGraphViewFragment extends Fragment {
 
                                 for(int i=0;i<LeadData.LEADArray.length;i++){
                                     floatList.add(Float.valueOf(LeadData.LEADArray[i]));
-                                    if(floatList.size()>10){
+                                    if(floatList.size()==50){
                                         realTimeEcgView.drawpoints(floatList);
                                         floatList.clear();
+
+                                      //  realTimeEcgView.erasePartOfCanvas();
 
 
                                     }
@@ -96,10 +128,6 @@ public class EcgGraphViewFragment extends Fragment {
 
 
         t.start();
-
-
     }
-
-
 }
 

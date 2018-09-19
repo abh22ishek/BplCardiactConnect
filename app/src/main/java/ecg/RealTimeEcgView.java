@@ -50,6 +50,7 @@ public class RealTimeEcgView extends View {
 
     Path mPath;
      float heightScale;
+     float widthScale;
     public RealTimeEcgView(Context context) {
         super(context);
         init();
@@ -71,12 +72,17 @@ public class RealTimeEcgView extends View {
 
     private void init() {
         mPaint = new Paint();
-       // floatListpoints=new ArrayList<>();
+
         final float density = getResources().getDisplayMetrics().densityDpi;
 
         mPixelsPerCm = (int) (density / Constants.CMS_PER_INCH + 0.5f);
 
       heightScale = Constants.AMPLITUDE_PER_CM / mPixelsPerCm; //
+        widthScale = mPixelsPerCm / Constants.SAMPLES_PER_CM;
+        if(floatListpoints==null){
+            floatListpoints=new ArrayList<>();
+
+        }
         }
 
 
@@ -88,6 +94,10 @@ public class RealTimeEcgView extends View {
         {
             return;
         }
+
+
+
+
       if (null == mGraphImg) {
 
              /** Used Bitmap.Config.ALPHA_8 instead Bitmap.Config.ARGB_8888 to
@@ -121,32 +131,19 @@ public class RealTimeEcgView extends View {
         }
 
 
-
-
-
-
         //
 
-
         mPaint.setColor(0X0082CB00);
-
-
 
         mCanvas.drawRect(r3, mPaint);
 
         int fixedSamplesofXaxis=400;
 
 
-
-
-
-
-
-
         mPaint.setColor(Color.WHITE);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(2f);
-        mPaint.setAntiAlias(true);
+
         Logger.log(Level.DEBUG,":)","Hello OnDraw()");
 
 
@@ -154,25 +151,30 @@ public class RealTimeEcgView extends View {
 
 
 
-            yValue=baseXpoint;
 
-            newXvalue++;
 
+           // newXvalue++;
+
+
+            int mCount=0;
             for(int i=0;i<floatListpoints.size();i++){
-               // mCanvas.drawPoint(xValue,yValue+baseXpoint,mPaint);
-                newYValue=floatListpoints.get(i);
-                float newxy=(newYValue+baseXpoint);
-                mCanvas.drawLine(xValue,yValue,newXvalue,newxy,mPaint);
+
+                newYValue=floatListpoints.get(i)/heightScale;
+
+                mCanvas.drawLine(xValue,yValue+baseXpoint,newXvalue,newYValue+baseXpoint,mPaint);
+                //mCanvas.drawPoint(newXvalue,newxy,mPaint);
 
                 xValue=newXvalue;
-                yValue=newYValue+baseXpoint;
-                newXvalue+=10;
+                yValue=newYValue;
+                newXvalue+=widthScale;
+
+              mCount++;
+
             }
+
+            Logger.log(Level.DEBUG,"--","mCount size="+mCount+"x val="+xValue+"-new Xval="+newXvalue);
+
             Logger.log(Level.DEBUG,"--","floatListpoints list size="+floatListpoints.size());
-
-
-
-
             c.drawBitmap(mGraphImg, r1, r2, mPaint);
 
 
@@ -180,23 +182,18 @@ public class RealTimeEcgView extends View {
             mDrawPoints=false;
         }
 
-
-
-
-
-
-
-
-
     }
 
 
 
 boolean mDrawPoints;
+    boolean mEraser;
     public void drawpoints(List<Float> buffer)
     {
 
         count++;
+
+        floatListpoints.clear();
       //  yValue=y;
         //floatListpoints.add((float) y);
         if(newXvalue>mWidth) {
@@ -204,15 +201,19 @@ boolean mDrawPoints;
             floatListpoints.clear();
             newXvalue = 0;
             xValue=0;
-            clearCanvas();
-            floatListpoints=null;
+            mEraser=true;
 
+        }
+
+        if(mEraser)
+        {
+            erasePartOfCanvas();
         }
 
 
         mDrawPoints=true;
         mDoPaint=false;
-        floatListpoints=buffer;
+        floatListpoints.addAll(buffer);
         invalidate();
 
        // newFloatArray(floatListpoints.size());
@@ -233,10 +234,28 @@ boolean mDrawPoints;
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+        }
+
+int blackRect=100;
+    int topLeft=0;
+
+        public void erasePartOfCanvas(){
+            // Set eraser paint properties
+            Paint eraserPaint=new Paint();
+            eraserPaint.setAlpha(0);
+            eraserPaint.setStrokeJoin(Paint.Join.ROUND);
+            eraserPaint.setStrokeCap(Paint.Cap.ROUND);
+            eraserPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            eraserPaint.setAntiAlias(true);
 
 
 
-    }
+            mCanvas.drawRect(topLeft,0,blackRect,getHeight(),eraserPaint);
+            topLeft=blackRect;
+            blackRect+=100;
+            invalidate();
+        }
+
 
     public void clearCanvas()
     {
@@ -258,11 +277,12 @@ boolean mDrawPoints;
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         Logger.log(Level.DEBUG,"---","--On size() changed--");
-       pxCount++;
+        pxCount++;
         mWidth=w;
         mHeight=h;
         baseXpoint=mHeight/2;
     }
+
 
     int pxCount=0;
 }

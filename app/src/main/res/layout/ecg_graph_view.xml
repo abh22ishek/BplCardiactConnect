@@ -76,15 +76,18 @@
         android:layout_above="@+id/bottomBar"
         android:layout_height="match_parent">
 
-        <ecg.RealTimeEcgView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/realTimeEcgView"
 
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/errorBar"
+            <ecg.RealTimeEcgView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/errorBar"
+                android:id="@+id/realTimeEcgView"/>
 
-            />
+
+
+
+
 
         <LinearLayout
             android:layout_width="30dp"

@@ -313,6 +313,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if (data.equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
             baseLayout.setVisibility(View.GONE);
+            getSupportActionBar().show();
             return;
         }
 
@@ -419,6 +420,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             return;
         } else if (currentFragment.getClass().getName().equals(ClassConstants.EXISTING_PATIENT_FRAGMENT)) {
             baseLayout.setVisibility(View.GONE);
+            getSupportActionBar().show();
             return;
         }
 
