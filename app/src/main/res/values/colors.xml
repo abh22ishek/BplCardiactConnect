@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#223F84</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#AD1457</color>
+    <color name="colorPrimaryDark">#880E4F</color>
+    <color name="colorAccent">#000000</color>
 
 
 
     <!--<color name="backgroundSplash">#125688</color>-->
 
-    <color name="cardiact_connect_theme">#223F63</color>
+    <color name="cardiact_connect_theme">#AD1457</color>
     <color name="backgroundSplash">#0066BB</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

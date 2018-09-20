@@ -95,13 +95,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         globalVariable = (BaseApplicationClass) getApplicationContext();
         viewFlipper = findViewById(R.id.linearParams);
 
-
         drawerLayout = findViewById(R.id.drawerLayout);
         UserIcon = findViewById(R.id.hospitalIcon1);
         UserIcon.setVisibility(View.GONE);
 
         appName = findViewById(R.id.appName);
-
         nv = findViewById(R.id.nv);
 
 
@@ -111,7 +109,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         baseLayout = findViewById(R.id.relativeParams);
 
         loginActivityListner = this;
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
 
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -124,8 +123,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         appName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 viewFlipper.showNext();
                 getCurrentViewFlipperID(BaseLoginActivityClass.this);
 
@@ -138,12 +135,12 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id) {
-                    case R.id.profile:
-                        Toast.makeText(BaseLoginActivityClass.this, "My Profile", Toast.LENGTH_SHORT).show();
+                    case R.id.hospitalProfile:
+                        Toast.makeText(BaseLoginActivityClass.this, "Hosp Profile", Toast.LENGTH_SHORT).show();
                         break;
 
-                    case R.id.settings:
-                        Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
+                    case R.id.customizeDisplay:
+                        Toast.makeText(BaseLoginActivityClass.this, "Custom Dispaly", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logOut:
                         drawerLayout.closeDrawer(Gravity.START);
@@ -153,6 +150,32 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
                     case R.id.navHeaderIcon:
                         Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
+                        break;
+
+
+                    case R.id.reportSettings:
+                        reportSettingsFragment();
+                        break;
+
+                    case R.id.configFtp:
+                        reportSettingsFragment();
+                        break;
+
+
+                    case R.id.maintenanceChecks:
+                        reportSettingsFragment();
+                        break;
+
+
+                    case R.id.managePatients:
+                        reportSettingsFragment();
+                        break;
+
+
+
+                    case R.id.about:
+                        reportSettingsFragment();
+                      //  break;
 
                     default:
                         return true;
@@ -326,7 +349,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if (data.equals(Constants.SHOW_ECG_DATA)) {
             InsertData task = new InsertData();
-            task.execute(new String[0]);
+            task.execute();
             return;
         }
 
@@ -433,7 +456,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
         Logger.log(Level.DEBUG, TAG, "Get Current Fragment=" + currentFragment.getClass().getName());
-        baseLayout.setVisibility(View.VISIBLE);
+        baseLayout.setVisibility(View.GONE);
     }
 
 
@@ -823,10 +846,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         String mPwd = login_credentials.getString(Constants.PASSWORD, null);
 
 
-        if (mUsername != null)
-            b = true;
-        else
-            b = false;
+        b = mUsername != null;
 
         Logger.log(Level.DEBUG, TAG, "get value stored in a shared preference s file **User ID**" + mUsername);
 
@@ -1056,6 +1076,19 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     }
 
+
+    private void reportSettingsFragment() {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        ReportFragment reportFragment = new ReportFragment();
+
+        fragmentTransaction.replace(R.id.fragmentContainer, reportFragment, ClassConstants.REPORT_FRAGMENT);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+
+    }
 
     private void reloadEcgDisplayFragment(List<EcgLEadModel> EcgLeads) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();

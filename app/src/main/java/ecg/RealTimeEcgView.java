@@ -203,11 +203,16 @@ boolean mDrawPoints;
             xValue=0;
             mEraser=true;
 
+            blackRect=100;
+            topLeft=0;
+
         }
 
         if(mEraser)
         {
             erasePartOfCanvas();
+            invalidate();
+            return;
         }
 
 
@@ -236,8 +241,8 @@ boolean mDrawPoints;
 
         }
 
-int blackRect=100;
-    int topLeft=0;
+float blackRect=100;
+    float topLeft=0;
 
         public void erasePartOfCanvas(){
             // Set eraser paint properties
@@ -250,10 +255,10 @@ int blackRect=100;
 
 
 
-            mCanvas.drawRect(topLeft,0,blackRect,getHeight(),eraserPaint);
-            topLeft=blackRect;
+            mCanvas.drawRect(topLeft,0,blackRect,mHeight,eraserPaint);
+            topLeft=topLeft+100;
             blackRect+=100;
-            invalidate();
+
         }
 
 

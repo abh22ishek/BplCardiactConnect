@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/profile"
-        android:title="@string/profile"/>
+    <item android:id="@+id/hospitalProfile"
+        android:title="@string/hosp_profile"/>
+
+    <item android:id="@+id/reportSettings"
+        android:title="@string/report"/>
 
 
-    <item android:id="@+id/settings"
-        android:title="@string/settings"/>
+    <item android:id="@+id/customizeDisplay"
+        android:title="@string/cust_display"/>
+
+
+
+    <item android:id="@+id/configFtp"
+        android:title="@string/config_ftp"/>
+
+    <item android:id="@+id/maintenanceChecks"
+        android:title="@string/maintain_chks"/>
+
+    <item android:id="@+id/managePatients"
+        android:title="@string/manage_pat"/>
+
+
+
+
+
+
     <item android:id="@+id/logOut"
         android:title="@string/log_out"/>
 
+
+    <item android:id="@+id/about"
+        android:title="@string/about"/>
 </menu>

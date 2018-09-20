@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:scrollbars="none"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/bg_rounded_white"
+            android:layout_height="wrap_content">
+            
+      
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:text="@string/grid_col"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/patDrug1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            
+
+        </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/grid_typ"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/gridTypeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/rep_det"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/reportDetailSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/ecg_for"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/ecgFormatSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/ecg_trac_again"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/ecgTraceGainSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/ecg_trac_filter"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/ecgTraceFilterSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/trace_seq"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/ecgTraceSeqSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/no_rhy_trace"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/noRhyTracesSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/rhy_lead_"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/rhyLead1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/rhy_lead_s"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/rhyLead2Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/separator" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/trace_dark"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/traceDarknessSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

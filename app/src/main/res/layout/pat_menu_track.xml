@@ -1,109 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:weightSum="2"
-    android:background="@color/bg_grey"
-    android:layout_margin="5dp"
+    android:layout_margin="1dp"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:weightSum="2"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/about"
+        android:src="@mipmap/hospp_bg"
 
-        android:orientation="horizontal"
-        android:layout_height="0dp">
-
-
-        <TextView
-            android:id="@+id/archivedRec"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_rounded_white"
-            android:fontFamily="@font/berkshire_swash"
-            android:gravity="center"
-            android:text="@string/view_arch_rec"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-
-        <TextView
-            android:id="@+id/option2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_rounded_white"
-            android:fontFamily="@font/berkshire_swash"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="@string/import_rec_gen"
-
-            android:textAllCaps="false"
-
-            android:textColor="@color/black"
-
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-
-
-        </LinearLayout>
-
-
+        />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:weightSum="2"
-        android:layout_height="0dp">
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
 
-        <TextView
-            android:id="@+id/realTimeEcgMeasurement"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_rounded_white"
-            android:fontFamily="@font/berkshire_swash"
-            android:gravity="center"
+            android:orientation="vertical"
+            android:background="#50C2185B"
+            android:layout_height="0dp">
 
-            android:text="@string/start_rt_ecg"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:id="@+id/realTimeEcgMeasurement"
+                android:text="@string/start_rt_ecg"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
 
 
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-
-        <TextView
-            android:id="@+id/help"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_rounded_white"
-            android:fontFamily="@font/berkshire_swash"
-            android:gravity="center"
-            android:text="@string/start_rt_ecg"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:background="#80AD1457"
+            android:orientation="vertical"
+            android:layout_height="0dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto"
+                android:id="@+id/archivedRec"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:text="@string/view_arch_rec"
+                android:layout_height="wrap_content" />
 
 
-            android:textStyle="italic" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#70EC407A"
+            android:layout_height="0dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/roboto"
+
+                android:text="@string/fetch_rec"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
+
 
 
     </LinearLayout>
 
-
-</LinearLayout>
+</FrameLayout>

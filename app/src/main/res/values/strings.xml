@@ -244,6 +244,15 @@ This is when high blood pressure requires emergency medical attention.
 
         </string-array>
 
+    <string name="choose_color">Choose Color</string>
+
+    <string-array name="color_picker">
+        <item>Pink</item>
+        <item>Orange </item>
+        <item>Cyan</item>
+
+
+    </string-array>
 
 
     <string-array name="search_by">
@@ -252,6 +261,86 @@ This is when high blood pressure requires emergency medical attention.
 
 
     </string-array>
+
+
+    <string-array name="grid_type">
+        <item>Minor</item>
+        <item>Major </item>
+        <item>Minor+Major</item>
+
+        <item>Off</item>
+
+    </string-array>
+
+    <string-array name="report_details">
+        <item>1 PG</item>
+        <item>2 PG </item>
+        <item>3 PG</item>
+
+    </string-array>
+
+
+
+    <string-array name="ecg_format">
+        <item>12X1</item>
+        <item>6X2</item>
+        <item>3X4</item>
+
+        <item>6X2 +3R</item>
+        <item>3X4 +1R</item>
+
+
+    </string-array>
+
+
+
+    <string-array name="ecg_trace_gain">
+        <item>2.5</item>
+        <item>5</item>
+        <item>10</item>
+
+    </string-array>
+
+
+
+    <string-array name="ecg_trace_speed">
+        <item>5</item>
+        <item>12.5</item>
+        <item>25</item>
+        <item>50</item>
+    </string-array>
+
+
+    <string-array name="ecg_trace_filter">
+        <item>ADF</item>
+        <item>MUS</item>
+        <item>ADF + MUS</item>
+        <item>OFF</item>
+    </string-array>
+
+
+
+    <string-array name="trace_seq">
+        <item>STD</item>
+        <item>Cabrera</item>
+
+    </string-array>
+
+
+    <string-array name="rhy_lead_1">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>V6</item>
+    </string-array>
+
+
+    <string-array name="trace_darkness">
+        <item>Normal</item>
+        <item>Dark</item>
+
+    </string-array>
+
 
 
 
@@ -357,6 +446,72 @@ This is when high blood pressure requires emergency medical attention.
     <string name="save_hl">Save as HL7</string>
 
 
+
+    <string name="grid_col">Grid Color</string>
+    <string name="grid_typ">Grid Type</string>
+
+    <string name="rep_det">Report detail</string>
+
+    <string name="ecg_for">Ecg Format</string>
+
+    <string name="ecg_trac_again">Ecg Trace Again</string>
+    <string name="ecg_trac_filter">Ecg Trace Filter</string>
+
+    <string name="trace_seq">Trace Sequence</string>
+
+    <string name="no_rhy_trace">No. Of Rhy Traces</string>
+    <string name="rhy_lead_">Rhy Lead 1</string>
+    <string name="rhy_lead_s">Rhy Lead 2</string>
+    
+    <string name="trace_dark">Trace Darkness</string>
+
+
+    <string name="report">Report</string>
+
+
+    <string name="hosp_profile">Hospital Profile</string>
+    <string name="report_settings">Report Settings</string>
+
+
+    <string name="cust_display">Customize Display</string>
+
+    <string name="config_ftp">Configure FTP Server</string>
+
+    <string name="maintain_chks">Maintenance Checks</string>
+
+    <string name="manage_pat">Manage Patients</string>
+    <string name="about">About</string>
+
+
+    <string name="qrs_beep">QRS Beep</string>
+    <string name="display_format">Display Format</string>
+
+    <string name="show_grid">Show Grid</string>
+
+    <string name="ecg_trace_speed">Ecg Trace Speed</string>
+
+
+
+    <string name="url">URL</string>
+    <string name="port">Port</string>
+    <string name="username">User Name</string>
+    <string name="save_directory"> Save Directory</string>
+
+    <string name="mange_pat">Manage Patients</string>
+    <string name="fetch_rec">Fetch Records From GenX3</string>
+
+
+    <string name="test_ftp">Test FTP Server Link</string>
+
+    <string name="test_wifi">Test WiFi Link</string>
+
+    <string name="test_bt">Test BT Printer Link</string>
+
+    <string name="test_genx_link">Test GenX Link</string>
+
+    <string name="reset_auto_id">Reset Auto ID</string>
+
+    <string name="start">Start Test</string>
 
 
 </resources>

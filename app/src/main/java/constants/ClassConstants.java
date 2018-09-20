@@ -36,5 +36,5 @@ public class ClassConstants {
 
     public static final String ECG_GRAPH_VIEW_FRAGMENT= EcgGraphViewFragment.class.getName();
 
-
+    public static final String REPORT_FRAGMENT= ReportFragment.class.getName();
 }
