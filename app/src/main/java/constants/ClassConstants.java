@@ -2,6 +2,7 @@ package constants;
 
 import ecg.*;
 import login.fragment.*;
+import maintenance.*;
 import patient.list.*;
 
 public class ClassConstants {
@@ -37,4 +38,13 @@ public class ClassConstants {
     public static final String ECG_GRAPH_VIEW_FRAGMENT= EcgGraphViewFragment.class.getName();
 
     public static final String REPORT_FRAGMENT= ReportFragment.class.getName();
+
+  //  public static final String CUSTOMIZE_DISPLAY_FRAGMENT= Customi.class.getName();
+
+    public static final String CONFIGURE_FTP_SERVER_FRAGMENT= ConfigureFTPServer.class.getName();
+
+    public static final String MAINTENANCE_CHECKS_FRAGMENT= MaintenanceChecksFragments.class.getName();
+
+
+
 }

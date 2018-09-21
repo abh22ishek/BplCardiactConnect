@@ -174,7 +174,7 @@ public class RealTimeEcgView extends View {
 
             Logger.log(Level.DEBUG,"--","mCount size="+mCount+"x val="+xValue+"-new Xval="+newXvalue);
 
-            Logger.log(Level.DEBUG,"--","floatListpoints list size="+floatListpoints.size());
+            Logger.log(Level.DEBUG,"--","floatListPoints list size="+floatListpoints.size());
             c.drawBitmap(mGraphImg, r1, r2, mPaint);
 
 
@@ -203,19 +203,24 @@ boolean mDrawPoints;
             xValue=0;
             mEraser=true;
 
+            Logger.log(Level.DEBUG,"**********8","Graph reaches to the end ");
             blackRect=100;
             topLeft=0;
 
         }
+   //     Logger.log(Level.DEBUG,"---newXvalue and width Value--","newXvalue--"+newXvalue+"---mWidth--"+mWidth);
+     //   Logger.log(Level.DEBUG,"---POs Value--","blackrect--"+blackRect+"---topLeft--"+topLeft);
+
 
         if(mEraser)
         {
             erasePartOfCanvas();
-            invalidate();
-            return;
+
+
         }
 
 
+        mEraser=false;
         mDrawPoints=true;
         mDoPaint=false;
         floatListpoints.addAll(buffer);
@@ -248,16 +253,15 @@ float blackRect=100;
             // Set eraser paint properties
             Paint eraserPaint=new Paint();
             eraserPaint.setAlpha(0);
-            eraserPaint.setStrokeJoin(Paint.Join.ROUND);
-            eraserPaint.setStrokeCap(Paint.Cap.ROUND);
             eraserPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
             eraserPaint.setAntiAlias(true);
 
 
 
             mCanvas.drawRect(topLeft,0,blackRect,mHeight,eraserPaint);
-            topLeft=topLeft+100;
-            blackRect+=100;
+          topLeft=topLeft+100;
+          blackRect+=100;
+          //  invalidate();
 
         }
 

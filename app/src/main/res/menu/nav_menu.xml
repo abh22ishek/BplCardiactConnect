@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/hospitalProfile"
-        android:title="@string/hosp_profile"/>
+    <group android:checkableBehavior="single"
+        >
+        <item android:id="@+id/hospitalProfile"
+            android:icon="@drawable/local_hosp"
+            android:title="@string/hosp_profile"/>
 
-    <item android:id="@+id/reportSettings"
-        android:title="@string/report"/>
+        <item android:id="@+id/reportSettings"
+            android:icon="@drawable/ic_report"
 
-
-    <item android:id="@+id/customizeDisplay"
-        android:title="@string/cust_display"/>
-
-
-
-    <item android:id="@+id/configFtp"
-        android:title="@string/config_ftp"/>
-
-    <item android:id="@+id/maintenanceChecks"
-        android:title="@string/maintain_chks"/>
-
-    <item android:id="@+id/managePatients"
-        android:title="@string/manage_pat"/>
+            android:title="@string/report"/>
 
 
+        <item android:id="@+id/customizeDisplay"
+            android:icon="@drawable/customize"
+
+            android:title="@string/cust_display"/>
+
+
+
+        <item android:id="@+id/configFtp"
+            android:icon="@drawable/ftp_serve"
+
+            android:title="@string/config_ftp"/>
+
+        <item android:id="@+id/maintenanceChecks"
+            android:icon="@drawable/settings_"
+
+            android:title="@string/maintain_chks"/>
+
+        <item android:id="@+id/managePatients"
+            android:icon="@drawable/patints"
+
+            android:title="@string/manage_pat"/>
+
+
+
+    </group>
 
 
 
 
     <item android:id="@+id/logOut"
+        android:icon="@drawable/lock"
+
         android:title="@string/log_out"/>
 
 
     <item android:id="@+id/about"
+        android:icon="@drawable/info"
+
         android:title="@string/about"/>
 </menu>

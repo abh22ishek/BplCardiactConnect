@@ -20,7 +20,7 @@ public class HospitalProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.report_frag,container,false);
+        View view= inflater.inflate(R.layout.hosp_profile,container,false);
 
         return view;
     }

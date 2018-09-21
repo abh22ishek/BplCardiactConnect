@@ -59,6 +59,7 @@ public class SignAsNewUserFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         loginActivityListner.onDataPass(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
+        loginActivityListner.OnCurrentFragment(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
         if(null!=getArguments().getString(Constants.USER_NAME)) {
 
            final String username=getArguments().getString(Constants.USER_NAME);

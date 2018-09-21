@@ -49,6 +49,7 @@ import io.reactivex.disposables.*;
 import io.reactivex.schedulers.*;
 import logger.*;
 import login.fragment.*;
+import maintenance.*;
 import model.*;
 import patient.list.*;
 import store.credentials.*;
@@ -120,6 +121,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         actionBarDrawerToggle.syncState();
 
 
+        //----
+
+
+
         appName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,15 +141,16 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.hospitalProfile:
+                        drawerLayout.closeDrawer(Gravity.START);
                         Toast.makeText(BaseLoginActivityClass.this, "Hosp Profile", Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.id.customizeDisplay:
-                        Toast.makeText(BaseLoginActivityClass.this, "Custom Dispaly", Toast.LENGTH_SHORT).show();
+                        drawerLayout.closeDrawer(Gravity.START);
+                        Toast.makeText(BaseLoginActivityClass.this, "Custom Display", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logOut:
                         drawerLayout.closeDrawer(Gravity.START);
-
                         logOutConfirmDialog(BaseLoginActivityClass.this);
                         break;
 
@@ -154,26 +160,31 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
                     case R.id.reportSettings:
+                        drawerLayout.closeDrawer(Gravity.START);
                         reportSettingsFragment();
                         break;
 
                     case R.id.configFtp:
-                        reportSettingsFragment();
+                        drawerLayout.closeDrawer(Gravity.START);
+                       loadConfigureFtpServerFragments();
                         break;
 
 
                     case R.id.maintenanceChecks:
-                        reportSettingsFragment();
+                        drawerLayout.closeDrawer(Gravity.START);
+                      maintenanceChecksFragments();
                         break;
 
 
                     case R.id.managePatients:
+                        drawerLayout.closeDrawer(Gravity.START);
                         reportSettingsFragment();
                         break;
 
 
 
                     case R.id.about:
+                        drawerLayout.closeDrawer(Gravity.START);
                         reportSettingsFragment();
                       //  break;
 
@@ -310,7 +321,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     public void onDataPass(String data) {
 
 
-        if (data.equalsIgnoreCase(ClassConstants.SIGNUP_FRAGMENT) || data.equalsIgnoreCase(ClassConstants.WELCOME_USER_FRAGMENT)) {
+        if (data.equalsIgnoreCase(ClassConstants.SIGNUP_FRAGMENT) ||
+                data.equalsIgnoreCase(ClassConstants.WELCOME_USER_FRAGMENT)) {
             UserIcon.setVisibility(View.VISIBLE);
             appName.setVisibility(View.GONE);
 
@@ -414,10 +426,24 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         int count = fragmentManager.getBackStackEntryCount();
         Logger.log(Level.DEBUG, TAG, "Back stack frag count in On curreent frag()=" + count);
 
-        if (currentFragment.getClass().getName().equals(ClassConstants.LOGIN_FRAGMENT)) {
+        if (currentFragment.getClass().getName().equals(ClassConstants.SIGNUP_FRAGMENT)) {
+            baseLayout.setVisibility(View.VISIBLE);
+            return;
+
+        }
+        else if (currentFragment.getClass().getName().equals(ClassConstants.WELCOME_USER_FRAGMENT)) {
+           getSupportActionBar().hide();
+           return;
+        }
+
+        else if (currentFragment.getClass().getName().equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)) {
+            baseLayout.setVisibility(View.VISIBLE);
+            getSupportActionBar().hide();
+            return;
+        }
 
 
-        } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT)) {
+        else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT)) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             if (NavigationUserIconUri != null) {
                 loadImageWithGlide(NavigationUserIconUri.toString(), navHeaderIcon);
@@ -456,6 +482,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
         Logger.log(Level.DEBUG, TAG, "Get Current Fragment=" + currentFragment.getClass().getName());
+        getSupportActionBar().show();
         baseLayout.setVisibility(View.GONE);
     }
 
@@ -845,11 +872,9 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         mUsername = login_credentials.getString(Constants.USER_NAME, null);
         String mPwd = login_credentials.getString(Constants.PASSWORD, null);
 
-
         b = mUsername != null;
 
         Logger.log(Level.DEBUG, TAG, "get value stored in a shared preference s file **User ID**" + mUsername);
-
 
         return b;
 
@@ -893,6 +918,32 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     }
 
+
+
+    private void maintenanceChecksFragments()
+    {
+        android.support.v4.app.FragmentManager fragmentManager;
+        android.support.v4.app.FragmentTransaction fragmentTransaction;
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        MaintenanceChecksFragments configureFTPServer = new MaintenanceChecksFragments();
+        fragmentTransaction.replace(R.id.fragmentContainer, configureFTPServer, ClassConstants.MAINTENANCE_CHECKS_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.MAINTENANCE_CHECKS_FRAGMENT);
+        fragmentTransaction.commit();
+    }
+
+
+    private void loadConfigureFtpServerFragments()
+    {
+        android.support.v4.app.FragmentManager fragmentManager;
+        android.support.v4.app.FragmentTransaction fragmentTransaction;
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        ConfigureFTPServer configureFTPServer = new ConfigureFTPServer();
+        fragmentTransaction.replace(R.id.fragmentContainer, configureFTPServer, ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT);
+        fragmentTransaction.commit();
+    }
 
     private void loginUserFrag() {
         android.support.v4.app.FragmentManager fragmentManager;
