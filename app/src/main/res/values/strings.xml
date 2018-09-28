@@ -263,6 +263,9 @@ This is when high blood pressure requires emergency medical attention.
     </string-array>
 
 
+
+
+
     <string-array name="grid_type">
         <item>Minor</item>
         <item>Major </item>
@@ -295,19 +298,19 @@ This is when high blood pressure requires emergency medical attention.
 
 
     <string-array name="ecg_trace_gain">
-        <item>2.5</item>
-        <item>5</item>
-        <item>10</item>
+        <item>2.5 mm/mV</item>
+        <item>5 mm/mV</item>
+        <item>10 mm/mV</item>
 
     </string-array>
 
 
 
     <string-array name="ecg_trace_speed">
-        <item>5</item>
-        <item>12.5</item>
-        <item>25</item>
-        <item>50</item>
+        <item>5 mm/sec</item>
+        <item>12.5 mm/sec</item>
+        <item>25 mm/sec</item>
+        <item>50 mm/sec</item>
     </string-array>
 
 
@@ -321,17 +324,30 @@ This is when high blood pressure requires emergency medical attention.
 
 
     <string-array name="trace_seq">
-        <item>STD</item>
+        <item>Standard</item>
         <item>Cabrera</item>
 
     </string-array>
 
 
     <string-array name="rhy_lead_1">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>aVR</item>
+
+        <item>aVR</item>
+        <item>aVL</item>
+        <item>aVF</item>
+
+        <item>V1</item>
+        <item>V2</item>
+        <item>V3</item>
+
+        <item>V4</item>
+        <item>V5</item>
         <item>V6</item>
+
     </string-array>
 
 
@@ -341,7 +357,11 @@ This is when high blood pressure requires emergency medical attention.
 
     </string-array>
 
-
+    <string-array name="no_of_rhy">
+        <item>One</item>
+        <item>Two</item>
+        <item>None</item>
+    </string-array>
 
 
 
@@ -412,6 +432,14 @@ This is when high blood pressure requires emergency medical attention.
 
     </string-array>
 
+    <string-array name="display_format">
+        <item> 6 X 2 </item>
+        <item> 3 X 2 </item>
+        <item> 3 X 1 </item>
+
+    </string-array>
+
+
 
 
 
@@ -454,7 +482,7 @@ This is when high blood pressure requires emergency medical attention.
 
     <string name="ecg_for">Ecg Format</string>
 
-    <string name="ecg_trac_again">Ecg Trace Again</string>
+    <string name="ecg_trac_again">Ecg Trace Gain</string>
     <string name="ecg_trac_filter">Ecg Trace Filter</string>
 
     <string name="trace_seq">Trace Sequence</string>
@@ -512,6 +540,13 @@ This is when high blood pressure requires emergency medical attention.
     <string name="reset_auto_id">Reset Auto ID</string>
 
     <string name="start">Start Test</string>
+    <string name="ini_hosp">Edit initial Hospitals</string>
+    <string name="up_con_doc">Update Consulting Doctor</string>
+    <string name="edt_hosp_name">Edit Hospital Name</string>
+    <string name="edt_dep_name">Edit Department Name</string>
+    <string name="add_doctor">Add Doctor</string>
+    <string name="delete_marked">Delete Marked</string>
+    <string name="select_all">Select All</string>
 
 
 </resources>

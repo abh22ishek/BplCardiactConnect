@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
     android:padding="10dp"
     android:background="@drawable/bg_rounded_white"
     android:layout_margin="5dp"
     android:paddingBottom="5dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/relativeLayout">
 
 
     <TextView
@@ -16,16 +18,18 @@
         android:textStyle="bold"
         android:id="@+id/header"
         android:textSize="20sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <View android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/separator"
         android:layout_marginTop="5dp"
         android:layout_margin="5dp"
-        android:layout_below="@+id/header"
-        android:id="@+id/separator" />
+        android:id="@+id/separator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <ListView
         android:layout_width="match_parent"
@@ -36,12 +40,13 @@
         android:id="@+id/list_content"
         android:gravity="center"
         android:divider="@color/white"
-        android:layout_below="@+id/separator"
-        android:layout_centerHorizontal="true" />
+        app:layout_constraintTop_toBottomOf="@+id/separator"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 
 
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

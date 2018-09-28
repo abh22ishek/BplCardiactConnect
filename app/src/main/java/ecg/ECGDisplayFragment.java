@@ -3,6 +3,7 @@ package ecg;
 import android.annotation.*;
 import android.app.*;
 import android.content.*;
+import android.content.pm.*;
 import android.content.res.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
@@ -44,6 +45,8 @@ public class ECGDisplayFragment extends Fragment {
     private ArrayList<Integer> LeadI,Lead4,Lead5,Lead6;
     private ArrayList<Integer> LeadX11,LeadII,LeadIII,LeadaVR,LeadV11,LeadVIII,LeadIX,LeadX,LeadXI;
 
+   boolean isEcggridChecked;
+   boolean isECGMajorGrid,isMinorECcgGrid,isECGGrids;
 
     @Override
     public void onAttach(Context context) {
@@ -55,6 +58,8 @@ public class ECGDisplayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         View view= inflater.inflate(R.layout.view_ecg,container,false);
         ecgGraphView=view.findViewById(R.id.ecgGraphView);
             iv_scroll=view.findViewById(R.id.iv_scroll);
@@ -89,6 +94,29 @@ public class ECGDisplayFragment extends Fragment {
 
 
 
+        if(ClassConstants.GRID_TYPE.equalsIgnoreCase("Major"))
+        {
+            isEcggridChecked=true;
+            isECGMajorGrid=true;
+            isMinorECcgGrid=false;
+
+        }else if(ClassConstants.GRID_TYPE.equalsIgnoreCase("Minor"))
+        {
+            isEcggridChecked=true;
+            isMinorECcgGrid=true;
+            isECGMajorGrid=false;
+        }else if(ClassConstants.GRID_TYPE.equalsIgnoreCase("OFF"))
+        {
+           isEcggridChecked=false;
+            isECGMajorGrid=false;
+            isMinorECcgGrid=false;
+
+        }else{
+            isEcggridChecked=true;
+            isECGMajorGrid=true;
+            isMinorECcgGrid=true;
+
+        }
 
         fabSpeedDial.setMenuListener(new SimpleMenuListenerAdapter() {
             @Override
@@ -245,58 +273,79 @@ public class ECGDisplayFragment extends Fragment {
 
         contentStream.setLineWidth(1.5f);
         // vertical grids
-        contentStream.setStrokingColor(AWTColor.PINK);
+        if(ClassConstants.GRID_COLOR.equalsIgnoreCase("Pink"))
+        {
+            contentStream.setStrokingColor(AWTColor.PINK);
 
-        for (int i = 0; i < 27; i++) {
-            contentStream.moveTo(cursorX, cursorY);
-            contentStream.lineTo(cursorX, rect_height + cursorY);
-            contentStream.stroke();
-            cursorX = cursorX + unit_per_cm;
+        }else if(ClassConstants.GRID_COLOR.equalsIgnoreCase("Orange"))
+        {
+            contentStream.setStrokingColor(AWTColor.ORANGE);
 
-        }
-
-
-        // Horizontal grids
-
-        cursorX = 60;
-        cursorY = 20;
-
-        for (int i = 0; i < 19; i++) {
-            contentStream.moveTo(cursorX, cursorY);
-            contentStream.lineTo(cursorX + rect_width + unit_per_cm, cursorY);
-            contentStream.stroke();
-            cursorY = cursorY + unit_per_cm;
-        }
-
-
-        cursorX = 60;
-        cursorY = 20;
-        contentStream.setLineWidth(0.2f);
-
-        contentStream.setStrokingColor(AWTColor.PINK);
-        // draw minor vertical grids
-        for (int i = 0; i < 260; i++) {
-            contentStream.moveTo(cursorX, cursorY);
-            contentStream.lineTo(cursorX, rect_height + cursorY);
-
-            contentStream.stroke();
-            cursorX = cursorX + unit_per_cm / 10f;
+        }else{
+            contentStream.setStrokingColor(AWTColor.CYAN);
 
         }
 
 
-        // draw minor horizontal grids
+        if(isECGMajorGrid){
+            for (int i = 0; i < 27; i++) {
+                contentStream.moveTo(cursorX, cursorY);
+                contentStream.lineTo(cursorX, rect_height + cursorY);
+                contentStream.stroke();
+                cursorX = cursorX + unit_per_cm;
 
-        cursorX = 60;
-        cursorY = 20;
+            }
 
 
-        for (int i = 0; i < 180; i++) {
-            contentStream.moveTo(cursorX, cursorY);
-            contentStream.lineTo(cursorX + rect_width + unit_per_cm, cursorY);
-            contentStream.stroke();
-            cursorY = cursorY + unit_per_cm / 10f;
+            // Horizontal grids
+
+            cursorX = 60;
+            cursorY = 20;
+
+            for (int i = 0; i < 19; i++) {
+                contentStream.moveTo(cursorX, cursorY);
+                contentStream.lineTo(cursorX + rect_width + unit_per_cm, cursorY);
+                contentStream.stroke();
+                cursorY = cursorY + unit_per_cm;
+            }
+
+
+
+            contentStream.setLineWidth(0.2f);
+
         }
+
+
+        if(isMinorECcgGrid){
+            cursorX = 60;
+            cursorY = 20;
+
+            // draw minor vertical grids
+            for (int i = 0; i < 260; i++) {
+                contentStream.moveTo(cursorX, cursorY);
+                contentStream.lineTo(cursorX, rect_height + cursorY);
+
+                contentStream.stroke();
+                cursorX = cursorX + unit_per_cm / 10f;
+
+            }
+
+
+            // draw minor horizontal grids
+
+            cursorX = 60;
+            cursorY = 20;
+
+
+            for (int i = 0; i < 180; i++) {
+                contentStream.moveTo(cursorX, cursorY);
+                contentStream.lineTo(cursorX + rect_width + unit_per_cm, cursorY);
+                contentStream.stroke();
+                cursorY = cursorY + unit_per_cm / 10f;
+            }
+        }
+
+
 
     }
 
@@ -517,7 +566,10 @@ public class ECGDisplayFragment extends Fragment {
 */
 
 
-            showGridsForMainEcg(contentStream);
+            if(isEcggridChecked){
+                showGridsForMainEcg(contentStream);
+
+            }
 
 
 
@@ -632,12 +684,6 @@ public class ECGDisplayFragment extends Fragment {
 
                     mPx3 = mX;
                     mPp3 = mP3;
-
-
-
-
-
-
 
 
 

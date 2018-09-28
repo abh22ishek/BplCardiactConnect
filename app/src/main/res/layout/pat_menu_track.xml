@@ -9,9 +9,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:contentDescription="@string/about"
-        android:src="@mipmap/hospp_bg"
+        android:src="@mipmap/ecg_bg"
 
         />
 
@@ -26,7 +26,9 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:background="#50C2185B"
+            android:background="#50D8B160"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:id="@+id/realTimeEcgMeasurement"
             android:layout_height="0dp">
 
             <TextView
@@ -35,7 +37,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/roboto"
                 android:gravity="center"
-                android:id="@+id/realTimeEcgMeasurement"
+
                 android:text="@string/start_rt_ecg"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
@@ -46,7 +48,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:background="#80AD1457"
+            android:background="#50EC4071"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:id="@+id/archivedRec"
+
             android:orientation="vertical"
             android:layout_height="0dp">
             <TextView
@@ -54,7 +59,6 @@
                 android:textSize="24sp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/roboto"
-                android:id="@+id/archivedRec"
                 android:gravity="center"
                 android:layout_centerInParent="true"
                 android:text="@string/view_arch_rec"
@@ -69,7 +73,9 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:background="#70EC407A"
+            android:background="#50F48FB1"
+            android:foreground="?android:attr/selectableItemBackground"
+
             android:layout_height="0dp">
             <TextView
                 android:layout_width="match_parent"

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_margin="1dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dialog_box_bg"
+    android:layout_height="170dp">
+
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="@string/header"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:id="@+id/header"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="30dp"
+
+
+            />
+
+      
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_below="@+id/header"
+            android:background="@drawable/bg_rounded_white"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/textview"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:text="@string/bp_general_knowledge"
+                android:layout_height="70dp" />
+           <EditText
+               android:layout_width="match_parent"
+                android:id="@+id/textEdit"
+                android:layout_margin="5dp"
+               android:hint="@string/edit"
+               android:inputType="text"
+               android:paddingStart="5dp"
+               android:textColor="@color/black"
+               android:maxLength="200"
+               android:scrollHorizontally="true"
+               android:paddingEnd="2dp"
+               android:visibility="visible"
+               android:layout_marginTop="15dp"
+               android:background="@drawable/bg_rounded_white"
+               android:layout_height="35dp" />
+
+
+            <custom.view.CustomButton
+                android:id="@+id/btnOk"
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="23dp"
+                android:background="@drawable/rounded_button"
+                android:text="@string/ok"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:fontname="centralSansBook" />
+
+        </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>

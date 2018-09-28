@@ -45,6 +45,7 @@ public class WelcomeUserFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.welcome_user, container, false);
         welcomeText=view.findViewById(R.id.textView2);
         proceed=view.findViewById(R.id.proceed);
@@ -184,7 +185,6 @@ public class WelcomeUserFragment extends Fragment {
         signUpFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
-
         fragmentTransaction.commit();
 
 

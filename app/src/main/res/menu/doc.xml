@@ -8,33 +8,22 @@
 
 </menu>-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >
 
 
 
-    <item android:id="@+id/age"
 
-        android:title="@string/sort_age"/>
-
-
-    <item android:id="@+id/name"
-        android:title="@string/sort_name"/>
-
-
-    <item android:id="@+id/Id"
-        android:title="@string/sort_id"/>
 
 
     <item android:id="@+id/AddDoctor"
         android:title="@string/add_doctor"/>
+
     <item android:id="@+id/SelectAll"
         android:title="@string/select_all"/>
 
     <item android:id="@+id/DeleteMarked"
         android:title="@string/delete_marked"/>
-
 
 
 </menu>

@@ -1,6 +1,7 @@
 package patient.list;
 
 import android.content.*;
+import android.content.pm.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
@@ -45,6 +46,8 @@ public class ExistingPatientFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         View view= inflater.inflate(R.layout.existing_pat,container,false);
         recyclerView=view.findViewById(R.id.recycler_view);
         autoCompleteTextView=view.findViewById(R.id.autoText);

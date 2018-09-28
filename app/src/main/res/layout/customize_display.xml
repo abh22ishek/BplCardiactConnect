@@ -15,49 +15,43 @@
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
 
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:background="@color/grey_bg"
             android:layout_height="wrap_content">
-            
-      
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:layout_height="wrap_content">
 
 
-            <TextView
-                android:layout_width="130dp"
-                android:layout_height="35dp"
-                android:text="@string/grid_col"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:padding="5dp"
+                android:layout_height="wrap_content">
 
 
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/gridColor"
-                android:layout_width="130dp"
-                android:gravity="center_vertical"
-                android:layout_alignParentEnd="true"
-                android:popupBackground="@color/white"
-                android:layout_height="35dp"
-
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:text="@string/qrs_beep"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
 
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center_vertical"
 
-                />
 
-            
+                    />
 
-        </RelativeLayout>
+
+            </RelativeLayout>
 
 
             <View
@@ -80,19 +74,18 @@
                     android:layout_height="35dp"
                     android:gravity="center_vertical"
 
-                    android:text="@string/grid_typ"
+                    android:text="@string/display_format"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
 
-
                 <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/gridTypeSpinner"
+                    android:id="@+id/displayFormat"
                     android:layout_width="130dp"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentEnd="true"
                     android:layout_height="35dp"
-                    />
+                    android:layout_alignParentEnd="true"
+                    android:dropDownWidth="200dp"
+                    android:gravity="center_vertical" />
 
 
 
@@ -118,7 +111,7 @@
                 <TextView
                     android:layout_width="130dp"
                     android:layout_height="35dp"
-                    android:text="@string/rep_det"
+                    android:text="@string/show_grid"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -126,12 +119,11 @@
 
 
                 <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/reportDetailSpinner"
+                    android:id="@+id/showGrid"
                     android:layout_width="130dp"
+                    android:layout_height="35dp"
                     android:gravity="center_vertical"
                     android:layout_alignParentEnd="true"
-
-                    android:layout_height="35dp"
                     />
 
 
@@ -156,22 +148,19 @@
                 <TextView
                     android:layout_width="130dp"
                     android:layout_height="35dp"
-                    android:text="@string/ecg_for"
+                    android:text="@string/ecg_trace_speed"
                     android:gravity="center_vertical"
 
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
 
-
                 <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/ecgFormatSpinner"
+                    android:id="@+id/ecgTraceSpeed"
                     android:layout_width="130dp"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentEnd="true"
-
                     android:layout_height="35dp"
-                    />
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center_vertical" />
 
 
 
@@ -204,12 +193,11 @@
 
 
                 <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/ecgTraceGainSpinner"
+                    android:id="@+id/ecgTraceGain"
                     android:layout_width="130dp"
-                    android:gravity="center_vertical"
                     android:layout_alignParentEnd="true"
-
                     android:layout_height="35dp"
+                    android:gravity="center_vertical"
                     />
 
 
@@ -245,10 +233,9 @@
                 <android.support.v7.widget.AppCompatSpinner
                     android:id="@+id/ecgTraceFilterSpinner"
                     android:layout_width="130dp"
-                    android:gravity="center_vertical"
                     android:layout_alignParentEnd="true"
-
                     android:layout_height="35dp"
+                    android:gravity="center_vertical"
                     />
 
 
@@ -260,6 +247,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/separator" />
+
+
+
+
 
 
             <RelativeLayout
@@ -282,168 +273,11 @@
 
 
                 <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/ecgTraceSeqSpinner"
+                    android:id="@+id/traceSequenceSpinner"
                     android:layout_width="130dp"
-                    android:gravity="center_vertical"
                     android:layout_alignParentEnd="true"
-
-                    android:layout_height="35dp"
-                    />
-
-
-
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/separator" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="5dp"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="35dp"
-                    android:text="@string/no_rhy_trace"
-                    android:gravity="center_vertical"
-
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/noRhyTracesSpinner"
-                    android:layout_width="130dp"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentEnd="true"
-
-                    android:layout_height="35dp"
-                    />
-
-
-
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/separator" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="5dp"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="35dp"
-                    android:text="@string/rhy_lead_"
-                    android:gravity="center_vertical"
-
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/rhyLead1"
-                    android:layout_width="130dp"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentEnd="true"
-
-                    android:layout_height="35dp"
-                    />
-
-
-
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/separator" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="5dp"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:layout_width="130dp"
                     android:layout_height="35dp"
                     android:gravity="center_vertical"
-
-                    android:text="@string/rhy_lead_s"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/rhyLead2Spinner"
-                    android:layout_width="130dp"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentEnd="true"
-
-                    android:layout_height="35dp"
-                    />
-
-
-
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/separator" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="5dp"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-                    android:layout_width="130dp"
-                    android:layout_height="35dp"
-                    android:text="@string/trace_dark"
-                    android:gravity="center_vertical"
-
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/traceDarknessSpinner"
-                    android:layout_width="130dp"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentEnd="true"
-
-                    android:layout_height="35dp"
                     />
 
 

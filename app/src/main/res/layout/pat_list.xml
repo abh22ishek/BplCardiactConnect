@@ -6,8 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_margin="0dp"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="0dp"
     android:clickable="true"
+
     android:focusable="true"
     app:cardUseCompatPadding="true"
 
@@ -23,12 +24,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="4dp"
             android:paddingBottom="6dp"
             android:clickable="true"
             android:focusable="true"
             android:id="@+id/layout"
-
+            android:background="@color/grey_bg"
             android:paddingTop="8dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"

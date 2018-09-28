@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/separator"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -13,42 +14,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_margin="5dp"
-        android:background="@drawable/bg_rounded_white"
+        android:layout_margin="1dp"
+        android:background="@color/grey_bg"
         android:id="@+id/topBar"
         android:layout_height="wrap_content"
         tools:ignore="UselessParent">
 
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp"
+            android:id="@+id/urlBar"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:clickable="true"
+            android:focusable="true"
             android:layout_height="wrap_content">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_marginStart="10dp"
                 android:checked="true"
+                android:clickable="false"
+                android:layout_alignParentStart="true"
+                android:id="@+id/radioURL"
                 android:layout_height="wrap_content" />
 
 
-
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/urL"
+                android:layout_width="150dp"
                 android:layout_height="35dp"
+                    android:layout_toEndOf="@+id/radioURL"
                 android:text="@string/url"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:gravity="center_vertical"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
 
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:text="http://www.bpl.com"
+                android:layout_height="35dp" />
+
+        </RelativeLayout>
 
 
         <View
@@ -58,11 +78,16 @@
 
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:id="@+id/portBar"
             android:layout_height="wrap_content">
 
 
@@ -70,25 +95,39 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_marginStart="10dp"
+                android:id="@+id/radioPort"
+                android:clickable="false"
+                android:layout_alignParentStart="true"
                 android:layout_height="wrap_content" />
 
 
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/port"
+                android:layout_width="150dp"
                 android:layout_height="35dp"
+                android:layout_toEndOf="@+id/radioPort"
                 android:text="@string/port"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:gravity="center_vertical"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
+
+                android:layout_alignParentEnd="true"
+                android:text="9090"
+                android:layout_height="35dp" />
 
 
 
-
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <View
@@ -99,35 +138,58 @@
 
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:id="@+id/userNameBar"
             android:layout_height="wrap_content">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_marginStart="10dp"
+                android:id="@+id/radioUserName"
+                android:clickable="false"
+
                 android:layout_height="wrap_content" />
 
 
 
+
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/userName"
+                android:layout_width="150dp"
                 android:layout_height="35dp"
+                android:layout_toEndOf="@+id/radioUserName"
                 android:text="@string/username"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:gravity="center_vertical"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
+
+                android:layout_alignParentEnd="true"
+                android:text="UserName"
+                android:layout_height="35dp" />
 
 
 
 
-        </LinearLayout>
+
+
+        </RelativeLayout>
 
 
         <View
@@ -136,34 +198,58 @@
             android:background="@color/separator" />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:id="@+id/passwordBar"
             android:layout_height="wrap_content">
 
 
             <RadioButton
                 android:layout_width="wrap_content"
+                android:id="@+id/radioPassword"
+                android:clickable="false"
+
                 android:layout_marginStart="10dp"
                 android:layout_height="wrap_content" />
 
 
 
+
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/password"
+                android:layout_width="150dp"
                 android:layout_height="35dp"
+                android:layout_toEndOf="@+id/radioPassword"
                 android:text="@string/password"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:gravity="center_vertical"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
+
+                android:layout_alignParentEnd="true"
+                android:text="*******"
+                android:layout_height="35dp" />
 
 
-        </LinearLayout>
+
+
+
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
@@ -171,49 +257,74 @@
             android:background="@color/separator" />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="5dp"
+            android:id="@+id/saveDirBar"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+
             android:layout_height="wrap_content">
 
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_marginStart="10dp"
+                android:id="@+id/radioSaveDir"
+                android:clickable="false"
+                android:layout_alignParentStart="true"
                 android:layout_height="wrap_content" />
 
 
 
+
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/saveDir"
+                android:layout_width="150dp"
                 android:layout_height="35dp"
+                android:layout_toEndOf="@+id/radioSaveDir"
                 android:text="@string/save_directory"
-                android:textColor="@color/black"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:gravity="center_vertical"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center_vertical|end"
 
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:text="/pod"
+                android:layout_height="35dp" />
+
+
+
+
+        </RelativeLayout>
 
     </LinearLayout>
 
 
     <custom.view.CustomButton
-        android:id="@+id/btnSignUp"
+        android:id="@+id/btnEdit"
         android:layout_width="150dp"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
+        android:foreground="?android:attr/selectableItemBackground"
 
+        android:layout_below="@+id/topBar"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/topBar"
-        android:background="@drawable/rounded_button"
-        android:text="@string/edit"
+        android:layout_marginTop="47dp"
+        android:background="@drawable/rounded_button_edit"
 
-        android:layout_marginTop="10dp"
+        android:text="@string/edit"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:fontname="centralSansBook" />

@@ -21,6 +21,8 @@ import android.support.v4.content.*;
 import android.support.v4.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.text.*;
+import android.text.style.*;
 import android.util.*;
 import android.view.*;
 import android.view.animation.*;
@@ -42,6 +44,7 @@ import constants.*;
 import custom.view.*;
 import ecg.*;
 import gennx.model.*;
+import hospital.*;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.*;
@@ -67,9 +70,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     BaseApplicationClass globalVariable;
     private String userIconUri;
-
-
     ViewFlipper viewFlipper;
+    List<DoctorModel>  DocsList;
 
     NavigationView nv;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -87,6 +89,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     Observable<List<EcgLEadModel>> mObservable;
 
+    Menu mMenu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,6 +114,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         loginActivityListner = this;
         getSupportActionBar().setDisplayShowTitleEnabled(true);
+
 
 
 
@@ -142,12 +146,23 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                 switch (id) {
                     case R.id.hospitalProfile:
                         drawerLayout.closeDrawer(Gravity.START);
-                        Toast.makeText(BaseLoginActivityClass.this, "Hosp Profile", Toast.LENGTH_SHORT).show();
+
+                        callFragments(ClassConstants.HOSPITAL_PROFILE_FRAGMENT,
+                                new HospitalProfileFragment(),ClassConstants.HOSPITAL_PROFILE_FRAGMENT,null);
+
+                        getSupportActionBar().setTitle(getString(R.string.hosp_profile));
+                      //  Toast.makeText(BaseLoginActivityClass.this, "Hosp Profile", Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.id.customizeDisplay:
                         drawerLayout.closeDrawer(Gravity.START);
-                        Toast.makeText(BaseLoginActivityClass.this, "Custom Display", Toast.LENGTH_SHORT).show();
+                        loadCustomizeDispalyFragments();
+                        callFragments(ClassConstants.CUSTOMIZE_DISPLAY_FRAGMENT,
+                                new CustomizeDisplay(),ClassConstants.CUSTOMIZE_DISPLAY_FRAGMENT,null);
+                        getSupportActionBar().setTitle(getString(R.string.cust_display));
+
+
+                      //  Toast.makeText(BaseLoginActivityClass.this, "Custom Display", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.logOut:
                         drawerLayout.closeDrawer(Gravity.START);
@@ -155,37 +170,43 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                         break;
 
                     case R.id.navHeaderIcon:
-                        Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
                         break;
 
 
                     case R.id.reportSettings:
                         drawerLayout.closeDrawer(Gravity.START);
-                        reportSettingsFragment();
+                        callFragments(ClassConstants.REPORT_FRAGMENT,
+                                new ReportFragment(),ClassConstants.REPORT_FRAGMENT,null);
+                        getSupportActionBar().setTitle(getString(R.string.report_settings));
                         break;
 
                     case R.id.configFtp:
                         drawerLayout.closeDrawer(Gravity.START);
-                       loadConfigureFtpServerFragments();
+                        callFragments(ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT,
+                                new ConfigureFTPServer(),ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT,null);
+                        getSupportActionBar().setTitle(getString(R.string.config_ftp));
                         break;
 
 
                     case R.id.maintenanceChecks:
                         drawerLayout.closeDrawer(Gravity.START);
-                      maintenanceChecksFragments();
+
+                        callFragments(ClassConstants.MAINTENANCE_CHECKS_FRAGMENT,new MaintenanceChecksFragments(),ClassConstants.MAINTENANCE_CHECKS_FRAGMENT,null);
+                        getSupportActionBar().setTitle(getString(R.string.maintain_chks));
                         break;
 
 
                     case R.id.managePatients:
                         drawerLayout.closeDrawer(Gravity.START);
-                        reportSettingsFragment();
+                        getSupportActionBar().setTitle(getString(R.string.manage_pat));
                         break;
 
 
 
                     case R.id.about:
                         drawerLayout.closeDrawer(Gravity.START);
-                        reportSettingsFragment();
+                       // reportSettingsFragment();
                       //  break;
 
                     default:
@@ -212,13 +233,74 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             }
         });
 
+        DocsList=new ArrayList<>();
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.sortby, menu);
+
+        mMenu=menu;
+            inflater.inflate(R.menu.sortby, menu);
+        MenuItem item1 = mMenu.findItem(R.id.age);
+        MenuItem item2 = mMenu.findItem(R.id.name);
+        MenuItem item3 = mMenu.findItem(R.id.Id);
+
+        MenuItem item4 = mMenu.findItem(R.id.AddDoctor);
+        MenuItem item5 = mMenu.findItem(R.id.SelectAll);
+        MenuItem item6 = mMenu.findItem(R.id.DeleteMarked);
+
+
+            SpannableString s = new SpannableString(getString(R.string.sort_age));
+            s.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s.length(), 0);
+            item1.setTitle(s);
+
+        SpannableString s1 = new SpannableString(getString(R.string.sort_name));
+        s1.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s1.length(), 0);
+        item2.setTitle(s1);
+
+
+        SpannableString s3 = new SpannableString(getString(R.string.sort_id));
+        s3.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s3.length(), 0);
+        item3.setTitle(s3);
+
+        SpannableString s4 = new SpannableString(getString(R.string.add_doctor));
+        s4.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s4.length(), 0);
+        item4.setTitle(s4);
+        SpannableString s5 = new SpannableString(getString(R.string.select_all));
+        s5.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s5.length(), 0);
+        item5.setTitle(s5);
+        SpannableString s6 = new SpannableString(getString(R.string.delete_marked));
+        s6.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s6.length(), 0);
+        item6.setTitle(s6);
+
+
+
+
+
+        if (item1 != null){
+            item1.setVisible(true);
+        }
+
+        if (item2 != null){
+            item2.setVisible(true);
+        }
+        if (item3 != null){
+            item3.setVisible(true);
+        }
+
+        if (item4 != null){
+            item4.setVisible(false);
+        }
+        if (item5 != null){
+            item5.setVisible(false);
+        } if (item6 != null){
+            item6.setVisible(false);
+        }
+
+
         return true;
     }
 
@@ -253,8 +335,9 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                 break;
 
 
-            case R.id.Ecg:
+            case R.id.AddDoctor:
 
+                addDoctors(this,"Add Doctor Name");
                 break;
 
 
@@ -374,8 +457,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         if(data.equalsIgnoreCase(ClassConstants.ECG_GRAPH_FRAGMENT))
         {
             baseLayout.setVisibility(View.GONE);
-
-
             return;
         }
 
@@ -389,6 +470,55 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
             realtimeEcgFrag();
+            return;
+        }
+
+
+        if(data.equalsIgnoreCase(ClassConstants.HOSPITAL_PROFILE_FRAGMENT))
+        {
+            baseLayout.setVisibility(View.GONE);
+            Bundle bundle=new Bundle();
+
+            bundle.putParcelableArrayList(Constants.USER_NAME, (ArrayList<? extends Parcelable>) DocsList);
+            callFragments(ClassConstants.HOSPITAL_PROFILE_FRAGMENT, new AddHospitalDoctors(),
+                    ClassConstants.HOSPITAL_PROFILE_FRAGMENT,bundle);
+            return;
+        }
+
+
+        if(data.equalsIgnoreCase(ClassConstants.ADD_HOSPITAL_DOCTORS_FRAGMENT))
+        {
+            baseLayout.setVisibility(View.GONE);
+            getSupportActionBar().show();
+            MenuItem item1 = mMenu.findItem(R.id.age);
+            MenuItem item2 = mMenu.findItem(R.id.name);
+            MenuItem item3 = mMenu.findItem(R.id.Id);
+
+            MenuItem item4 = mMenu.findItem(R.id.AddDoctor);
+            MenuItem item5 = mMenu.findItem(R.id.SelectAll);
+            MenuItem item6 = mMenu.findItem(R.id.DeleteMarked);
+
+            if (item1 != null){
+                item1.setVisible(false);
+            }
+
+            if (item2 != null){
+                item2.setVisible(false);
+            }
+            if (item3 != null){
+                item3.setVisible(false);
+            }
+
+            if (item4 != null){
+                item4.setVisible(true);
+            }
+            if (item5 != null){
+                item5.setVisible(true);
+            } if (item6 != null){
+            item6.setVisible(true);
+        }
+
+
             return;
         }
         baseLayout.setVisibility(View.VISIBLE);
@@ -411,8 +541,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.addToBackStack(ClassConstants.ECG_GRAPH_VIEW_FRAGMENT);
 
         fragmentTransaction.commit();
-        setRequestedOrientation(
-                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
 
@@ -479,6 +608,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
          getSupportActionBar().hide();
             return;
         }
+
+
 
 
         Logger.log(Level.DEBUG, TAG, "Get Current Fragment=" + currentFragment.getClass().getName());
@@ -659,8 +790,16 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
         } else {
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag(ClassConstants.PATIENT_PROFILE_FRAGMENT);
-            fragment.onActivityResult(requestCode, resultCode, data);
+            try{
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(ClassConstants.PATIENT_PROFILE_FRAGMENT);
+                if(fragment!=null){
+                    fragment.onActivityResult(requestCode, resultCode, data);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
         }
 
     }
@@ -920,30 +1059,43 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
 
-    private void maintenanceChecksFragments()
+    private void callFragments(String addToBackStack,Fragment fragment,String TAG,Bundle bundle)
     {
         android.support.v4.app.FragmentManager fragmentManager;
         android.support.v4.app.FragmentTransaction fragmentTransaction;
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        MaintenanceChecksFragments configureFTPServer = new MaintenanceChecksFragments();
-        fragmentTransaction.replace(R.id.fragmentContainer, configureFTPServer, ClassConstants.MAINTENANCE_CHECKS_FRAGMENT);
-        fragmentTransaction.addToBackStack(ClassConstants.MAINTENANCE_CHECKS_FRAGMENT);
+        if(bundle!=null)
+        {
+            fragment.setArguments(bundle);
+        }
+       // MaintenanceChecksFragments configureFTPServer = new MaintenanceChecksFragments();
+        fragmentTransaction.replace(R.id.fragmentContainer, fragment,TAG );
+        fragmentTransaction.addToBackStack(addToBackStack);
         fragmentTransaction.commit();
+
     }
 
 
-    private void loadConfigureFtpServerFragments()
+
+
+
+
+
+    private void loadCustomizeDispalyFragments()
     {
         android.support.v4.app.FragmentManager fragmentManager;
         android.support.v4.app.FragmentTransaction fragmentTransaction;
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        ConfigureFTPServer configureFTPServer = new ConfigureFTPServer();
-        fragmentTransaction.replace(R.id.fragmentContainer, configureFTPServer, ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT);
-        fragmentTransaction.addToBackStack(ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT);
+        CustomizeDisplay customizeDisplay = new CustomizeDisplay();
+        fragmentTransaction.replace(R.id.fragmentContainer, customizeDisplay, ClassConstants.CUSTOMIZE_DISPLAY_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.CUSTOMIZE_DISPLAY_FRAGMENT);
         fragmentTransaction.commit();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
     }
+
 
     private void loginUserFrag() {
         android.support.v4.app.FragmentManager fragmentManager;
@@ -954,6 +1106,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.replace(R.id.fragmentContainer, loginFragment, ClassConstants.LOGIN_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.LOGIN_FRAGMENT);
         fragmentTransaction.commit();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
     }
 
 
@@ -971,50 +1125,14 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.replace(R.id.fragmentContainer, welcomeUserFragment, ClassConstants.WELCOME_USER_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.WELCOME_USER_FRAGMENT);
         fragmentTransaction.commit();
-    }
-
-
-    private void builDynamicImageViews(Context context, LinearLayout layout) {
-
-        /*for(int i=0;i<5;i++)
-        {
-            RoundedImageView roundedImageView = new RoundedImageView(context);
-
-            roundedImageView.setId(i);
-            roundedImageView.setAlpha(0.5f);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            );
-
-            params.gravity=Gravity.CENTER;
-            params.setMarginEnd(50);
-            roundedImageView.setLayoutParams(params);
-
-
-
-
-            Glide.with(context)
-                    .load(R.drawable.user_icon)
-                    .override(200,200)
-                    .centerCrop()
-                    .skipMemoryCache(true)
-                    .into(roundedImageView);
-
-
-            roundedImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
-
-
-            // Adds the view to the layout
-            layout.addView(roundedImageView);
-        }*/
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
     }
+
+
+
+
+
 
 
     private List<String> mapUserIDICon(Context context) {
@@ -1123,23 +1241,17 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.replace(R.id.fragmentContainer, signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
-    }
-
-
-    private void reportSettingsFragment() {
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        ReportFragment reportFragment = new ReportFragment();
-
-        fragmentTransaction.replace(R.id.fragmentContainer, reportFragment, ClassConstants.REPORT_FRAGMENT);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
 
 
     }
+
+
+
+
+
+
 
     private void reloadEcgDisplayFragment(List<EcgLEadModel> EcgLeads) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
@@ -1171,8 +1283,30 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.replace(R.id.fragmentContainer, patientListFragment, ClassConstants.PATIENT_LIST_FRAGMENT);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
     }
 
+
+    private void reloadHospitalDocsFragemnt(List<DoctorModel> Doc) {
+
+        android.support.v4.app.FragmentManager fragmentManager =
+
+                Objects.requireNonNull(BaseLoginActivityClass.this).getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        AddHospitalDoctors addHospitalDoctors = new AddHospitalDoctors();
+
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(Constants.USER_NAME, (ArrayList<? extends Parcelable>) Doc);
+        addHospitalDoctors.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragmentContainer, addHospitalDoctors, ClassConstants.ADD_HOSPITAL_DOCTORS_FRAGMENT);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -1251,6 +1385,43 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
             }
         }
+    }
+
+
+
+
+    private void addDoctors(final Context context,String headerText) {
+
+        if (dialog == null) {
+            dialog = new Dialog(context);
+        }
+
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBoxAnimation;
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.new_custom_dialog);
+        dialog.setCancelable(true);
+
+        final EditText content = dialog.findViewById(R.id.textEdit);
+        final TextView header = dialog.findViewById(R.id.header);
+        final TextView textview = dialog.findViewById(R.id.textview);
+        textview.setVisibility(View.GONE);
+        final Button OK=dialog.findViewById(R.id.btnOk);
+        header.setText(headerText);
+
+
+        OK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DoctorModel d=new DoctorModel(content.getText().toString().trim(),"");
+                DocsList.add(d);
+                reloadHospitalDocsFragemnt(DocsList);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 }

@@ -72,6 +72,8 @@ public class PatientProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         View view= inflater.inflate(R.layout.pat_profile,container,false);
         patRaceSpinner=view.findViewById(R.id.patRace);
         patDrug1Spinner=view.findViewById(R.id.patDrug1);

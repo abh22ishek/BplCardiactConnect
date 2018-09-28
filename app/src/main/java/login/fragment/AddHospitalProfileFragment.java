@@ -42,8 +42,7 @@ public class AddHospitalProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
-            }
+                }
         });
     }
 }

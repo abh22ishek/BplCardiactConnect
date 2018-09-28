@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/separator"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -13,8 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_rounded_white"
+            android:layout_margin="1dp"
+            android:background="@color/grey_bg"
             android:id="@+id/topBar"
             android:layout_height="wrap_content"
             tools:ignore="UselessParent">
@@ -26,13 +27,18 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:padding="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+
+                android:id="@+id/linearFTPServerLink"
                 android:layout_height="wrap_content">
 
                 <RadioButton
+                    android:id="@+id/r1"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:checked="true"
-                    android:layout_height="wrap_content" />
+                    android:clickable="false"
+                    android:checked="true" />
 
 
 
@@ -63,12 +69,18 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:padding="5dp"
+                android:id="@+id/linearWifi"
+                android:foreground="?android:attr/selectableItemBackground"
+
                 android:layout_height="wrap_content">
 
 
 
                 <RadioButton
                     android:layout_width="wrap_content"
+                    android:id="@+id/r2"
+                    android:clickable="false"
+
                     android:layout_marginStart="10dp"
                     android:layout_height="wrap_content" />
 
@@ -79,6 +91,7 @@
                     android:layout_height="35dp"
                     android:text="@string/test_wifi"
                     android:textColor="@color/black"
+
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
                     android:textSize="16sp" />
@@ -104,11 +117,18 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:padding="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+
+                android:id="@+id/linearBT"
+
                 android:layout_height="wrap_content">
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:id="@+id/r3"
+                    android:clickable="false"
+
                     android:layout_height="wrap_content" />
 
 
@@ -141,13 +161,20 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:padding="5dp"
+                android:id="@+id/linearGenX"
+                android:foreground="?android:attr/selectableItemBackground"
+
+
                 android:layout_height="wrap_content">
 
 
                 <RadioButton
+                    android:id="@+id/r4"
                     android:layout_width="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_height="wrap_content" />
+                    android:clickable="false"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp" />
 
 
 
@@ -176,12 +203,18 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:padding="5dp"
+                android:id="@+id/linearReset"
+                android:foreground="?android:attr/selectableItemBackground"
+
                 android:layout_height="wrap_content">
 
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:id="@+id/r5"
+                    android:clickable="false"
+
                     android:layout_height="wrap_content" />
 
 
@@ -203,15 +236,16 @@
 
 
     <custom.view.CustomButton
-        android:id="@+id/btnSignUp"
+        android:id="@+id/startTest"
         android:layout_width="150dp"
         android:layout_height="35dp"
 
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/topBar"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/rounded_button_edit"
         android:text="@string/start"
+        android:foreground="?android:attr/selectableItemBackground"
 
         android:layout_marginTop="10dp"
         android:textColor="@color/white"

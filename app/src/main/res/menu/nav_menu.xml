@@ -8,7 +8,7 @@
             android:title="@string/hosp_profile"/>
 
         <item android:id="@+id/reportSettings"
-            android:icon="@drawable/ic_report"
+            android:icon="@drawable/description"
 
             android:title="@string/report"/>
 
@@ -26,7 +26,7 @@
             android:title="@string/config_ftp"/>
 
         <item android:id="@+id/maintenanceChecks"
-            android:icon="@drawable/settings_"
+            android:icon="@drawable/build"
 
             android:title="@string/maintain_chks"/>
 

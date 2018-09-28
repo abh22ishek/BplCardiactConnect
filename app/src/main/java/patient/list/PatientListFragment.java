@@ -1,6 +1,7 @@
 package patient.list;
 
 import android.content.*;
+import android.content.pm.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
@@ -44,6 +45,8 @@ private List<PatientModel> patientListSortedByName;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         View view= inflater.inflate(R.layout.pat_list_recy,container,false);
         recyclerView=view.findViewById(R.id.recycler_view);
         return view;

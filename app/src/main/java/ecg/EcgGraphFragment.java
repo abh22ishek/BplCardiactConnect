@@ -46,10 +46,7 @@ public class EcgGraphFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loginActivityListner.onDataPass(EcgGraphFragment.class.getName());
-
-
         previous.setVisibility(View.INVISIBLE);
-
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +87,7 @@ public class EcgGraphFragment extends Fragment {
 
                 }else if(count==10)
                 {
-                   next.setVisibility(View.GONE);
+                    next.setVisibility(View.GONE);
                     previous.setVisibility(View.VISIBLE);
                     first4.setVisibility(View.GONE);
                     mid4.setVisibility(View.GONE);

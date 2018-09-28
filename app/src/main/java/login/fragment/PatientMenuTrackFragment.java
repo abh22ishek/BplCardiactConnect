@@ -2,6 +2,7 @@ package login.fragment;
 
 import android.app.*;
 import android.content.*;
+import android.content.pm.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.os.*;
@@ -17,24 +18,32 @@ import constants.*;
 import patient.list.*;
 
 @SuppressWarnings("SpellCheckingInspection")
+
+
 public class PatientMenuTrackFragment extends Fragment {
 
     private LoginActivityListner loginActivityListner;
-
-    private TextView archivedRec,realTimeEcgMeasurement;
-
-
+    private RelativeLayout archivedRec,realTimeEcgMeasurement;
     private  Dialog mDialog;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         loginActivityListner= (LoginActivityListner) getActivity();
     }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+    }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         View view= inflater.inflate(R.layout.pat_menu_track,container,false);
 
         archivedRec=view.findViewById(R.id.archivedRec);
@@ -47,12 +56,14 @@ public class PatientMenuTrackFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loginActivityListner.OnCurrentFragment(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
-        archivedRec.setOnClickListener(new View.OnClickListener() {
+        archivedRec.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onPatientList();
             }
         });
+
 
 
 
@@ -154,15 +165,14 @@ public class PatientMenuTrackFragment extends Fragment {
 
                 if (adapterView.getItemAtPosition(i).equals(getString(R.string.new_user)))  //
                 {
-
                     onPatientProfile();
+                    }
 
-                    } else{
-
+                    else{
                     onExistingPatient();
+                    }
 
-                }
-                mDialog.dismiss();
+                    mDialog.dismiss();
             }
 
         });

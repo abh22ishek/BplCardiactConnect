@@ -1,24 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp"
-
+    android:padding="1dp"
     android:id="@+id/loginRelative"
-    android:background="@color/bg_grey"
+    android:background="@color/separator"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:contentDescription="@string/hosp_profile"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/hosp_img" />
 
 
-
-<ListView
+<LinearLayout
     android:layout_width="match_parent"
-    android:divider="@color/black"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:gravity="center"
+    android:layout_height="55dp">
 
-</ListView>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Sri Jayadeva Insitute of Cardiology"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:paddingStart="5dp"
+        android:gravity="center_vertical"
+        android:id="@+id/hospName"
+        android:paddingEnd="5dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="1dp"
+        android:background="@color/grey_bg"
+        android:id="@+id/topBar"
+        android:layout_weight="0.01"
+        android:layout_height="wrap_content"
+
+        >
 
 
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:focusable="true"
+            android:id="@+id/linerarEditInitilasHospName"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:id="@+id/r1"
+                android:clickable="false"
+                android:checked="true" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="@string/ini_hosp"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+
+
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:id="@+id/linerarupdateCons"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_height="wrap_content">
+
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/r2"
+                android:clickable="false"
+
+                android:layout_marginStart="10dp" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="@string/up_con_doc"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+
+
+
+
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:id="@+id/linerarEditHospName"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_marginStart="10dp"
+                android:id="@+id/r3"
+                android:clickable="false"
+
+                android:layout_height="wrap_content" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="@string/edt_hosp_name"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+
+
+
+
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:foreground="?android:attr/selectableItemBackground"
+
+            android:id="@+id/lineareditDepartmentName"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_height="wrap_content">
+
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:id="@+id/r4"
+                android:clickable="false"
+
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="@string/edt_dep_name"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                android:gravity="center_vertical"
+                android:textSize="16sp" />
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <custom.view.CustomButton
+        android:id="@+id/btnEdit"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+
+        android:layout_gravity="center_horizontal"
+
+        android:background="@drawable/rounded_button_edit"
+        android:text="@string/edit"
+        android:foreground="?android:attr/selectableItemBackground"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:fontname="centralSansBook" />
+
+
+
+</LinearLayout>
 

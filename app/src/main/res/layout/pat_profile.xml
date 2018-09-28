@@ -11,7 +11,7 @@
         android:orientation="horizontal"
         android:id="@+id/layout"
         android:gravity="center"
-        android:background="@color/settings_bg"
+        android:background="@color/separator"
         android:layout_height="150dp">
 
         <custom.view.RoundedImageView

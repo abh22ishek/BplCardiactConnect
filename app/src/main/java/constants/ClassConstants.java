@@ -1,6 +1,9 @@
 package constants;
 
+import android.graphics.*;
+
 import ecg.*;
+import hospital.*;
 import login.fragment.*;
 import maintenance.*;
 import patient.list.*;
@@ -44,6 +47,22 @@ public class ClassConstants {
     public static final String CONFIGURE_FTP_SERVER_FRAGMENT= ConfigureFTPServer.class.getName();
 
     public static final String MAINTENANCE_CHECKS_FRAGMENT= MaintenanceChecksFragments.class.getName();
+
+    public static final String HOSPITAL_PROFILE_FRAGMENT= HospitalProfileFragment.class.getName();
+
+    public static final String CUSTOMIZE_DISPLAY_FRAGMENT= CustomizeDisplay.class.getName();
+
+
+
+    public static final String ADD_HOSPITAL_DOCTORS_FRAGMENT= AddHospitalDoctors.class.getName();
+
+
+    public static  String GRID_COLOR= "Blue";
+    public static  String GRID_TYPE= "Minor";
+
+    public static  String ECG_FORMAT= "12x1";
+
+    public static  String QRS_BEEP= "OFF";
 
 
 
