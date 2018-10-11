@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="#354D74"
-
+    android:background="@color/bg_grey"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -41,7 +40,10 @@
         app:fabGravity="bottom_end"
         app:fabMenu="@menu/menu"
         android:id="@+id/fabSpeedDial"
+
         app:miniFabBackgroundTint="@android:color/white"
+        app:miniFabDrawableTint="@color/black"
+        app:miniFabTitleTextColor="@color/black"
 
 
 

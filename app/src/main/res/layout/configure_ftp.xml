@@ -331,6 +331,23 @@
 
 
 
+    <custom.view.CustomButton
+        android:id="@+id/btnUpload"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:foreground="?android:attr/selectableItemBackground"
+
+        android:layout_below="@+id/btnEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_button_edit"
+
+        android:text="@string/upload"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:fontname="centralSansBook" />
+
 
 
 

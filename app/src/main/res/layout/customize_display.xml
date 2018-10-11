@@ -84,7 +84,7 @@
                     android:layout_width="130dp"
                     android:layout_height="35dp"
                     android:layout_alignParentEnd="true"
-                    android:dropDownWidth="200dp"
+
                     android:gravity="center_vertical" />
 
 

@@ -15,23 +15,25 @@ import model.*;
 import recyclerview.cardview.*;
 import utility.*;
 
-public class DoctorRecyclerViewAdapter extends  RecyclerView.Adapter<DoctorRecyclerViewAdapter.CustomViewHolder> {
+public class DoctorRecyclerViewAdapter extends  RecyclerView.Adapter<DoctorRecyclerViewAdapter.CustomViewHolder> implements SelectDoctorsListner{
 
     Context context;
     LoginActivityListner loginActivityListner;
-    List<DoctorModel> doctorModelList;
+    List<String> doctorModelList;
     boolean iselection;
 
+    ListR listlistner;
     boolean array[];
 
 
-    public DoctorRecyclerViewAdapter(Context context, LoginActivityListner listner, List<DoctorModel> doc,boolean Isseleted) {
+    public DoctorRecyclerViewAdapter(Context context, LoginActivityListner listner,ListR listlistner,
+                                     List<String> doc,boolean Isseleted) {
         this.context = context;
         this.loginActivityListner=listner;
         this.doctorModelList=doc;
-
         this.iselection=Isseleted;
 
+        listlistner=listlistner;
         array=new boolean[doc.size()];
     }
 
@@ -52,12 +54,12 @@ public class DoctorRecyclerViewAdapter extends  RecyclerView.Adapter<DoctorRecyc
 
         final int pos=position;
 
-        holder.DocName.setText(doctorModelList.get(position).getDocName());
+        holder.DocName.setText(doctorModelList.get(position));
 
 
         if(iselection)
         {
-            holder.checkBox.setVisibility(View.VISIBLE);
+
 
         }
 
@@ -74,17 +76,11 @@ public class DoctorRecyclerViewAdapter extends  RecyclerView.Adapter<DoctorRecyc
                     array[pos]=false;
                 }
 
+
             }
         });
 
-        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                iselection=true;
-                notifyDataSetChanged();
-                return true;
-            }
-        });
+
 
 
 
@@ -92,16 +88,12 @@ public class DoctorRecyclerViewAdapter extends  RecyclerView.Adapter<DoctorRecyc
         for(int i=0;i< array.length;i++)
         {
             holder.checkBox.setChecked(array[pos]);
+           // listlistner.getSelectedUser("data",array);
         }
 
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.layout.setBackgroundColor(Utility.getColorWrapper(context,R.color.header_itltle_color));
 
-            }
-        });
+
 
 
 
@@ -111,6 +103,33 @@ public class DoctorRecyclerViewAdapter extends  RecyclerView.Adapter<DoctorRecyc
     @Override
     public int getItemCount() {
         return doctorModelList.size();
+    }
+
+    @Override
+    public void markAll(List<String> DocList) {
+
+        doctorModelList=DocList;
+        array =new boolean[DocList.size()];
+
+
+        for(int i=0;i <array.length;i++){
+            array[i]=true;
+        }
+
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void unMarkAll(List<String> DocList) {
+        doctorModelList =DocList;
+        array =new boolean[DocList.size()];
+
+        for(int i=0;i <array.length;i++){
+            array[i]=false;
+        }
+
+
+        notifyDataSetChanged();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder  {

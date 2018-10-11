@@ -52,6 +52,8 @@ public class ReportFragment extends Fragment {
         rhyLead1=view.findViewById(R.id.rhyLead1);
         rhyLead2=view.findViewById(R.id.rhyLead2Spinner);
         traceDarkness=view.findViewById(R.id.traceDarknessSpinner);
+
+
         return view;
     }
 
@@ -72,9 +74,6 @@ public class ReportFragment extends Fragment {
         gridColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-
-
                 ClassConstants.GRID_COLOR= (String) adapterView.getItemAtPosition(i);
 
                 }
@@ -95,8 +94,6 @@ public class ReportFragment extends Fragment {
         gridType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-
 
                 ClassConstants.GRID_TYPE= (String) adapterView.getItemAtPosition(i);
 
@@ -182,4 +179,14 @@ public class ReportFragment extends Fragment {
 
 
     }
+
+    @Override
+    public void setUserVisibleHint(boolean visible){
+        super.setUserVisibleHint(visible);
+
+       if (!visible){
+            //when fragment becomes invisible to user,do what you want...
+        }
+    }
+
 }

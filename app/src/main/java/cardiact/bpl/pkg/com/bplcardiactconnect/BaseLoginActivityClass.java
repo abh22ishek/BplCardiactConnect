@@ -33,6 +33,7 @@ import com.bumptech.glide.load.engine.*;
 import com.bumptech.glide.load.resource.drawable.*;
 import com.bumptech.glide.request.animation.*;
 import com.bumptech.glide.request.target.*;
+import com.bumptech.glide.util.*;
 
 
 import java.io.*;
@@ -59,12 +60,10 @@ import store.credentials.*;
 import utility.*;
 
 
-public class BaseLoginActivityClass extends AppCompatActivity implements LoginActivityListner {
+public class BaseLoginActivityClass extends AppCompatActivity implements LoginActivityListner,ListR {
 
 
     private RoundedImageView UserIcon;
-
-
     private TextView appName;
     private String TAG = BaseLoginActivityClass.class.getSimpleName();
 
@@ -80,17 +79,14 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     LoginActivityListner loginActivityListner;
 
     RelativeLayout baseLayout;
-
     ImageView navHeaderIcon;
 
     Uri NavigationUserIconUri;
-
     List<EcgLEadModel> EcgLeads;
 
     Observable<List<EcgLEadModel>> mObservable;
-
     Menu mMenu;
-
+    private ListR listR;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +94,9 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         globalVariable = (BaseApplicationClass) getApplicationContext();
         viewFlipper = findViewById(R.id.linearParams);
+
+            doctorSets=new LinkedHashSet<>();
+
 
         drawerLayout = findViewById(R.id.drawerLayout);
         UserIcon = findViewById(R.id.hospitalIcon1);
@@ -117,6 +116,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
 
+        listR=BaseLoginActivityClass.this;
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
 
@@ -200,6 +200,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                     case R.id.managePatients:
                         drawerLayout.closeDrawer(Gravity.START);
                         getSupportActionBar().setTitle(getString(R.string.manage_pat));
+                        onPatientList();
                         break;
 
 
@@ -340,6 +341,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                 addDoctors(this,"Add Doctor Name");
                 break;
 
+            case R.id.SelectAll:
+
+                reloadHospitalDocsFragemnt(DocsList,true);
+
+                break;
 
             default:
                 break;
@@ -480,6 +486,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             Bundle bundle=new Bundle();
 
             bundle.putParcelableArrayList(Constants.USER_NAME, (ArrayList<? extends Parcelable>) DocsList);
+            bundle.putBoolean("checked",false);
             callFragments(ClassConstants.HOSPITAL_PROFILE_FRAGMENT, new AddHospitalDoctors(),
                     ClassConstants.HOSPITAL_PROFILE_FRAGMENT,bundle);
             return;
@@ -678,11 +685,15 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     boolean[] booleansArr;
 
+
+
+
     @Override
     public void getSelectedUser(String data, boolean[] arrays) {
         booleansArr = new boolean[arrays.length];
         //copying one array to another
-        booleansArr = Arrays.copyOf(arrays, arrays.length);
+        booleansArr=Arrays.copyOf(arrays,arrays.length);
+
     }
 
     @Override
@@ -789,7 +800,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             }
 
 
-        } else {
+        } else if((requestCode==Constants.PATIENT_PROFILE_REQUEST_CODE || requestCode==Constants.PATIENT_PROFILE_CAMERA_CODE)&& resultCode==RESULT_OK){
             try{
                 Fragment fragment = getSupportFragmentManager().findFragmentByTag(ClassConstants.PATIENT_PROFILE_FRAGMENT);
                 if(fragment!=null){
@@ -800,6 +811,21 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             }
 
 
+        }
+
+
+
+
+        else if((requestCode==Constants.HOSPITAL_PROFILE_REQUEST_CODE || requestCode==Constants.HOSPITAL_PROFILE_CAMERA_CODE)
+                && resultCode==RESULT_OK){
+            try{
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(ClassConstants.HOSPITAL_PROFILE_FRAGMENT);
+                if(fragment!=null){
+                    fragment.onActivityResult(requestCode, resultCode, data);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
     }
@@ -1267,6 +1293,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.commit();
 
 
+
     }
 
 
@@ -1288,7 +1315,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-    private void reloadHospitalDocsFragemnt(List<DoctorModel> Doc) {
+    private void reloadHospitalDocsFragemnt(List<DoctorModel> Doc,boolean mChecked) {
 
         android.support.v4.app.FragmentManager fragmentManager =
 
@@ -1299,6 +1326,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(Constants.USER_NAME, (ArrayList<? extends Parcelable>) Doc);
+        bundle.putBoolean("checked",mChecked);
         addHospitalDoctors.setArguments(bundle);
 
         fragmentTransaction.replace(R.id.fragmentContainer, addHospitalDoctors, ClassConstants.ADD_HOSPITAL_DOCTORS_FRAGMENT);
@@ -1322,6 +1350,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             Logger.log(Level.INFO, TAG, "UNSPECIFIED ORIENTATION");
 
         }
+    }
+
+    @Override
+    public void getSelectedUserDoctors(String data, boolean[] arrays) {
+
     }
 
 
@@ -1396,7 +1429,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             dialog = new Dialog(context);
         }
 
-
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBoxAnimation;
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.new_custom_dialog);
@@ -1414,9 +1446,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             @Override
             public void onClick(View view) {
 
+
+
                 DoctorModel d=new DoctorModel(content.getText().toString().trim(),"");
                 DocsList.add(d);
-                reloadHospitalDocsFragemnt(DocsList);
+                doctorSets.add(content.getText().toString().trim());
+                Utility.storeHospitalDocs(BaseLoginActivityClass.this,doctorSets);
+                reloadHospitalDocsFragemnt(DocsList,false);
                 dialog.dismiss();
             }
         });
@@ -1424,4 +1460,19 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         dialog.show();
     }
 
+    Set<String> doctorSets;
+    private void onPatientList()
+    {
+        android.support.v4.app.FragmentManager fragmentManager = Objects.requireNonNull(getSupportFragmentManager());
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        PatientListFragment patientListFragment = new PatientListFragment();
+        // fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_FADE );
+
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.SORT_BY,"");
+        patientListFragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment,ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.commit();
+    }
 }

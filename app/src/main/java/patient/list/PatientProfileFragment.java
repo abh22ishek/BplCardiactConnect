@@ -56,9 +56,9 @@ public class PatientProfileFragment extends Fragment {
     RoundedImageView patIcon;
     private static final int RESULT_OK = -1;
     private static final int RESULT_CANCELED = 0;
-    final int CAMERA_DATA = 106;
+
     BaseApplicationClass globalVariable;
-    final int SELECT_PICTURE_DATA=343;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -340,7 +340,7 @@ public class PatientProfileFragment extends Fragment {
                     {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},
-                                    CAMERA_DATA);
+                                    Constants.PATIENT_PROFILE_CAMERA_CODE);
 
 
                         }
@@ -352,7 +352,7 @@ public class PatientProfileFragment extends Fragment {
                             intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                             intent.putExtra(MediaStore.EXTRA_OUTPUT,tempuri);
                             intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);
-                            startActivityForResult(intent,CAMERA_DATA);
+                            startActivityForResult(intent,Constants.PATIENT_PROFILE_CAMERA_CODE);
                         }
 
                     }else{
@@ -367,7 +367,7 @@ public class PatientProfileFragment extends Fragment {
                     intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.setType("image/*");
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE_DATA);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.PATIENT_PROFILE_REQUEST_CODE);
 
                 }
 
@@ -396,7 +396,7 @@ public class PatientProfileFragment extends Fragment {
             Logger.log(Level.DEBUG,"--","grant results[]="+grantResults[k]);
 
         }
-        if(requestCode==CAMERA_DATA)
+        if(requestCode==Constants.PATIENT_PROFILE_CAMERA_CODE)
         {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED
                     ) {
@@ -406,7 +406,7 @@ public class PatientProfileFragment extends Fragment {
                 intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,tempuri);
                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                startActivityForResult(intent, CAMERA_DATA);
+                startActivityForResult(intent, Constants.PATIENT_PROFILE_CAMERA_CODE);
 
             }
 
@@ -434,7 +434,7 @@ public class PatientProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if (requestCode == SELECT_PICTURE_DATA && resultCode == RESULT_OK && null != data) {
+        if (requestCode == Constants.PATIENT_PROFILE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
             Uri uri = data.getData();
 
 
@@ -470,7 +470,7 @@ public class PatientProfileFragment extends Fragment {
 
 
         }
-        else if(requestCode==CAMERA_DATA && resultCode==RESULT_OK)
+        else if(requestCode==Constants.PATIENT_PROFILE_CAMERA_CODE && resultCode==RESULT_OK)
         {
             String uri;
             if(file.exists())

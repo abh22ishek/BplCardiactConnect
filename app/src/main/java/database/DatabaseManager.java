@@ -339,24 +339,16 @@ public class DatabaseManager {
             m.setTime(cursor.getString(cursor.getColumnIndex(PATIENT_TEST_TIME)));
             m.setGender(cursor.getString(cursor.getColumnIndex(PATIENT_GENDER)));
             m.setPatAge(cursor.getInt(cursor.getColumnIndex(PATIENT_AGE)));
-
             m.setHeight(cursor.getString(cursor.getColumnIndex(PATIENT_HEIGHT)));
             m.setWeight(cursor.getString(cursor.getColumnIndex(PATIENT_WEIGHT)));
-
-
-
             m.setPatRace(cursor.getString(cursor.getColumnIndex(PATIENT_RACE)));
             m.setPacemaker(cursor.getString(cursor.getColumnIndex(PATIENT_PACEMAKER)));
-
             m.setDrug1(cursor.getString(cursor.getColumnIndex(PATIENT_DRUG1)));
             m.setDrug2(cursor.getString(cursor.getColumnIndex(PATIENT_DRUG2)));
-
             m.setClinicDiagnosis(cursor.getString(cursor.getColumnIndex(PATIENT_CLINICAL_DIAGNOSIS)));
             m.setSystolic(cursor.getString(cursor.getColumnIndex(PATIENT_SYSTOLIC_DATA)));
-
             m.setDiabolic(cursor.getString(cursor.getColumnIndex(PATIENT_DIABOLIC_DATA)));
             m.setConsultName(cursor.getString(cursor.getColumnIndex(PATIENT_CONSULTATTION_DOC)));
-
             m.setPatRefDoc(cursor.getString(cursor.getColumnIndex(PATIENT_REF_DOC)));
 
 
@@ -367,8 +359,6 @@ public class DatabaseManager {
         }
 
         cursor.close();
-
-
         Logger.log(Level.DEBUG, TAG, "patientModelList length=" + patientModelList.size());
 
         return patientModelList;

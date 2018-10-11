@@ -77,7 +77,7 @@ public class RealTimeEcgView extends View {
 
         mPixelsPerCm = (int) (density / Constants.CMS_PER_INCH + 0.5f);
 
-      heightScale = Constants.AMPLITUDE_PER_CM / mPixelsPerCm; //
+        heightScale = Constants.AMPLITUDE_PER_CM / mPixelsPerCm; //
         widthScale = mPixelsPerCm / Constants.SAMPLES_PER_CM;
         if(floatListpoints==null){
             floatListpoints=new ArrayList<>();

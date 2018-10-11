@@ -5,6 +5,7 @@
     android:textColor="@color/white"
     android:layout_margin="1dp"
     android:padding="2dp"
+    android:textStyle="italic"
     android:textSize="14sp"
     android:background="@color/separator"
     android:layout_height="35dp">

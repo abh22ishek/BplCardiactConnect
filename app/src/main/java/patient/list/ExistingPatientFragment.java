@@ -151,10 +151,14 @@ public class ExistingPatientFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        recyclerViewAdapter = new ExistingPatientRecyclerView(getActivity(),
-              loginActivityListner, ExistingPatientModelList,false,searchByTag);
+        if(ExistingPatientModelList!=null){
+            recyclerViewAdapter = new ExistingPatientRecyclerView(getActivity(),
+                    loginActivityListner, ExistingPatientModelList,false,searchByTag);
 
-        recyclerView.setAdapter(recyclerViewAdapter);
+            recyclerView.setAdapter(recyclerViewAdapter);
+        }
+
+
 
 
     }

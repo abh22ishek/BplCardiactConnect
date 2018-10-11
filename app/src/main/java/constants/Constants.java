@@ -32,4 +32,23 @@ public class Constants {
 
     public static final String SHOW_ECG_DATA="ecg";
 
+
+    public static final int PATIENT_PROFILE_REQUEST_CODE=343;
+    public static final int PATIENT_PROFILE_CAMERA_CODE=106;
+
+    public static final int HOSPITAL_PROFILE_REQUEST_CODE=421;
+    public static final int HOSPITAL_PROFILE_CAMERA_CODE=421;
+
+
+    public static final String HOSPITAL_INFO_FILE="Hospital_sharedPreference";
+
+
+
+    public static final String HOSPITAL_NAME="hospital_name";
+    public static final String HOSPITAL_DEPARTMENT="hospital_department";
+    public static final String HOSPITAL_INITIALS="initials";
+    public static final String HOSPITAL_DOCTORS="hospital_doctors";
+    public static final String HOSPITAL_URI="hospital_uri";
+
+    public static final String REPORT_SETTINGS="Report";
 }

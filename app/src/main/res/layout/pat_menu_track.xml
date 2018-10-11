@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:background="#50D8B160"
+            android:background="#80880e4f"
             android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/realTimeEcgMeasurement"
             android:layout_height="0dp">
@@ -48,7 +48,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:background="#50EC4071"
+            android:background="#80c2185b"
             android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/archivedRec"
 
@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:background="#50F48FB1"
+            android:background="#50e91e63"
             android:foreground="?android:attr/selectableItemBackground"
 
             android:layout_height="0dp">
@@ -85,7 +85,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/roboto"
 
-                android:text="@string/fetch_rec"
+                android:text="@string/import_rec_gen"
                 android:layout_height="wrap_content" />
 
 

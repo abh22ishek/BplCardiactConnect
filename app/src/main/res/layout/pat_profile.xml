@@ -182,7 +182,8 @@
                             android:layout_height="35dp"
                             android:buttonTint="@color/sig_strength_mid"
                             android:text="@string/male"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            tools:ignore="UnusedAttribute" />
 
                         <android.support.v7.widget.AppCompatRadioButton
                             android:id="@+id/radio_btn_Female"
@@ -191,7 +192,8 @@
                             android:layout_marginStart="8dp"
                             android:buttonTint="@color/sig_strength_mid"
                             android:text="@string/female"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            tools:ignore="UnusedAttribute" />
                     </RadioGroup>
                 </LinearLayout>
 

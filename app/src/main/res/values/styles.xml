@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/cardiact_connect_theme</item>
         <item name="colorPrimaryDark">#880E4F</item>
-        <item name="colorAccent">@color/sig_strength_mid</item>
+        <item name="colorAccent">@color/separator</item>
         <item name="android:itemBackground">@color/separator</item>
 
     </style>

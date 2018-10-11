@@ -4,12 +4,16 @@ import android.app.*;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.net.*;
 import android.os.*;
 import android.support.annotation.*;
-import android.support.v4.app.*;
 import android.support.v4.app.Fragment;
 import android.view.*;
 import android.widget.*;
+
+import org.apache.commons.net.ftp.*;
+
+import java.io.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 
@@ -17,9 +21,12 @@ public class ConfigureFTPServer extends Fragment {
 
    RelativeLayout urlBar,portBar,usernameBar,passwordBar,saveDirBar;
    RadioButton radioUrl,radioport,radioUserName,radioPassword,radioSaveDir;
-   Button btnEdit;
+   Button btnEdit,btnUpload;
    String  headerText;
-
+    String server = "ftp://14.141.84.241/";
+    int port = 21;
+    String user = "testrnd";
+    String pass = "r&d9876";
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -43,6 +50,7 @@ public class ConfigureFTPServer extends Fragment {
         radioPassword=view.findViewById(R.id.radioPassword);
         radioSaveDir=view.findViewById(R.id.radioSaveDir);
         btnEdit=view.findViewById(R.id.btnEdit);
+        btnUpload=view.findViewById(R.id.btnUpload);
         return view;
     }
 
@@ -131,6 +139,59 @@ public class ConfigureFTPServer extends Fragment {
                 showDialog(getActivity(),headerText);
             }
         });
+
+
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               // configFTPClient(user,pass);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gmail.com"));
+                startActivity(browserIntent);
+            }
+        });
+
+
+    }
+
+
+    private void configFTPClient(String user, String password)
+    {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+
+        FTPClient ftpClient = new FTPClient();
+
+       //final String serverFinal=server;
+        BufferedInputStream buffIn = null;
+
+        String fileNameDirectory="BPL_CARDIART";
+
+        File file =new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath(),fileNameDirectory);
+        String firstRemoteFile =file+"/"+ "Cardiart__LPP1_ECG.pdf";
+
+        try {
+            buffIn = new BufferedInputStream(new FileInputStream(firstRemoteFile));
+
+            ftpClient.connect(server,port);
+            ftpClient.login(user, password);
+           // ftpClient.changeWorkingDirectory(serverRoad);
+
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            ftpClient.enterLocalPassiveMode();
+            ftpClient.storeFile("test.txt", buffIn);
+            buffIn.close();
+            ftpClient.logout();
+            ftpClient.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 

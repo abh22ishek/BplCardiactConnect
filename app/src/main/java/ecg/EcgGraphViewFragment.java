@@ -121,7 +121,7 @@ public class EcgGraphViewFragment extends Fragment {
                                         false, 800);
 
                                 graph2LastXValue++;
-                               // grapView.getViewport().scrollToEnd();
+                               grapView.getViewport().scrollToEnd();
                                /* for(int i=0;i<LeadData.LEADArray.length;i++){
                                             mCount++;
 

@@ -183,12 +183,6 @@ public class ECGDisplayFragment extends Fragment {
 
 
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-
 
 
     private void captureScreen(String loginName,String userName) {
@@ -416,16 +410,16 @@ public class ECGDisplayFragment extends Fragment {
 
 
 
+    float heightScale = 0;
+    float widthScale = 0;
+    float graphHeight = 42.51f;
 
-    private   void createPdf(){
+
+    private  void createPdf(){
 
 
         PDDocument document = new PDDocument();
         PDPage page = new PDPage(new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth()));
-        float widthScale = 0;
-        float heightScale = 0;
-        float graphHeight = 42.51f;
-
 
         String leadArr[]={"V6","V5","V4","V3","V2","V1","aVF","aVL","aVR","III","II","I"};
 
@@ -1216,4 +1210,547 @@ public class ECGDisplayFragment extends Fragment {
         Log.i("Ecg lead length -2048 =", "" + LeadX11.size());
         return LeadX11;
     }
+
+
+    private void plot3by4Leads(PDPageContentStream contentStream) throws IOException {
+
+        float unit_per_cm = 28.34f;
+
+        String leadArr1st[] = {"aVR", "III", "II", "I"};
+
+        String leadArr2nd[] = {"V2", "V1", "aVL", "aVF"};
+
+        String leadArr3rd[] = {"V6", "V5", "V4", "V3"};
+
+
+        widthScale = unit_per_cm / (float) 300; // 100 ... 0.28
+        // samples per cm
+        heightScale = (float) 328 / unit_per_cm; // pixels  328/63=5.2
+
+        graphHeight = 40f;
+
+
+        //-----------------
+
+
+        float mP1 = 10f, mPp1 = 10f;
+
+        float mP2 = 10f, mPp2 = 10f;
+
+        float mP3 = 10f, mPp3 = 10f;
+
+        float mP4 = 10f, mPp4 = 10f;
+
+        float mP5 = 10f, mPp5 = 10f;
+
+        float mP6 = 10f, mPp6 = 10f;
+
+        float mP7 = 10f, mPp7 = 10f;
+
+        float mP8 = 10f, mPp8 = 10f;
+
+        float mP9 = 10f, mPp9 = 10f;
+
+        float mP10 = 10f, mPp10 = 10f;
+
+        float mP11 = 10f, mPp11 = 10f;
+
+        float mP12 = 10f, mPp12 = 10f;
+
+        float mX = 40f + 2 * unit_per_cm; // add 1 cm to  starting point
+
+        mP1 = mP2 = mP3 = 0;
+        mP4 = mP5 = mP6 = mP7 = mP8 = mP9 = mP10 = mP11 = mP12 = 0;
+
+
+        float mPx7 = mX;
+        mPp7 = 3f * unit_per_cm;
+
+        float mPx8 = mX;
+        mPp8 = 5.5f * unit_per_cm;
+
+        float mPx9 = mX;
+        mPp9 = 8f * unit_per_cm;
+
+        float mPx10 = mX;
+        mPp10 = 10.5f * unit_per_cm;
+
+        float mPx11 = mX;
+        mPp11 = 13f * unit_per_cm;
+
+        float mPx12 = mX;
+        mPp12 = 15.5f * unit_per_cm;
+
+        PDFont font = PDType1Font.COURIER;
+        contentStream.setNonStrokingColor(0, 0, 0); //black text
+
+
+        float mCount1 = 3.1f * unit_per_cm;
+
+        for (int i = 0; i < leadArr1st.length; i++) {
+
+            contentStream.beginText();
+            contentStream.setFont(font, 11f);
+            contentStream.newLineAtOffset(mX - 10f, mCount1);
+            contentStream.showText(leadArr1st[i]);
+            contentStream.endText();
+
+            mCount1 = mCount1 + 2.5f * unit_per_cm;
+        }
+
+
+        contentStream.setLineWidth(1.0f);
+        contentStream.setStrokingColor(AWTColor.black);
+
+
+        for (int i = 0; i < 2400; i++) {
+
+/*
+            mP7 = (3f * unit_per_cm) + (MEdianData.Lead6MedianArray[i] / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx7, mPp7);
+            contentStream.lineTo(mX, mP7);
+            contentStream.stroke();
+
+            mPx7 = mX;
+            mPp7 = mP7;
+
+
+            mP8 = (5.5f * unit_per_cm) + (MEdianData.Lead5MedianArray[i] / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx8, mPp8);
+            contentStream.lineTo(mX, mP8);
+            contentStream.stroke();
+
+            mPx8 = mX;
+            mPp8 = mP8;*/
+
+
+            mP9 = (8f * unit_per_cm) + (LeadIII.get(i) / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx9, mPp9);
+            contentStream.lineTo(mX, mP9);
+            contentStream.stroke();
+
+            mPx9 = mX;
+            mPp9 = mP9;
+
+
+            mP10 = (10.5f * unit_per_cm) + (LeadIII.get(i) / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx10, mPp10);
+            contentStream.lineTo(mX, mP10);
+            contentStream.stroke();
+
+            mPx10 = mX;
+            mPp10 = mP10;
+
+            mP11 = (13f * unit_per_cm) + (LeadII.get(i) / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx11, mPp11);
+            contentStream.lineTo(mX, mP11);
+            contentStream.stroke();
+
+            mPx11 = mX;
+            mPp11 = mP11;
+
+
+            mP12 = (15.5f * unit_per_cm) + (LeadI.get(i) / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx12, mPp12);
+            contentStream.lineTo(mX, mP12);
+            contentStream.stroke();
+
+            mPx12 = mX;
+            mPp12 = mP12;
+
+
+            mX = mX + widthScale;
+
+
+        }
+
+
+        float mXAnother = 40f + 9 * unit_per_cm; // add 1 cm to  starting point
+
+        float mPx1 = mXAnother;
+        mPp1 = 3f * unit_per_cm;
+
+        float mPx2 = mXAnother;
+        mPp2 = 5.5f * unit_per_cm;
+
+        float mPx3 = mXAnother;
+        mPp3 = 8f * unit_per_cm;
+
+        float mPx4 = mXAnother;
+        mPp4 = 10.5f * unit_per_cm;
+
+        float mPx5 = mXAnother;
+        mPp5 = 13f * unit_per_cm;
+
+        float mPx6 = mXAnother;
+        mPp6 = 15.5f * unit_per_cm;
+
+        float mCount = 3.1f * unit_per_cm;
+
+        for (int i = 0; i < leadArr2nd.length; i++) {
+
+            contentStream.beginText();
+            contentStream.setFont(font, 11f);
+            contentStream.newLineAtOffset(mXAnother - 10f, mCount);
+            contentStream.showText(leadArr2nd[i]);
+            contentStream.endText();
+
+            mCount = mCount + 2.5f * unit_per_cm;
+        }
+
+        for (int i = 0; i < 2400; i++) {
+
+
+          /*  mP1 = (3 * unit_per_cm) + (MEdianData.Lead12MedianArray[i] / heightScale);
+
+            contentStream.moveTo(mPx1, mPp1);
+            contentStream.lineTo(mXAnother, mP1);
+            contentStream.stroke();
+
+            mPx1 = mXAnother;
+            mPp1 = mP1;
+
+
+            mP2 = (5.5f * unit_per_cm) + (MEdianData.Lead11MedianArray[i] / heightScale);
+
+
+            contentStream.moveTo(mPx2, mPp2);
+            contentStream.lineTo(mXAnother, mP2);
+            contentStream.stroke();
+
+            mPx2 = mXAnother;
+            mPp2 = mP2;*/
+
+
+            mP3 = (8f * unit_per_cm) + (LeadIII.get(i) / heightScale);
+
+            contentStream.moveTo(mPx3, mPp3);
+            contentStream.lineTo(mXAnother, mP3);
+            contentStream.stroke();
+
+            mPx3 = mXAnother;
+            mPp3 = mP3;
+
+
+            mP4 = (10.5f * unit_per_cm) + (LeadIII.get(i) / heightScale);
+
+            contentStream.moveTo(mPx4, mPp4);
+            contentStream.lineTo(mXAnother, mP4);
+            contentStream.stroke();
+
+            mPx4 = mXAnother;
+            mPp4 = mP4;
+
+
+            mP5 = (13f * unit_per_cm) + (LeadIII.get(i) / heightScale);
+            contentStream.moveTo(mPx5, mPp5);
+            contentStream.lineTo(mXAnother, mP5);
+            contentStream.stroke();
+
+            mPx5 = mXAnother;
+            mPp5 = mP5;
+
+
+            mP6 = (15.5f * unit_per_cm) + (LeadIII.get(i) / heightScale);
+            contentStream.moveTo(mPx6, mPp6);
+            contentStream.lineTo(mXAnother, mP6);
+            contentStream.stroke();
+
+            mPx6 = mXAnother;
+            mPp6 = mP6;
+
+
+            mXAnother = mXAnother + widthScale;
+        }
+    }
+
+
+    private void plot6by12Leads(PDPageContentStream contentStream) throws IOException {
+
+        float unit_per_cm = 28.34f;
+
+        String leadArr1st[] = {"aVF", "aVL", "aVR", "III", "II", "I"};
+
+        String leadArr2nd[] = {"V6", "V5", "V4", "V3", "V2", "V1"};
+
+
+        widthScale = unit_per_cm / (float) 200; // 100 ... 0.28
+        // samples per cm
+        heightScale = (float) 250 / unit_per_cm; // pixels  328/63=5.2
+
+        graphHeight = 40f;
+
+
+        //-----------------
+
+
+        float mP1 = 10f, mPp1 = 10f;
+
+        float mP2 = 10f, mPp2 = 10f;
+
+        float mP3 = 10f, mPp3 = 10f;
+
+        float mP4 = 10f, mPp4 = 10f;
+
+        float mP5 = 10f, mPp5 = 10f;
+
+        float mP6 = 10f, mPp6 = 10f;
+
+        float mP7 = 10f, mPp7 = 10f;
+
+        float mP8 = 10f, mPp8 = 10f;
+
+        float mP9 = 10f, mPp9 = 10f;
+
+        float mP10 = 10f, mPp10 = 10f;
+
+        float mP11 = 10f, mPp11 = 10f;
+
+        float mP12 = 10f, mPp12 = 10f;
+
+        float mX = 40f + 2 * unit_per_cm; // add 1 cm to  starting point
+
+        mP1 = mP2 = mP3 = 0;
+        mP4 = mP5 = mP6 = mP7 = mP8 = mP9 = mP10 = mP11 = mP12 = 0;
+
+
+        float mPx7 = mX;
+        mPp7 = 3f * unit_per_cm;
+
+        float mPx8 = mX;
+        mPp8 = 5.5f * unit_per_cm;
+
+        float mPx9 = mX;
+        mPp9 = 8f * unit_per_cm;
+
+        float mPx10 = mX;
+        mPp10 = 10.5f * unit_per_cm;
+
+        float mPx11 = mX;
+        mPp11 = 13f * unit_per_cm;
+
+        float mPx12 = mX;
+        mPp12 = 15.5f * unit_per_cm;
+
+        PDFont font = PDType1Font.COURIER;
+        contentStream.setNonStrokingColor(0, 0, 0); //black text
+
+
+        float mCount1 = 3.1f * unit_per_cm;
+
+        for (int i = 0; i < leadArr1st.length; i++) {
+
+            contentStream.beginText();
+            contentStream.setFont(font, 11f);
+            contentStream.newLineAtOffset(mX - 10f, mCount1);
+            contentStream.showText(leadArr1st[i]);
+            contentStream.endText();
+
+            mCount1 = mCount1 + 2.5f * unit_per_cm;
+        }
+
+
+        contentStream.setLineWidth(1.0f);
+        contentStream.setStrokingColor(AWTColor.black);
+
+
+        for (int i = 0; i < 600; i++) {
+
+
+            mP7 = (3f * unit_per_cm) + (MEdianData.Lead6MedianArray[i] / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx7, mPp7);
+            contentStream.lineTo(mX, mP7);
+            contentStream.stroke();
+
+            mPx7 = mX;
+            mPp7 = mP7;
+
+
+            mP8 = (5.5f * unit_per_cm) + (MEdianData.Lead5MedianArray[i] / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx8, mPp8);
+            contentStream.lineTo(mX, mP8);
+            contentStream.stroke();
+
+            mPx8 = mX;
+            mPp8 = mP8;
+
+
+            mP9 = (8f * unit_per_cm) + (MEdianData.Lead4MedianArray[i] / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx9, mPp9);
+            contentStream.lineTo(mX, mP9);
+            contentStream.stroke();
+
+            mPx9 = mX;
+            mPp9 = mP9;
+
+
+            mP10 = (10.5f * unit_per_cm) + (MEdianData.Lead3MedianArray[i] / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx10, mPp10);
+            contentStream.lineTo(mX, mP10);
+            contentStream.stroke();
+
+            mPx10 = mX;
+            mPp10 = mP10;
+
+
+            mP11 = (13f * unit_per_cm) + (MEdianData.Lead2MedianArray[i] / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx11, mPp11);
+            contentStream.lineTo(mX, mP11);
+            contentStream.stroke();
+
+            mPx11 = mX;
+            mPp11 = mP11;
+
+
+            mP12 = (15.5f * unit_per_cm) + (integerList.get(i) / heightScale);
+            contentStream.setStrokingColor(AWTColor.black);
+            contentStream.moveTo(mPx12, mPp12);
+            contentStream.lineTo(mX, mP12);
+            contentStream.stroke();
+
+            mPx12 = mX;
+            mPp12 = mP12;
+
+
+            mX = mX + widthScale;
+
+
+        }
+
+
+        float mXAnother = 40f + 8 * unit_per_cm; // add 1 cm to  starting point
+
+        float mPx1 = mXAnother;
+        mPp1 = 3f * unit_per_cm;
+
+        float mPx2 = mXAnother;
+        mPp2 = 5.5f * unit_per_cm;
+
+        float mPx3 = mXAnother;
+        mPp3 = 8f * unit_per_cm;
+
+        float mPx4 = mXAnother;
+        mPp4 = 10.5f * unit_per_cm;
+
+        float mPx5 = mXAnother;
+        mPp5 = 13f * unit_per_cm;
+
+        float mPx6 = mXAnother;
+        mPp6 = 15.5f * unit_per_cm;
+
+        float mCount = 3.1f * unit_per_cm;
+
+        for (int i = 0; i < leadArr2nd.length; i++) {
+
+            contentStream.beginText();
+            contentStream.setFont(font, 11f);
+            contentStream.newLineAtOffset(mXAnother - 10f, mCount);
+            contentStream.showText(leadArr2nd[i]);
+            contentStream.endText();
+
+            mCount = mCount + 2.5f * unit_per_cm;
+        }
+
+        for (int i = 0; i < 600; i++) {
+
+
+            mP1 = (3 * unit_per_cm) + (MEdianData.Lead12MedianArray[i] / heightScale);
+
+            contentStream.moveTo(mPx1, mPp1);
+            contentStream.lineTo(mXAnother, mP1);
+            contentStream.stroke();
+
+            mPx1 = mXAnother;
+            mPp1 = mP1;
+
+
+            mP2 = (5.5f * unit_per_cm) + (MEdianData.Lead11MedianArray[i] / heightScale);
+
+
+            contentStream.moveTo(mPx2, mPp2);
+            contentStream.lineTo(mXAnother, mP2);
+            contentStream.stroke();
+
+            mPx2 = mXAnother;
+            mPp2 = mP2;
+
+
+            mP3 = (8f * unit_per_cm) + (MEdianData.Lead10MedianArray[i] / heightScale);
+
+            contentStream.moveTo(mPx3, mPp3);
+            contentStream.lineTo(mXAnother, mP3);
+            contentStream.stroke();
+
+            mPx3 = mXAnother;
+            mPp3 = mP3;
+
+
+            mP4 = (10.5f * unit_per_cm) + (MEdianData.Lead9MedianArray[i] / heightScale);
+
+            contentStream.moveTo(mPx4, mPp4);
+            contentStream.lineTo(mXAnother, mP4);
+            contentStream.stroke();
+
+            mPx4 = mXAnother;
+            mPp4 = mP4;
+
+
+            mP5 = (13f * unit_per_cm) + (MEdianData.Lead8MedianArray[i] / heightScale);
+            contentStream.moveTo(mPx5, mPp5);
+            contentStream.lineTo(mXAnother, mP5);
+            contentStream.stroke();
+
+            mPx5 = mXAnother;
+            mPp5 = mP5;
+
+
+            mP6 = (15.5f * unit_per_cm) + (MEdianData.Lead7MedianArray[i] / heightScale);
+            contentStream.moveTo(mPx6, mPp6);
+            contentStream.lineTo(mXAnother, mP6);
+            contentStream.stroke();
+
+            mPx6 = mXAnother;
+            mPp6 = mP6;
+
+
+            mXAnother = mXAnother + widthScale;
+        }
+    }
+
+
+    List<Integer> integerList;
+
+
+    private List<Integer> filterMedianLead1Data(int amplitude, int ArrayLead1[]) {
+        integerList = new ArrayList<>();
+        int value;
+        int pax = 0;
+        for (int i = 0; i < 600; i++) {
+            value = ArrayLead1[i];
+            value = value * 2;
+            value = value / 14;
+            pax = amplitude - value;
+            if (pax == 0)
+                pax = 1;
+
+            value = value / pax;
+
+            integerList.add(value);
+        }
+
+
+        return integerList;
+    }
+
 }

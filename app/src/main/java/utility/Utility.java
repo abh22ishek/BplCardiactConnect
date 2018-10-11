@@ -1,5 +1,6 @@
 package utility;
 
+import android.annotation.*;
 import android.content.*;
 import android.database.sqlite.*;
 import android.os.*;
@@ -274,4 +275,87 @@ public class Utility {
         }
     }
 
+
+
+    public static SharedPreferences storeHospitalDocs(Context context,Set<String> doctors)
+    {
+
+        SharedPreferences sharedPref = context.getSharedPreferences(Constants.HOSPITAL_DOCTORS,
+                Context.MODE_PRIVATE);
+
+
+
+        if(getListOFHospitalDocs(context)==null){
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putStringSet("doctors",doctors);
+            editor.apply();
+
+        }else{
+            SharedPreferences.Editor editor = sharedPref.edit();
+            Set<String> olderSets=new LinkedHashSet<>();
+            olderSets.addAll(getListOFHospitalDocs(context));
+            olderSets.addAll(doctors);
+            editor.putStringSet("doctors",olderSets);
+            editor.apply();
+        }
+
+
+
+
+        return sharedPref;
+    }
+
+
+
+    public static Set<String> getListOFHospitalDocs(Context context)
+    {
+
+        Set<String> set;
+        SharedPreferences prefs;
+        prefs = context
+                .getSharedPreferences(Constants.HOSPITAL_DOCTORS, Context.MODE_PRIVATE);
+
+        set=prefs.getStringSet("doctors", null);
+        return set;
+    }
+
+
+
+    public static void storeReportSettings(Context context,Set<String> doctors)
+    {
+
+        SharedPreferences sharedPref = context.getSharedPreferences(Constants.REPORT_SETTINGS,
+                Context.MODE_PRIVATE);
+
+
+
+
+            SharedPreferences.Editor editor = sharedPref.edit();
+
+            editor.putStringSet("grid_color",doctors);
+        editor.putStringSet("grid_type",doctors);
+        editor.putStringSet("report_detail",doctors);
+
+        editor.putStringSet("ecg_format",doctors);
+        editor.putStringSet("ecg_trace_gain",doctors);
+        editor.putStringSet("ecg_trace_filter",doctors);
+
+        editor.putStringSet("trace_sequence",doctors);
+        editor.putStringSet("rhy_traces",doctors);
+        editor.putStringSet("rhy_lead1",doctors);
+
+        editor.putStringSet("rhy_lead2",doctors);
+        editor.putStringSet("trace_darkness",doctors);
+
+
+
+            editor.apply();
+
+
+
+
+
+
+
+    }
 }

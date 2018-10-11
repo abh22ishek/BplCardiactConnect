@@ -8,13 +8,31 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <ImageView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:layout_weight="0.6"
-        android:contentDescription="@string/hosp_profile"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/hosp_img" />
+        android:layout_height="0dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/hosp_profile"
+            android:scaleType="centerCrop"
+            android:id="@+id/hospitalImage"
+            android:src="@mipmap/hosp_img" />
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:contentDescription="@string/edit"
+            android:layout_gravity="end"
+            android:background="@drawable/edit_p"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:id="@+id/editBtn"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
 
 
 <LinearLayout
@@ -26,7 +44,19 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="Sri Jayadeva Insitute of Cardiology"
+        android:text="@string/department_name"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:paddingStart="5dp"
+        android:gravity="center_vertical"
+        android:id="@+id/departName"
+        android:paddingEnd="5dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="@string/hospital_name"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="17sp"
