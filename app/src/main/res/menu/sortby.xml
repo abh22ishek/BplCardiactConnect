@@ -28,8 +28,10 @@
 
 
     <item android:id="@+id/AddDoctor"
+        android:icon="@drawable/edit_p"
         android:title="@string/add_doctor"/>
     <item android:id="@+id/SelectAll"
+        android:icon="@drawable/select_all"
         android:title="@string/select_all"/>
 
     <item android:id="@+id/DeleteMarked"

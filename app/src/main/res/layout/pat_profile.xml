@@ -507,6 +507,7 @@
                     android:inputType="text"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
+                    android:focusable="false"
                     android:textColor="@color/black"
                     android:textColorHint="@color/bg_grey" />
             </LinearLayout>
@@ -537,6 +538,7 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/set_pat_ref_doc"
                     android:inputType="text"
+                    android:focusable="false"
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textColor="@color/black"

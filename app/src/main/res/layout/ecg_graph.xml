@@ -1,424 +1,321 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:background="#354D74"
-    android:layout_height="match_parent">
-
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
         android:id="@+id/first4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_bar"
-        android:visibility="visible"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:visibility="visible">
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/lead_1"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
-            android:layout_height="wrap_content" />
-
-
-
-        <com.jjoe64.graphview.GraphView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:id="@+id/lead1"
-            android:layout_alignParentBottom="true"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/lead_1"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            />
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/lead1"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
 
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/lead_2"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
-            android:layout_height="wrap_content" />
-
-
-
-        <com.jjoe64.graphview.GraphView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:id="@+id/lead2"
-            android:layout_alignParentBottom="true"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/lead_2"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            />
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/lead2"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
 
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/lead_3"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
-            android:layout_height="wrap_content" />
-
-
-        <com.jjoe64.graphview.GraphView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:id="@+id/lead3"
-            android:layout_alignParentBottom="true"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/lead_3"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            />
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/lead3"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
 
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/avr"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
-            android:layout_height="wrap_content" />
-
-
-        <com.jjoe64.graphview.GraphView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:id="@+id/lead4"
-            android:layout_alignParentBottom="true"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/avr"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            />
-
-
-    </RelativeLayout>
-
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/lead4"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
         android:id="@+id/mid4"
-        android:visibility="gone"
-        android:layout_above="@+id/bottom_bar"
-
-        android:layout_height="wrap_content">
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/avl"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
-
-
-
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:id="@+id/avl"
-                android:layout_alignParentBottom="true"
-
-
-                />
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/avf"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
-
-
-
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:id="@+id/avf"
-                android:layout_alignParentBottom="true"
-
-
-                />
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/leadv1"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
-
-
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:id="@+id/leadV1"
-                android:layout_alignParentBottom="true"
-
-
-                />
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/leadv2"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
-
-
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:id="@+id/leadV2"
-                android:layout_alignParentBottom="true"
-
-
-                />
-
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_bar"
         android:orientation="vertical"
-        android:id="@+id/last4"
-        android:visibility="gone"
-        android:layout_above="@+id/bottom_bar"
-        android:layout_height="wrap_content">
-
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:text="@string/leadv3"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
                 android:layout_marginTop="10dp"
+                android:text="@string/avl"
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                android:layout_height="wrap_content" />
-
-
+                android:textStyle="bold" />
 
             <com.jjoe64.graphview.GraphView
+                android:id="@+id/avl"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
-                android:id="@+id/leadV3"
-                android:layout_alignParentBottom="true"
-
-
-                />
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="@string/leadv4"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
-
-
-
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:id="@+id/leadV4"
-                android:layout_alignParentBottom="true"
-
-
-                />
-
-
+                android:layout_alignParentBottom="true" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:text="@string/leadv5"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
                 android:layout_marginTop="10dp"
+                android:text="@string/avf"
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                android:layout_height="wrap_content" />
-
+                android:textStyle="bold" />
 
             <com.jjoe64.graphview.GraphView
+                android:id="@+id/avf"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
-                android:id="@+id/leadV5"
-                android:layout_alignParentBottom="true"
-
-
-                />
-
-
+                android:layout_alignParentBottom="true" />
         </RelativeLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:text="@string/leadv6"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
                 android:layout_marginTop="10dp"
+                android:text="@string/leadv1"
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                android:layout_height="wrap_content" />
-
+                android:textStyle="bold" />
 
             <com.jjoe64.graphview.GraphView
+                android:id="@+id/leadV1"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
-                android:id="@+id/leadV6"
-                android:layout_alignParentBottom="true"
-
-
-                />
-
-
+                android:layout_alignParentBottom="true" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/leadv2"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/leadV2"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/last4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_bar"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/leadv3"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/leadV3"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/leadv4"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/leadV4"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/leadv5"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/leadV5"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/leadv6"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/leadV6"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:gravity="end"
-        android:id="@+id/bottom_bar"
-
-        android:orientation="horizontal"
-        android:layout_height="35dp">
-
-
-
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="100dp"
             android:id="@+id/Previous"
-            android:text="@string/prev"
-
-            android:layout_height="wrap_content"
-            tools:ignore="ButtonStyle" />
-        <Button
             android:layout_width="100dp"
-            android:id="@+id/Next"
-            android:text="@string/next"
             android:layout_height="wrap_content"
+            android:text="@string/prev"
             tools:ignore="ButtonStyle" />
 
+        <Button
+            android:id="@+id/Next"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
-
-
 </RelativeLayout>

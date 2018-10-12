@@ -37,7 +37,6 @@ public class AddHospitalDoctors extends Fragment {
         }
 
 
-
     }
 
     RecyclerView listOfDocs;
@@ -77,8 +76,7 @@ public class AddHospitalDoctors extends Fragment {
         }
 
 
-
-        }
+    }
 
 
     private void populateRecyclerView() {
@@ -90,11 +88,9 @@ public class AddHospitalDoctors extends Fragment {
                 loginActivityListner,listR,
                 DocsList,isChecked);
 
+         listOfDocs.setAdapter(doctorRecyclerViewAdapter);
 
-        listOfDocs.setAdapter(doctorRecyclerViewAdapter);
-
-
-    }
+         }
 
 
 

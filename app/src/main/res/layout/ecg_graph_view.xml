@@ -1,225 +1,178 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/black"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
         android:id="@+id/topPanel"
-
+        android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:orientation="horizontal"
         tools:ignore="UselessParent">
 
-
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_margin="1dp"
-
+            android:layout_weight="1"
+            android:background="@color/settings_bg"
+            android:gravity="center"
             android:text="HR :"
-            android:gravity="center"
-            android:textStyle="bold"
             android:textColor="@color/white"
-
-            android:background="@color/settings_bg"
-            android:layout_height="match_parent" />
-
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
             android:layout_weight="2"
+            android:background="@color/settings_bg"
+            android:gravity="center"
             android:text="@string/pat_id"
-            android:gravity="center"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:background="@color/settings_bg"
-            android:layout_margin="1dp"
-            android:layout_height="match_parent" />
-
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
             android:layout_weight="1"
+            android:background="@color/settings_bg"
+            android:gravity="center"
             android:text="@string/time"
-            android:gravity="center"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:background="@color/settings_bg"
-            android:layout_margin="1dp"
-            android:layout_height="match_parent" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
             android:layout_weight="1"
             android:background="@color/settings_bg"
-            android:layout_margin="1dp"
-            android:text="Battery Status :"
             android:gravity="center"
+            android:text="Battery Status :"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_height="match_parent" />
-
-
-
+            android:textStyle="bold" />
     </LinearLayout>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
-
-        android:layout_below="@+id/topPanel"
+        android:layout_height="match_parent"
         android:layout_above="@+id/bottomBar"
-        android:layout_height="match_parent">
+        android:layout_below="@+id/topPanel">
 
-
-
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:id="@+id/realTimeEcgView"/>
-
-
-
-
-
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/realTimeEcgView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true" />
 
         <LinearLayout
-            android:layout_width="30dp"
             android:id="@+id/errorBar"
-            android:orientation="vertical"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_height="match_parent" >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="1"
+                android:layout_height="0dp"
                 android:layout_margin="1dp"
-
-                android:background="@color/limits_text_color"
-                android:layout_height="0dp" />
+                android:layout_weight="1"
+                android:background="@color/limits_text_color" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:background="@color/limits_text_color"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-
-                android:layout_height="wrap_content" />
+                android:layout_weight="1"
+                android:background="@color/limits_text_color" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:background="@color/sig_strength_hi"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-
-                android:layout_height="wrap_content" />
+                android:layout_weight="1"
+                android:background="@color/sig_strength_hi" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:background="@color/sig_strength_hi"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:background="@color/sig_strength_hi"
-                android:layout_margin="1dp"
-
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:background="@color/sig_strength_hi"
-                android:layout_margin="1dp"
-
-                android:layout_height="wrap_content" />
+                android:background="@color/sig_strength_hi" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:background="@color/sig_strength_hi"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-
-                android:layout_height="wrap_content" />
+                android:layout_weight="1"
+                android:background="@color/sig_strength_hi" />
 
             <TextView
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-                android:background="@color/limits_text_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-            android:layout_height="wrap_content" />
+                android:layout_weight="1"
+                android:background="@color/sig_strength_hi" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/sig_strength_hi" />
 
-
-
-
-
-
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@color/limits_text_color" />
         </LinearLayout>
-
-
-
-
-
-
     </RelativeLayout>
 
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:orientation="horizontal"
         android:id="@+id/bottomBar"
-        android:layout_height="35dp">
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:layout_margin="1dp"
-
+            android:layout_weight="1"
+            android:background="@color/settings_bg"
+            android:gravity="center"
             android:text="Lead Switch"
-            android:gravity="center"
-            android:textStyle="bold"
             android:textColor="@color/white"
-
-            android:background="@color/settings_bg"
-            android:layout_height="match_parent" />
-
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
             android:layout_weight="2"
-            android:text="ADF MUS :"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/white"
             android:background="@color/settings_bg"
-            android:layout_margin="1dp"
-            android:layout_height="match_parent" />
-
+            android:gravity="center"
+            android:text="ADF MUS :"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="Gain :"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:background="@color/settings_bg"
+            android:layout_height="match_parent"
             android:layout_margin="1dp"
-            android:layout_height="match_parent" />
-
-
+            android:layout_weight="1"
+            android:background="@color/settings_bg"
+            android:gravity="center"
+            android:text="Gain :"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

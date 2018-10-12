@@ -545,11 +545,13 @@ This is when high blood pressure requires emergency medical attention.
     <string name="edt_hosp_name">Edit Hospital Name</string>
     <string name="edt_dep_name">Edit Department Name</string>
     <string name="add_doctor">Add Doctor</string>
-    <string name="delete_marked">Delete Marked</string>
+    <string name="delete_marked">Delete All</string>
     <string name="select_all">Select All</string>
     <string name="upload">Upload</string>
     <string name="department_name">Urology Department</string>
     <string name="hospital_name">Manipal Hospital</string>
+    <string name="sel_ref_doc">Select Reference Doc</string>
+    <string name="sel_cons_doc">Select Consultation Doc</string>
 
 
 </resources>

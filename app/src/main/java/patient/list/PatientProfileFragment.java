@@ -36,6 +36,7 @@ import data.*;
 import database.*;
 import logger.*;
 import login.fragment.*;
+import utility.*;
 
 public class PatientProfileFragment extends Fragment {
 
@@ -58,6 +59,8 @@ public class PatientProfileFragment extends Fragment {
     private static final int RESULT_CANCELED = 0;
 
     BaseApplicationClass globalVariable;
+
+    Set<String> ConsultationDocs;
 
     @Override
     public void onAttach(Context context) {
@@ -222,6 +225,32 @@ public class PatientProfileFragment extends Fragment {
             }
         });
 
+
+
+        patRefDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ConsultationDocs=Utility.getListOFHospitalDocs(getActivity());
+                if(ConsultationDocs!=null)
+                {
+                 showDocs(getActivity(),ConsultationDocs,patRefDoc);
+                }
+
+            }
+        });
+
+
+        patConsulDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConsultationDocs=Utility.getListOFHospitalDocs(getActivity());
+                if(ConsultationDocs!=null)
+                {
+                    showDocs(getActivity(),ConsultationDocs,patConsulDoc);
+                }
+            }
+        });
 
     }
 
@@ -537,5 +566,59 @@ public class PatientProfileFragment extends Fragment {
         Logger.log(Level.DEBUG, "---", "shared preference s file gets stored"+uriImage);
         // globalVariable.setUsername(email_id.getText().toString());
         return  profile_image;
+    }
+
+
+    private void showDocs(final Context context, Set<String> listofDocs, final View view) {
+
+
+       List<String> listDocsW=new ArrayList<>();
+        listDocsW.addAll(listofDocs);
+
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, listDocsW);
+
+            final Dialog dialog = new Dialog(context);
+
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBoxAnimation;
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.custom_list);
+
+        dialog.setCancelable(true);
+
+        final ListView listview = dialog.findViewById(R.id.list_content);
+        final TextView header = dialog.findViewById(R.id.header);
+
+        if(view.equals(patRefDoc))
+            header.setText(getString(R.string.sel_ref_doc));
+        else
+            header.setText(getString(R.string.sel_cons_doc));
+
+        if(listofDocs.size()>6)
+        {
+            ViewGroup.LayoutParams params = listview.getLayoutParams();
+            params.height = 400;
+            listview.setLayoutParams(params);
+            listview.requestLayout();
+        }
+
+        listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View v, int i, long l) {
+
+             if(view.equals(patRefDoc))
+               patRefDoc.setText(adapterView.getItemAtPosition(i).toString());
+             else
+                 patConsulDoc.setText(adapterView.getItemAtPosition(i).toString());
+
+                dialog.dismiss();
+            }
+
+        });
+
+        dialog.show();
     }
 }

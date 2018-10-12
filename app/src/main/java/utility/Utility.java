@@ -320,6 +320,26 @@ public class Utility {
     }
 
 
+    public static void clearHospitalDocs(Context context){
+        SharedPreferences prefs;
+        prefs = context .getSharedPreferences(Constants.HOSPITAL_DOCTORS, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        try
+        {
+            editor.remove("doctors");
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            editor.apply();
+
+        }
+
+    }
+
 
     public static void storeReportSettings(Context context,Set<String> doctors)
     {

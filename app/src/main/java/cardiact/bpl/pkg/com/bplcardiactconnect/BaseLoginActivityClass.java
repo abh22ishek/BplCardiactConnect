@@ -347,6 +347,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
                 break;
 
+
+            case R.id.DeleteMarked:
+                Utility.clearHospitalDocs(BaseLoginActivityClass.this);
+                reloadHospitalDocsFragemnt(DocsList,true);
+                break;
             default:
                 break;
         }
