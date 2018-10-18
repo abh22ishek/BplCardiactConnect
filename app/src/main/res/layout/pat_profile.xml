@@ -292,7 +292,6 @@
                         android:id="@+id/radio_btn_Yes"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:buttonTint="@color/sig_strength_mid"
                         android:text="@string/yes"
                         android:textColor="@color/black" />
 
@@ -301,7 +300,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
                         android:layout_marginStart="8dp"
-                        android:buttonTint="@color/sig_strength_mid"
+
                         android:text="@string/no"
                         android:textColor="@color/black" />
                 </RadioGroup>
@@ -538,8 +537,8 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/set_pat_ref_doc"
                     android:inputType="text"
-                    android:focusable="false"
-                    android:maxLength="20"
+                    android:focusable="true"
+                    android:maxLength="25"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/bg_grey" />

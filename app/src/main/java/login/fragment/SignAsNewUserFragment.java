@@ -44,7 +44,9 @@ public class SignAsNewUserFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
         View view= inflater.inflate(R.layout.log_out ,container,false);
         signUpFresh=view.findViewById(R.id.signUpFresh);
 

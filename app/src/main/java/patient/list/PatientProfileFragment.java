@@ -194,6 +194,9 @@ public class PatientProfileFragment extends Fragment {
             public void onClick(View view) {
 
 
+                if(!isValidFields())
+                    return;
+
                SQLiteDatabase mDatabase= DatabaseManager.getInstance().openDatabase();
 
                try{
@@ -234,7 +237,7 @@ public class PatientProfileFragment extends Fragment {
                 ConsultationDocs=Utility.getListOFHospitalDocs(getActivity());
                 if(ConsultationDocs!=null)
                 {
-                 showDocs(getActivity(),ConsultationDocs,patRefDoc);
+                // showDocs(getActivity(),ConsultationDocs,patRefDoc);
                 }
 
             }
@@ -620,5 +623,55 @@ public class PatientProfileFragment extends Fragment {
         });
 
         dialog.show();
+    }
+
+
+    private boolean isValidFields()
+    {
+        boolean b=false;
+
+        if(patId.getText().toString().trim().equals("")){
+            patId.setError(getString(R.string.en_pat_id));
+            patId.requestFocus();
+            return b;
+        }
+
+        else if(patId.getText().toString().trim().length()<6)
+        {
+            patId.setError(getString(R.string.pat_min));
+            patId.requestFocus();
+            return b;
+        }
+        else if(patAge.getText().toString().trim().equals(""))
+        {
+            patAge.setError(getString(R.string.age_val));
+            patAge.requestFocus();
+            return b;
+        }
+
+        else if(patHeight.getText().toString().trim().equals(""))
+        {
+            patHeight.setError(getString(R.string.height_emp));
+            patHeight.requestFocus();
+            return b;
+        }
+
+        else if(patWeight.getText().toString().trim().equals(""))
+        {
+            patWeight.setError(getString(R.string.weigh_val));
+            patWeight.requestFocus();
+            return b;
+        }
+
+        else if(patConsulDoc.getText().toString().equals(""))
+        {
+
+           patConsulDoc.setError(getString(R.string.con_doc_val));
+            patConsulDoc.requestFocus();
+            return b;
+        }
+
+        b=true;
+        return b;
     }
 }

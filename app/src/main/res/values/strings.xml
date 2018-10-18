@@ -552,6 +552,13 @@ This is when high blood pressure requires emergency medical attention.
     <string name="hospital_name">Manipal Hospital</string>
     <string name="sel_ref_doc">Select Reference Doc</string>
     <string name="sel_cons_doc">Select Consultation Doc</string>
+    <string name="en_pat_id">Enter Patient Id</string>
+    <string name="pat_min">Patient Id should be minimum 6 characters</string>
+    <string name="age_val">Age cannot be Empty</string>
+    <string name="height_emp">Height Cannot be empty</string>
+    <string name="weigh_val">Weight cannot be empty</string>
+    <string name="con_doc_val">Consultation Doctor cannot be empty</string>
+    <string name="check_ineternet">Please Check your Internet Connection</string>
 
 
 </resources>

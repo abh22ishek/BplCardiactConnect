@@ -7,6 +7,7 @@ import hospital.*;
 import login.fragment.*;
 import maintenance.*;
 import patient.list.*;
+import usb.*;
 
 public class ClassConstants {
 
@@ -52,10 +53,9 @@ public class ClassConstants {
 
     public static final String CUSTOMIZE_DISPLAY_FRAGMENT= CustomizeDisplay.class.getName();
 
-
-
     public static final String ADD_HOSPITAL_DOCTORS_FRAGMENT= AddHospitalDoctors.class.getName();
 
+    public static final String USB_CONNECTION_FARGMENT= UsbConnectionFragment.class.getName();
 
     public static  String GRID_COLOR= "Blue";
     public static  String GRID_TYPE= "Minor";

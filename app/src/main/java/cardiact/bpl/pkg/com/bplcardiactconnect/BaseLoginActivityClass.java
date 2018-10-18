@@ -3,6 +3,7 @@ package cardiact.bpl.pkg.com.bplcardiactconnect;
 import android.*;
 import android.annotation.*;
 import android.app.*;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.*;
@@ -57,6 +58,7 @@ import maintenance.*;
 import model.*;
 import patient.list.*;
 import store.credentials.*;
+import usb.*;
 import utility.*;
 
 
@@ -236,6 +238,28 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         DocsList=new ArrayList<>();
 
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayOptions(actionBar.getDisplayOptions() |   android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+        ImageView imageView = new ImageView(actionBar.getThemedContext());
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        imageView.setImageResource(R.drawable.ic_usb_black_24dp);
+        android.support.v7.app.ActionBar.LayoutParams layoutParams = new   android.support.v7.app.ActionBar.LayoutParams(
+                android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT,
+                android.support.v7.app.ActionBar.LayoutParams.WRAP_CONTENT, Gravity.END
+                | Gravity.CENTER_VERTICAL);
+        layoutParams.rightMargin = 20;
+        imageView.setLayoutParams(layoutParams);
+        actionBar.setCustomView(imageView);
+
+
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callFragments(ClassConstants.USB_CONNECTION_FARGMENT,
+                        new UsbConnectionFragment(),ClassConstants.USB_CONNECTION_FARGMENT,null);
+            }
+        });
     }
 
 
@@ -593,7 +617,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
         } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
-
             baseLayout.setVisibility(View.GONE);
             return;
         } else if (currentFragment.getClass().getName().equals(ClassConstants.WELCOME_USER_FRAGMENT)) {
@@ -1480,4 +1503,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
         fragmentTransaction.commit();
     }
+
+
+
+
 }

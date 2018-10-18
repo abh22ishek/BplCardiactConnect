@@ -1,5 +1,6 @@
 package maintenance;
 
+import android.annotation.*;
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
@@ -14,8 +15,12 @@ import android.widget.*;
 import org.apache.commons.net.ftp.*;
 
 import java.io.*;
+import java.net.*;
 
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
+import it.sauronsoftware.ftp4j.*;
+import it.sauronsoftware.ftp4j.FTPClient;
+import logger.*;
 
 public class ConfigureFTPServer extends Fragment {
 
@@ -23,7 +28,7 @@ public class ConfigureFTPServer extends Fragment {
    RadioButton radioUrl,radioport,radioUserName,radioPassword,radioSaveDir;
    Button btnEdit,btnUpload;
    String  headerText;
-    String server = "ftp://14.141.84.241/";
+    String server = "14.141.84.241";
     int port = 21;
     String user = "testrnd";
     String pass = "r&d9876";
@@ -145,55 +150,185 @@ public class ConfigureFTPServer extends Fragment {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
 
-               // configFTPClient(user,pass);
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gmail.com"));
-                startActivity(browserIntent);
+                if(isNetworkAvailable(getActivity()) &&isInternetAvailable() )
+                    new UploadPDFFiles().execute(new String[] { isloaded});
+                else
+                    Toast.makeText(getActivity(),R.string.check_ineternet,Toast.LENGTH_SHORT).show();
+               // Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gmail.com"));
+               // startActivity(browserIntent);
             }
         });
 
 
     }
 
-
-    private void configFTPClient(String user, String password)
+    public boolean isNetworkAvailable(Context context)
     {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE));
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                .permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        return connectivityManager.getActiveNetworkInfo() != null &&
+                connectivityManager.getActiveNetworkInfo().isConnected();
+    }
 
 
-        FTPClient ftpClient = new FTPClient();
+    public boolean isInternetAvailable() {
+        try {
+            final InetAddress address = InetAddress.getByName("www.google.com");
+            return !address.equals("");
+        } catch (UnknownHostException e) {
+          e.printStackTrace();
+        }
+        return false;
+    }
 
-       //final String serverFinal=server;
-        BufferedInputStream buffIn = null;
+    public void uploadFile(File fileName) {
 
-        String fileNameDirectory="BPL_CARDIART";
 
-        File file =new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath(),fileNameDirectory);
-        String firstRemoteFile =file+"/"+ "Cardiart__LPP1_ECG.pdf";
+        it.sauronsoftware.ftp4j.FTPClient client = new it.sauronsoftware.ftp4j.FTPClient();
 
         try {
-            buffIn = new BufferedInputStream(new FileInputStream(firstRemoteFile));
 
-            ftpClient.connect(server,port);
-            ftpClient.login(user, password);
-           // ftpClient.changeWorkingDirectory(serverRoad);
+            client.connect(server, 21);
+            try
+            {
+                client.login(user, pass);
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println(" Login Failed ...! ...");
+            }
+            finally {
+                client.setType(FTPClient.TYPE_BINARY);
+                try{
+                    client.changeDirectory("/ms/");
+                }catch (Exception e){
+                    e.printStackTrace();
+                    System.out.println(" Client change directory issue  ...");
+                }
 
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-            ftpClient.enterLocalPassiveMode();
-            ftpClient.storeFile("test.txt", buffIn);
-            buffIn.close();
-            ftpClient.logout();
-            ftpClient.disconnect();
+
+                client.upload(fileName, new MyTransferListener());
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
+            try {
+                client.disconnect(true);
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
 
-
-
     }
+
+    public class MyTransferListener implements FTPDataTransferListener {
+
+        public void started() {
+
+            Logger.log(Level.DEBUG,getActivity().getPackageName()," Upload Started ...");
+
+        }
+
+        public void transferred(int length) {
+
+            Logger.log(Level.DEBUG,getActivity().getPackageName()," transferred ..."+length);
+
+        }
+
+        public void completed() {
+
+            //   btn.setVisibility(View.VISIBLE);
+            // Transfer completed
+
+            Logger.log(Level.DEBUG,getActivity().getPackageName()," Completed ...");
+
+        }
+
+        public void aborted() {
+
+
+            Logger.log(Level.DEBUG,getActivity().getPackageName()," Aborted ...");
+
+        }
+
+        public void failed() {
+
+
+            Logger.log(Level.DEBUG,getActivity().getPackageName()," Failed !!!!!!!! ...");
+
+        }
+    }
+
+    ProgressDialog progressDialog;
+    String isloaded = "false";
+
+
+    @SuppressLint("StaticFieldLeak")
+    private  class UploadPDFFiles extends AsyncTask<String, String, String> {
+
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if (progressDialog == null) {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please wait ......");
+
+                progressDialog.setCancelable(false);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String fileNameDirectory = "BPL_CARDIART";
+
+            File f = new File(android.os.Environment.getExternalStorageDirectory().
+                    getAbsolutePath(), fileNameDirectory + "/" + "Cardiart__LPP1_ECG.pdf");
+
+            // Upload sdcard file
+            try{
+                uploadFile(f);
+                isloaded="true";
+            }catch (Exception e)
+            {
+                isloaded="false";
+                e.printStackTrace();
+            }
+
+
+            return isloaded;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+                if (isloaded.equalsIgnoreCase("true")) {
+                    Toast.makeText(getActivity(),
+                            "PDF  Successfully uploaded", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+            }
+
+        }
+    }
+
+
+
+
+
 
 
     Dialog dialog;
