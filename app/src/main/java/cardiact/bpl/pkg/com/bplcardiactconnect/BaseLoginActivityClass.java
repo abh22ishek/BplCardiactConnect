@@ -1,10 +1,7 @@
 package cardiact.bpl.pkg.com.bplcardiactconnect;
 
-import android.*;
 import android.annotation.*;
 import android.app.*;
-import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.*;
 import android.content.res.*;
@@ -12,16 +9,13 @@ import android.graphics.*;
 import android.graphics.drawable.*;
 import android.net.*;
 import android.os.*;
-import android.provider.*;
 import android.support.annotation.*;
 import android.support.design.widget.*;
-import android.support.v4.app.*;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.*;
 import android.support.v4.widget.*;
-import android.support.v7.app.*;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -29,16 +23,7 @@ import android.view.*;
 import android.view.animation.*;
 import android.widget.*;
 
-import com.bumptech.glide.*;
-import com.bumptech.glide.load.engine.*;
-import com.bumptech.glide.load.resource.drawable.*;
-import com.bumptech.glide.request.animation.*;
-import com.bumptech.glide.request.target.*;
-import com.bumptech.glide.util.*;
-
-
 import java.io.*;
-import java.lang.*;
 import java.util.*;
 
 import application.*;
@@ -65,12 +50,11 @@ import utility.*;
 public class BaseLoginActivityClass extends AppCompatActivity implements LoginActivityListner,ListR {
 
 
-    private RoundedImageView UserIcon;
-    private TextView appName;
+
+//    private TextView appName;
     private String TAG = BaseLoginActivityClass.class.getSimpleName();
 
     BaseApplicationClass globalVariable;
-    private String userIconUri;
     ViewFlipper viewFlipper;
     List<DoctorModel>  DocsList;
 
@@ -80,10 +64,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     DrawerLayout drawerLayout;
     LoginActivityListner loginActivityListner;
 
-    RelativeLayout baseLayout;
+   // RelativeLayout baseLayout;
     ImageView navHeaderIcon;
 
-    Uri NavigationUserIconUri;
+
     List<EcgLEadModel> EcgLeads;
 
     Observable<List<EcgLEadModel>> mObservable;
@@ -92,7 +76,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_login_activity_main);
+        setContentView(R.layout.base_activity);
 
         globalVariable = (BaseApplicationClass) getApplicationContext();
         viewFlipper = findViewById(R.id.linearParams);
@@ -101,17 +85,22 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
         drawerLayout = findViewById(R.id.drawerLayout);
-        UserIcon = findViewById(R.id.hospitalIcon1);
-        UserIcon.setVisibility(View.GONE);
 
-        appName = findViewById(R.id.appName);
+
+
+       /* UserIcon = findViewById(R.id.hospitalIcon1);
+        UserIcon.setVisibility(View.GONE);
+*/
+       // appName = findViewById(R.id.appName);
+
+
         nv = findViewById(R.id.nv);
 
 
         View header = nv.getHeaderView(0);
         navHeaderIcon = header.findViewById(R.id.navHeaderIcon);
 
-        baseLayout = findViewById(R.id.relativeParams);
+      //  baseLayout = findViewById(R.id.relativeParams);
 
         loginActivityListner = this;
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -130,6 +119,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         //----
 
 
+/*
 
         appName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,85 +130,83 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
             }
         });
+*/
 
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id) {
-                    case R.id.hospitalProfile:
-                        drawerLayout.closeDrawer(Gravity.START);
+        nv.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            switch (id) {
+                case R.id.hospitalProfile:
+                    drawerLayout.closeDrawer(Gravity.START);
 
-                        callFragments(ClassConstants.HOSPITAL_PROFILE_FRAGMENT,
-                                new HospitalProfileFragment(),ClassConstants.HOSPITAL_PROFILE_FRAGMENT,null);
+                    callFragments(ClassConstants.HOSPITAL_PROFILE_FRAGMENT,
+                            new HospitalProfileFragment(),ClassConstants.HOSPITAL_PROFILE_FRAGMENT,null);
 
-                        getSupportActionBar().setTitle(getString(R.string.hosp_profile));
-                      //  Toast.makeText(BaseLoginActivityClass.this, "Hosp Profile", Toast.LENGTH_SHORT).show();
-                        break;
+                    getSupportActionBar().setTitle(getString(R.string.hosp_profile));
+                  //  Toast.makeText(BaseLoginActivityClass.this, "Hosp Profile", Toast.LENGTH_SHORT).show();
+                    break;
 
-                    case R.id.customizeDisplay:
-                        drawerLayout.closeDrawer(Gravity.START);
-                        loadCustomizeDispalyFragments();
-                        callFragments(ClassConstants.CUSTOMIZE_DISPLAY_FRAGMENT,
-                                new CustomizeDisplay(),ClassConstants.CUSTOMIZE_DISPLAY_FRAGMENT,null);
-                        getSupportActionBar().setTitle(getString(R.string.cust_display));
-
-
-                      //  Toast.makeText(BaseLoginActivityClass.this, "Custom Display", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.logOut:
-                        drawerLayout.closeDrawer(Gravity.START);
-                        logOutConfirmDialog(BaseLoginActivityClass.this);
-                        break;
-
-                    case R.id.navHeaderIcon:
-                      //  Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
-                        break;
+                case R.id.customizeDisplay:
+                    drawerLayout.closeDrawer(Gravity.START);
+                    loadCustomizeDispalyFragments();
+                    callFragments(ClassConstants.CUSTOMIZE_DISPLAY_FRAGMENT,
+                            new CustomizeDisplay(),ClassConstants.CUSTOMIZE_DISPLAY_FRAGMENT,null);
+                    getSupportActionBar().setTitle(getString(R.string.cust_display));
 
 
-                    case R.id.reportSettings:
-                        drawerLayout.closeDrawer(Gravity.START);
-                        callFragments(ClassConstants.REPORT_FRAGMENT,
-                                new ReportFragment(),ClassConstants.REPORT_FRAGMENT,null);
-                        getSupportActionBar().setTitle(getString(R.string.report_settings));
-                        break;
+                  //  Toast.makeText(BaseLoginActivityClass.this, "Custom Display", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.logOut:
+                    drawerLayout.closeDrawer(Gravity.START);
+                    logOutConfirmDialog(BaseLoginActivityClass.this);
+                    break;
 
-                    case R.id.configFtp:
-                        drawerLayout.closeDrawer(Gravity.START);
-                        callFragments(ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT,
-                                new ConfigureFTPServer(),ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT,null);
-                        getSupportActionBar().setTitle(getString(R.string.config_ftp));
-                        break;
+                case R.id.navHeaderIcon:
+                  //  Toast.makeText(BaseLoginActivityClass.this, "Settings", Toast.LENGTH_SHORT).show();
+                    break;
 
 
-                    case R.id.maintenanceChecks:
-                        drawerLayout.closeDrawer(Gravity.START);
+                case R.id.reportSettings:
+                    drawerLayout.closeDrawer(Gravity.START);
+                    callFragments(ClassConstants.REPORT_FRAGMENT,
+                            new ReportFragment(),ClassConstants.REPORT_FRAGMENT,null);
+                    getSupportActionBar().setTitle(getString(R.string.report_settings));
+                    break;
 
-                        callFragments(ClassConstants.MAINTENANCE_CHECKS_FRAGMENT,new MaintenanceChecksFragments(),ClassConstants.MAINTENANCE_CHECKS_FRAGMENT,null);
-                        getSupportActionBar().setTitle(getString(R.string.maintain_chks));
-                        break;
-
-
-                    case R.id.managePatients:
-                        drawerLayout.closeDrawer(Gravity.START);
-                        getSupportActionBar().setTitle(getString(R.string.manage_pat));
-                        onPatientList();
-                        break;
-
-
-
-                    case R.id.about:
-                        drawerLayout.closeDrawer(Gravity.START);
-                       // reportSettingsFragment();
-                      //  break;
-
-                    default:
-                        return true;
-                }
+                case R.id.configFtp:
+                    drawerLayout.closeDrawer(Gravity.START);
+                    callFragments(ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT,
+                            new ConfigureFTPServer(),ClassConstants.CONFIGURE_FTP_SERVER_FRAGMENT,null);
+                    getSupportActionBar().setTitle(getString(R.string.config_ftp));
+                    break;
 
 
-                return true;
+                case R.id.maintenanceChecks:
+                    drawerLayout.closeDrawer(Gravity.START);
+
+                    callFragments(ClassConstants.MAINTENANCE_CHECKS_FRAGMENT,new MaintenanceChecksFragments(),ClassConstants.MAINTENANCE_CHECKS_FRAGMENT,null);
+                    getSupportActionBar().setTitle(getString(R.string.maintain_chks));
+                    break;
+
+
+                case R.id.managePatients:
+                    drawerLayout.closeDrawer(Gravity.START);
+                    getSupportActionBar().setTitle(getString(R.string.manage_pat));
+                    onPatientList();
+                    break;
+
+
+
+                case R.id.about:
+                    drawerLayout.closeDrawer(Gravity.START);
+                   // reportSettingsFragment();
+                  //  break;
+
+                default:
+                    return true;
             }
+
+
+            return true;
         });
 
 
@@ -229,13 +217,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
 
-        UserIcon.setOnClickListener(new View.OnClickListener() {
+    /*    UserIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectOptions(BaseLoginActivityClass.this);
             }
         });
-
+*/
         DocsList=new ArrayList<>();
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -441,20 +429,20 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if (data.equalsIgnoreCase(ClassConstants.SIGNUP_FRAGMENT) ||
                 data.equalsIgnoreCase(ClassConstants.WELCOME_USER_FRAGMENT)) {
-            UserIcon.setVisibility(View.VISIBLE);
-            appName.setVisibility(View.GONE);
+          //  UserIcon.setVisibility(View.VISIBLE);
+         //   appName.setVisibility(View.GONE);
 
         } else {
-            UserIcon.setVisibility(View.GONE);
-            appName.setVisibility(View.VISIBLE);
+          //  UserIcon.setVisibility(View.GONE);
+          //  appName.setVisibility(View.VISIBLE);
         }
 
-        appName.setVisibility(View.VISIBLE);
-        UserIcon.setImageDrawable(ContextCompat.getDrawable(BaseLoginActivityClass.this, R.drawable.user_icon));
+       // appName.setVisibility(View.VISIBLE);
+       // UserIcon.setImageDrawable(ContextCompat.getDrawable(BaseLoginActivityClass.this, R.drawable.user_icon));
 
 
         if (data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)) {
-            UserIcon.setVisibility(View.GONE);
+          //  UserIcon.setVisibility(View.GONE);
             viewFlipper.setVisibility(View.VISIBLE);
 
 
@@ -465,13 +453,13 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         //
 
         if (data.equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
-            baseLayout.setVisibility(View.GONE);
+            //baseLayout.setVisibility(View.GONE);
             getSupportActionBar().show();
             return;
         }
 
         if (data.equals(ClassConstants.ECG_DISPALY_FRAGMENT)) {
-            baseLayout.setVisibility(View.GONE);
+          //  baseLayout.setVisibility(View.GONE);
             // getSupportActionBar().hide();
             return;
         }
@@ -484,14 +472,14 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
         if (data.equals(ClassConstants.LOGIN_FRAGMENT)) {
-            baseLayout.setVisibility(View.GONE);
+           // baseLayout.setVisibility(View.GONE);
             return;
         }
 
 
         if(data.equalsIgnoreCase(ClassConstants.ECG_GRAPH_FRAGMENT))
         {
-            baseLayout.setVisibility(View.GONE);
+           // baseLayout.setVisibility(View.GONE);
             return;
         }
 
@@ -511,7 +499,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if(data.equalsIgnoreCase(ClassConstants.HOSPITAL_PROFILE_FRAGMENT))
         {
-            baseLayout.setVisibility(View.GONE);
+          //  baseLayout.setVisibility(View.GONE);
             Bundle bundle=new Bundle();
 
             bundle.putParcelableArrayList(Constants.USER_NAME, (ArrayList<? extends Parcelable>) DocsList);
@@ -524,7 +512,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if(data.equalsIgnoreCase(ClassConstants.ADD_HOSPITAL_DOCTORS_FRAGMENT))
         {
-            baseLayout.setVisibility(View.GONE);
+          //  baseLayout.setVisibility(View.GONE);
             getSupportActionBar().show();
             MenuItem item1 = mMenu.findItem(R.id.age);
             MenuItem item2 = mMenu.findItem(R.id.name);
@@ -557,7 +545,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
             return;
         }
-        baseLayout.setVisibility(View.VISIBLE);
+        //baseLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -587,12 +575,12 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         // Always get Current fragment
         currentFragment = fragmentManager.findFragmentByTag(tag);
-        Logger.log(Level.DEBUG, TAG, "--Navigation Image URI--" + NavigationUserIconUri);
+      //  Logger.log(Level.DEBUG, TAG, "--Navigation Image URI--" + NavigationUserIconUri);
         int count = fragmentManager.getBackStackEntryCount();
         Logger.log(Level.DEBUG, TAG, "Back stack frag count in On curreent frag()=" + count);
 
         if (currentFragment.getClass().getName().equals(ClassConstants.SIGNUP_FRAGMENT)) {
-            baseLayout.setVisibility(View.VISIBLE);
+         //   baseLayout.setVisibility(View.VISIBLE);
             return;
 
         }
@@ -602,7 +590,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
         else if (currentFragment.getClass().getName().equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)) {
-            baseLayout.setVisibility(View.VISIBLE);
+           // baseLayout.setVisibility(View.VISIBLE);
             getSupportActionBar().hide();
             return;
         }
@@ -610,14 +598,14 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT)) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            if (NavigationUserIconUri != null) {
+           /* if (NavigationUserIconUri != null) {
                 loadImageWithGlide(NavigationUserIconUri.toString(), navHeaderIcon);
 
-            }
+            }*/
 
 
         } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
-            baseLayout.setVisibility(View.GONE);
+            //baseLayout.setVisibility(View.GONE);
             return;
         } else if (currentFragment.getClass().getName().equals(ClassConstants.WELCOME_USER_FRAGMENT)) {
 
@@ -629,17 +617,17 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_PROFILE_FRAGMENT)) {
 
-            baseLayout.setVisibility(View.GONE);
+           // baseLayout.setVisibility(View.GONE);
             return;
         } else if (currentFragment.getClass().getName().equals(ClassConstants.EXISTING_PATIENT_FRAGMENT)) {
-            baseLayout.setVisibility(View.GONE);
+          //  baseLayout.setVisibility(View.GONE);
             getSupportActionBar().show();
             return;
         }
 
 
         else if (currentFragment.getClass().getName().equals(ClassConstants.ECG_GRAPH_VIEW_FRAGMENT)) {
-            baseLayout.setVisibility(View.GONE);
+          //  baseLayout.setVisibility(View.GONE);
          getSupportActionBar().hide();
             return;
         }
@@ -649,7 +637,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         Logger.log(Level.DEBUG, TAG, "Get Current Fragment=" + currentFragment.getClass().getName());
         getSupportActionBar().show();
-        baseLayout.setVisibility(View.GONE);
+       // baseLayout.setVisibility(View.GONE);
     }
 
 
@@ -680,9 +668,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
             return;
         }
 
-
-        StoreCredentialsFile.storeSignUpCredentials(this, userName, TAG);
-        StoreCredentialsFile.store_profile_image(this, userIconUri, TAG, globalVariable.getUsername());
         Constants.Logged_User_ID = globalVariable.getUsername();
 
 
@@ -691,10 +676,12 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     public void displayImage(Uri uri) {
         if (uri != null) {
-            loadImageWithGlide(uri.toString(), UserIcon);
-            NavigationUserIconUri = uri;
-        } else
-            UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
+          //  loadImageWithGlide(uri.toString(), UserIcon);
+          //  NavigationUserIconUri = uri;
+        } else{
+
+        }
+            //UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
     }
 
     @Override
@@ -705,9 +692,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     public boolean isImaggeIconVisible(boolean isVisible) {
 
-        if (!isVisible)
+        if (!isVisible){
 
-            UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
+        }
+
+          //  UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
         return isVisible;
     }
 
@@ -726,7 +715,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
     @Override
     public void OnhandlePermissions() {
-        selectOptions(BaseLoginActivityClass.this);
+       // selectOptions(BaseLoginActivityClass.this);
     }
 
 
@@ -797,261 +786,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     //  hoy, estoy muy ocupado
 // mi computadora esta muy  lento
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == Constants.SELECT_PICTURE && resultCode == RESULT_OK && null != data) {
-            Uri uri = data.getData();
-            userIconUri = uri.toString();
-
-            NavigationUserIconUri = uri;
-            if (uri != null)
-                loadImageWithGlide(uri.toString(), UserIcon);
-
-        } else if (requestCode == Constants.CAMERA_CODE && resultCode == RESULT_OK) {
-            String uri;
-            if (file.exists()) {
-                Log.i("**Absolute path**=", "" + file.getAbsolutePath());
-                uri = file.getAbsolutePath();
-
-                NavigationUserIconUri = Uri.parse(uri);
-
-                userIconUri = "file://" + uri;
-                loadImageWithGlide(uri, UserIcon);
-
-
-            } else {
-                userIconUri = "no_image";
-                NavigationUserIconUri = null;
-                UserIcon.setImageDrawable(this.getResources().getDrawable(R.drawable.user_icon));
-            }
-
-
-        } else if((requestCode==Constants.PATIENT_PROFILE_REQUEST_CODE || requestCode==Constants.PATIENT_PROFILE_CAMERA_CODE)&& resultCode==RESULT_OK){
-            try{
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag(ClassConstants.PATIENT_PROFILE_FRAGMENT);
-                if(fragment!=null){
-                    fragment.onActivityResult(requestCode, resultCode, data);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-
-        }
-
-
-
-
-        else if((requestCode==Constants.HOSPITAL_PROFILE_REQUEST_CODE || requestCode==Constants.HOSPITAL_PROFILE_CAMERA_CODE)
-                && resultCode==RESULT_OK){
-            try{
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag(ClassConstants.HOSPITAL_PROFILE_FRAGMENT);
-                if(fragment!=null){
-                    fragment.onActivityResult(requestCode, resultCode, data);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-
-    private void loadImageWithGlide(String uri, ImageView imageView) {
-
-
-        //noinspection SpellCheckingInspection
-        Glide
-                .with(BaseLoginActivityClass.this)
-                .load(uri)
-                .override(100, 100)
-                .centerCrop()// resizes the image to these dimensions (in pixel). does not respect aspect ratio
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(new GlideDrawableImageViewTarget(imageView) {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
-                        super.onResourceReady(resource, animation);
-
-                        Logger.log(Level.DEBUG, TAG, "Glide loaded the image successfully");
-                    }
-
-                    @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        super.onLoadFailed(e, errorDrawable);
-
-                        Logger.log(Level.ERROR, TAG, e.toString());
-                    }
-                });
-
-    }
-
-
-    List<String> options;
-    Dialog dialog;
     File file;
 
-    private void selectOptions(final Context context) {
-
-
-        if (options == null) {
-            options = new ArrayList<>();
-            options.add(getString(R.string.def));
-            options.add(getString(R.string.camera));
-            options.add(getString(R.string.gallery));
-
-        }
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, options);
-        if (dialog == null) {
-            dialog = new Dialog(context);
-        }
-
-
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBoxAnimation;
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(R.layout.custom_list);
-
-        final ListView content = dialog.findViewById(R.id.list_content);
-        final TextView header = dialog.findViewById(R.id.header);
-
-
-        content.setAdapter(adapter);
-        header.setText(getResources().getString(R.string.ch_opt));
-        content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if (adapterView.getItemAtPosition(i).equals(getString(R.string.def))) {
-
-                    UserIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.user_icon));
-
-
-                } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.camera))) {
-                    selectCameraOptions();
-                } else {
-                    selectPicsFromGallery();
-
-                }
-                dialog.dismiss();
-            }
-
-        });
-
-        dialog.show();
-    }
-
-
-    private void selectPicsFromGallery() {
-        Intent intent;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        } else {
-            intent = new Intent(Intent.ACTION_GET_CONTENT);
-        }
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"),
-                Constants.SELECT_PICTURE);
-    }
-
-
-    private void selectCameraOptions() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            ActivityCompat.requestPermissions(BaseLoginActivityClass.this,
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE},
-                    Constants.CAMERA_REQUEST_CODE);
-
-
-        } else {
-            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "test.jpg" + System.currentTimeMillis());
-            Uri tempUri = Uri.fromFile(file);
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-            startActivityForResult(intent, Constants.CAMERA_CODE);
-        }
-    }
-
-
-    @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-
-        // Log.i("TAG", "**Grant Results**=" + grantResults[0]+" "+grantResults[1]+" "+grantRes + "request code=" + requestCode);
-
-        for (int grantResult : grantResults) {
-            Logger.log(Level.DEBUG, TAG, "grant results[]=" + grantResult);
-
-        }
-        if (requestCode == Constants.CAMERA_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED
-                    ) {
-                file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "test.jpg" + System.currentTimeMillis());
-                Uri uri = Uri.fromFile(file);
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-                startActivityForResult(intent, Constants.CAMERA_CODE);
-            } else if (grantResults[0] == PackageManager.PERMISSION_DENIED || grantResults[1] == PackageManager.PERMISSION_DENIED)
-
-            {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(BaseLoginActivityClass.this, Manifest.permission.CAMERA)
-                        || ActivityCompat.shouldShowRequestPermissionRationale(BaseLoginActivityClass.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    Toast.makeText(BaseLoginActivityClass.this, getString(R.string.per_nec), Toast.LENGTH_SHORT).show();
-                    showDialogOK("Camera and Write External Storage Permission required for this app for User Icon",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    switch (which) {
-                                        case DialogInterface.BUTTON_POSITIVE:
-                                            ActivityCompat.requestPermissions(BaseLoginActivityClass.this,
-                                                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                                    Constants.CAMERA_REQUEST_CODE);
-                                            break;
-                                        case DialogInterface.BUTTON_NEGATIVE:
-                                            UserIcon.setImageDrawable(ContextCompat.getDrawable(BaseLoginActivityClass.this, R.drawable.user_icon));
-                                            break;
-                                    }
-                                }
-                            });
-                } else {
-                    Toast.makeText(this, "Go to settings And enable permissions", Toast.LENGTH_LONG)
-                            .show();
-
-                }
-
-
-            }
-
-
-        }
-
-
-    }
-
-    private void showDialogOK(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton(getString(R.string.ok), okListener)
-                .setNegativeButton(getString(R.string.cancel), okListener)
-                .create()
-                .show();
-    }
 
 
     String mUsername;
@@ -1222,7 +958,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         for (int i = 0; i < UriList.size(); i++) {
             roundedImageView = new RoundedImageView(context);
             uri = Uri.parse(UriList.get(i));
-            loadImageWithGlide(uri.toString(), roundedImageView);
+            //loadImageWithGlide(uri.toString(), roundedImageView);
             roundedImageView.setId(i);
             viewFlipper.addView(roundedImageView);
 
@@ -1451,6 +1187,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
 
+    Dialog dialog;
     private void addDoctors(final Context context,String headerText) {
 
         if (dialog == null) {

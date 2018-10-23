@@ -2,6 +2,7 @@ package login.fragment;
 
 import android.annotation.*;
 import android.content.*;
+import android.graphics.drawable.*;
 import android.net.*;
 import android.os.*;
 import android.support.annotation.*;
@@ -10,6 +11,11 @@ import android.view.*;
 import android.widget.*;
 
 
+import com.bumptech.glide.*;
+import com.bumptech.glide.load.engine.*;
+import com.bumptech.glide.load.resource.drawable.*;
+import com.bumptech.glide.request.animation.*;
+import com.bumptech.glide.request.target.*;
 
 import java.util.*;
 
@@ -27,6 +33,8 @@ public class WelcomeUserFragment extends Fragment {
 
     private TextView signAsOtherUser;
 
+    ImageView icon,hospitalImage;
+    TextView hospName,department_name;
 
     @Override
     public void onAttach(Context context) {
@@ -50,14 +58,17 @@ public class WelcomeUserFragment extends Fragment {
         welcomeText=view.findViewById(R.id.textView2);
         proceed=view.findViewById(R.id.proceed);
         signUpFresh=view.findViewById(R.id.signUpFresh);
-
+        hospName=view.findViewById(R.id.hospName);
+        department_name=view.findViewById(R.id.departName);
+        hospitalImage=view.findViewById(R.id.hospitalImage);
         signAsOtherUser=view.findViewById(R.id.signAsOtherUser);
+        icon=view.findViewById(R.id.pixel);
 
         return view;
     }
 
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -75,6 +86,20 @@ public class WelcomeUserFragment extends Fragment {
 
 
 
+        if(getHospitalDetails(getActivity())!=null){
+
+            hospName.setText(hosName);
+            department_name.setText(departName);
+            if(savedUriHosp.equals(""))
+            {
+                hospitalImage.setImageDrawable(this.getResources().getDrawable(R.mipmap.hosp_img));
+
+            }else{
+                loadImageWithGlide(savedUriHosp,hospitalImage);
+
+            }
+
+        }
         signUpFresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,16 +142,46 @@ public class WelcomeUserFragment extends Fragment {
 
             Logger.log(Level.DEBUG, ClassConstants.WELCOME_USER_FRAGMENT, "Uri=" + uri);
             if (uri != null) {
-                loginActivityListner.displayImage(uri);
+              //  loginActivityListner.displayImage(uri);
+                loadImageWithGlide(uri.toString(),icon);
 
             }
+
 
 
         }
 
 
-    }
 
+    }
+    private void loadImageWithGlide(String uri, ImageView imageView) {
+
+
+        //noinspection SpellCheckingInspection
+        Glide
+                .with(getActivity())
+                .load(uri)
+                .override(100, 100)
+                .centerCrop()// resizes the image to these dimensions (in pixel). does not respect aspect ratio
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(new GlideDrawableImageViewTarget(imageView) {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> animation) {
+                        super.onResourceReady(resource, animation);
+
+                        Logger.log(Level.DEBUG, "----", "Glide loaded the image successfully");
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        super.onLoadFailed(e, errorDrawable);
+
+                        Logger.log(Level.ERROR, "------p", e.toString());
+                    }
+                });
+
+    }
 
     private String get_profile_image(String key_username)
     {
@@ -188,5 +243,24 @@ public class WelcomeUserFragment extends Fragment {
         fragmentTransaction.commit();
 
 
+    }
+
+    String hosName,departName,hospInitials, savedUriHosp;
+
+
+    public  SharedPreferences getHospitalDetails(Context context)
+    {
+
+
+        SharedPreferences prefs;
+        prefs = context.getSharedPreferences(Constants.HOSPITAL_INFO_FILE, Context.MODE_PRIVATE);
+
+        hosName =prefs.getString(Constants.HOSPITAL_NAME, "");
+        hospInitials =prefs.getString(Constants.HOSPITAL_NAME, "");
+        departName =prefs.getString(Constants.HOSPITAL_DEPARTMENT, "");
+        savedUriHosp =prefs.getString(Constants.HOSPITAL_URI, "");
+
+
+        return prefs;
     }
 }

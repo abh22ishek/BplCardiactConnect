@@ -359,54 +359,46 @@ public class PatientProfileFragment extends Fragment {
 
         content.setAdapter(adapter);
         header.setText(getResources().getString(R.string.ch_opt));
-        content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        content.setOnItemClickListener((adapterView, view, i, l) -> {
 
-                if(adapterView.getItemAtPosition(i).equals(getString(R.string.def)))
+            if(adapterView.getItemAtPosition(i).equals(getString(R.string.def)))
+            {
+
+                patIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.user_icon));
+
+                }else if(adapterView.getItemAtPosition(i).equals(getString(R.string.camera)))
                 {
-
-                    patIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.user_icon));
-
-                    }else if(adapterView.getItemAtPosition(i).equals(getString(R.string.camera)))
-                    {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},
-                                    Constants.PATIENT_PROFILE_CAMERA_CODE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},
+                                Constants.PATIENT_PROFILE_CAMERA_CODE);
 
 
-                        }
-                        else
-                        {
-                          File  file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"test.jpg"+System.currentTimeMillis());
-                            Uri tempuri=Uri.fromFile(file);
-                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT,tempuri);
-                            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);
-                            startActivityForResult(intent,Constants.PATIENT_PROFILE_CAMERA_CODE);
-                        }
-
-                    }else{
-                    Intent intent;
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-                        intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                    }else{
-                        intent = new Intent(Intent.ACTION_GET_CONTENT);
                     }
-                    intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intent.setType("image/*");
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.PATIENT_PROFILE_REQUEST_CODE);
+                    else
+                    {
+                      File  file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"test.jpg"+System.currentTimeMillis());
+                        Uri tempuri=Uri.fromFile(file);
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT,tempuri);
+                        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);
+                        startActivityForResult(intent,Constants.PATIENT_PROFILE_CAMERA_CODE);
+                    }
 
-                }
+                }else{
+                Intent intent;
+                intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.PATIENT_PROFILE_REQUEST_CODE);
 
-
-                dialog.dismiss();
             }
 
+
+            dialog.dismiss();
         });
 
         dialog.show();

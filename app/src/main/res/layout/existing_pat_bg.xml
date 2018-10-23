@@ -1,173 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v7.widget.CardView
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_margin="1dp"
-    app:cardCornerRadius="2dp"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardUseCompatPadding="true"
-    android:background="@color/grey_bg"
-    android:layout_height="wrap_content">
-
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:id="@+id/layout"
-            android:padding="4dp"
-            android:gravity="center_vertical"
-            >
-
-
-            <custom.view.RoundedImageView
-                android:id="@+id/patientIcon"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/user_icon"
-                android:visibility="visible" />
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_toEndOf="@+id/patientIcon"
-                android:layout_marginStart="10dp"
-                android:id="@+id/l1"
-                android:layout_height="wrap_content">
-
-
-
-
-
-                <TextView
-                    android:id="@+id/patName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto"
-                    android:text="@string/pat_name"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="1dp"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-
-                    />
-
-
-                <TextView
-                    android:id="@+id/patSex"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="2dp"
-                    android:text="@string/gender" />
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_toEndOf="@+id/patientIcon"
-
-                android:id="@+id/l2"
-                android:layout_below="@+id/l1"
-                android:layout_height="wrap_content">
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/pat_id_" />
-
-
-                <TextView
-                    android:id="@+id/patId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-
-                    android:layout_marginStart="2dp"
-                    android:text="@string/pat_id" />
-
-            </LinearLayout>
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_toEndOf="@+id/patientIcon"
-                android:layout_marginStart="10dp"
-                android:id="@+id/l3"
-                android:layout_below="@+id/l2"
-                android:layout_height="wrap_content">
-
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/patAge"
-                    android:text="@string/age"
-                    />
-
-
-                <TextView
-
-                    android:layout_width="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:text="@string/height"
-                    android:id="@+id/height"
-
-                    />
-
-
-                <TextView
-
-                    android:id="@+id/weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:text="@string/weight"
-                    android:textStyle="bold"
-
-                    />
-
-
-                <TextView
-
-                    android:layout_width="100dp"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:text="@string/pat_race"
-                    android:id="@+id/patRace"
-
-
-                    />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-
-</android.support.v7.widget.CardView>
+<?xml version="1.0" encoding="utf-8"?><android.support.v7.widget.CardView    xmlns:android="http://schemas.android.com/apk/res/android"    xmlns:app="http://schemas.android.com/apk/res-auto"    android:layout_width="match_parent"    android:layout_margin="1dp"    app:cardCornerRadius="2dp"    android:clickable="true"    android:focusable="true"    app:cardUseCompatPadding="true"    android:background="@color/grey_bg"    android:layout_height="wrap_content">        <RelativeLayout            android:layout_width="match_parent"            android:layout_height="wrap_content"            android:layout_margin="1dp"            android:clickable="true"            android:focusable="true"            android:id="@+id/layout"            android:padding="4dp"            android:gravity="center_vertical"            >            <custom.view.RoundedImageView                android:id="@+id/patientIcon"                android:layout_width="80dp"                android:layout_height="80dp"                android:layout_alignParentStart="true"                android:src="@drawable/user_icon"                android:visibility="visible" />            <LinearLayout                android:layout_width="match_parent"                android:orientation="horizontal"                android:layout_toEndOf="@+id/patientIcon"                android:layout_marginStart="10dp"                android:id="@+id/l1"                android:layout_height="wrap_content">                <TextView                    android:id="@+id/patName"                    android:layout_width="wrap_content"                    android:layout_height="wrap_content"                    android:fontFamily="@font/roboto"                    android:text="@string/pat_name"                    android:textColor="@color/black"                    android:layout_marginStart="1dp"                    android:textSize="17sp"                    android:textStyle="bold"                    />                <TextView                    android:id="@+id/patSex"                    android:layout_width="100dp"                    android:layout_height="wrap_content"                    android:textSize="17sp"                    android:textStyle="bold"                    android:textColor="@color/black"                    android:layout_marginStart="2dp"                    android:text="@string/gender" />            </LinearLayout>            <LinearLayout                android:layout_width="match_parent"                android:orientation="horizontal"                android:layout_toEndOf="@+id/patientIcon"                android:id="@+id/l2"                android:layout_below="@+id/l1"                android:layout_height="wrap_content">                <TextView                    android:layout_width="wrap_content"                    android:layout_height="wrap_content"                    android:textStyle="bold"                    android:layout_marginStart="10dp"                    android:text="@string/pat_id_" />                <TextView                    android:id="@+id/patId"                    android:layout_width="wrap_content"                    android:layout_height="wrap_content"                    android:textStyle="bold"                    android:layout_marginStart="2dp"                    android:text="@string/pat_id" />            </LinearLayout>            <LinearLayout                android:layout_width="match_parent"                android:orientation="horizontal"                android:layout_toEndOf="@+id/patientIcon"                android:layout_marginStart="10dp"                android:id="@+id/l3"                android:layout_below="@+id/l2"                android:layout_height="wrap_content">                <TextView                    android:layout_width="wrap_content"                    android:textStyle="bold"                    android:layout_height="wrap_content"                    android:id="@+id/patAge"                    android:text="@string/age"                    />                <TextView                    android:layout_width="wrap_content"                    android:textStyle="bold"                    android:layout_height="wrap_content"                    android:layout_marginStart="1dp"                    android:text="@string/height"                    android:id="@+id/height"                    />                <TextView                    android:id="@+id/weight"                    android:layout_width="wrap_content"                    android:layout_height="wrap_content"                    android:layout_marginStart="1dp"                    android:text="@string/weight"                    android:textStyle="bold"                    />                <TextView                    android:layout_width="100dp"                    android:textStyle="bold"                    android:layout_height="wrap_content"                    android:layout_marginStart="1dp"                    android:text="@string/pat_race"                    android:id="@+id/patRace"                    />            </LinearLayout>        </RelativeLayout></android.support.v7.widget.CardView>

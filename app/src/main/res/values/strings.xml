@@ -127,8 +127,8 @@
     <string name="sign_new_user">Sign As as New User</string>
     <string name="sign_as_other_user">Sign As as Other User</string>
 
-    <string name="new_user">Create New User</string>
-    <string name="existing_user">Select Any Existing User</string>
+    <string name="new_user">Create New Patient</string>
+    <string name="existing_user">Select Any Existing Patient</string>
 
     <string name="selection">Choose Any</string>
 

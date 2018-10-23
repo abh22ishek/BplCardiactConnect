@@ -14,7 +14,6 @@ import android.widget.*;
 import com.felhr.usbserial.*;
 import com.google.android.things.pio.*;
 
-import java.io.*;
 import java.util.*;
 
 import constants.*;
@@ -60,10 +59,11 @@ public class UsbConnectionFragment extends Fragment {
 
          usbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
         // Get the list of attached devices
-        HashMap<String, UsbDevice> usbDevices = usbManager.getDeviceList();
+            HashMap<String, UsbDevice> usbDevices = usbManager.getDeviceList();
 
 
         if (!usbDevices.isEmpty()) {
+
             boolean keep = true;
             for (Map.Entry<String, UsbDevice> entry : usbDevices.entrySet()) {
                 device = entry.getValue();

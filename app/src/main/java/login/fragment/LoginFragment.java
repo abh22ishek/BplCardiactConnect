@@ -13,6 +13,7 @@ import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import database.*;
 import logger.*;
+import store.credentials.*;
 
 public class LoginFragment extends Fragment {
 
@@ -160,8 +161,9 @@ public class LoginFragment extends Fragment {
 
                         loginActivityListner.setUserName(userId.getText().toString().trim(),ClassConstants.LOGIN_FRAGMENT);
                         navigateFragment();
+                        StoreCredentialsFile.storeSignUpCredentials(getActivity(), userId.getText().toString().trim(), TAG);
                     } else {
-                        Toast.makeText(getActivity(), "Invalid Password and UserId", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Invalid Password Or UserId", Toast.LENGTH_SHORT).show();
                     }
 
 
