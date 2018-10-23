@@ -79,7 +79,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         setContentView(R.layout.base_activity);
 
         globalVariable = (BaseApplicationClass) getApplicationContext();
-        viewFlipper = findViewById(R.id.linearParams);
+
 
             doctorSets=new LinkedHashSet<>();
 
@@ -443,10 +443,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if (data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)) {
           //  UserIcon.setVisibility(View.GONE);
-            viewFlipper.setVisibility(View.VISIBLE);
+          //  viewFlipper.setVisibility(View.VISIBLE);
 
 
-            ShowViewFlipper(viewFlipper, BaseLoginActivityClass.this);
+           // ShowViewFlipper(viewFlipper, BaseLoginActivityClass.this);
 
 
         }
