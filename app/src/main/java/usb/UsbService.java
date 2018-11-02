@@ -4,16 +4,14 @@ import android.app.*;
 import android.content.*;
 import android.hardware.usb.*;
 import android.os.*;
-import android.support.annotation.*;
+import android.util.*;
 
 import com.felhr.usbserial.*;
 
-import java.io.*;
 import java.util.*;
 
-public class UsbService  {
+public class UsbService extends Service {
 
-/*
     public static final String ACTION_USB_READY = "com.felhr.connectivityservices.USB_READY";
     public static final String ACTION_USB_ATTACHED = "android.hardware.usb.action.USB_DEVICE_ATTACHED";
     public static final String ACTION_USB_DETACHED = "android.hardware.usb.action.USB_DEVICE_DETACHED";
@@ -28,7 +26,7 @@ public class UsbService  {
     public static final int CTS_CHANGE = 1;
     public static final int DSR_CHANGE = 2;
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
-    private static final int BAUD_RATE = 9600; // BaudRate. Change this value if you need
+    private static final int BAUD_RATE = 256000; // BaudRate. Change this value if you need
     public static boolean SERVICE_CONNECTED = false;
 
     private IBinder binder = new UsbBinder();
@@ -41,27 +39,28 @@ public class UsbService  {
     private UsbSerialDevice serialPort;
 
     private boolean serialPortConnected;
-    *//*
+    /*
      *  Data received from serial port will be received here. Just populate onReceivedData with your code
      *  In this particular example. byte stream is converted to String and send to UI thread to
      *  be treated there.
-     *//*
+     */
     private UsbSerialInterface.UsbReadCallback mCallback = new UsbSerialInterface.UsbReadCallback() {
         @Override
         public void onReceivedData(byte[] arg0) {
             try {
-                String data = new String(arg0, "UTF-8");
+
+                //  String data = new String(arg0, "UTF-8");
                 if (mHandler != null)
-                    mHandler.obtainMessage(MESSAGE_FROM_SERIAL_PORT, data).sendToTarget();
-            } catch (UnsupportedEncodingException e) {
+                    mHandler.obtainMessage(MESSAGE_FROM_SERIAL_PORT, arg0).sendToTarget();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
 
-    *//*
+    /*
      * State changes in the CTS line will be received here
-     *//*
+     */
     private UsbSerialInterface.UsbCTSCallback ctsCallback = new UsbSerialInterface.UsbCTSCallback() {
         @Override
         public void onCTSChanged(boolean state) {
@@ -70,9 +69,9 @@ public class UsbService  {
         }
     };
 
-    *//*
+    /*
      * State changes in the DSR line will be received here
-     *//*
+     */
     private UsbSerialInterface.UsbDSRCallback dsrCallback = new UsbSerialInterface.UsbDSRCallback() {
         @Override
         public void onDSRChanged(boolean state) {
@@ -80,10 +79,10 @@ public class UsbService  {
                 mHandler.obtainMessage(DSR_CHANGE).sendToTarget();
         }
     };
-    *//*
+    /*
      * Different notifications from OS will be received here (USB attached, detached, permission responses...)
      * About BroadcastReceiver: http://developer.android.com/reference/android/content/BroadcastReceiver.html
-     *//*
+     */
     private final BroadcastReceiver usbReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context arg0, Intent arg1) {
@@ -115,10 +114,10 @@ public class UsbService  {
         }
     };
 
-    *//*
+    /*
      * onCreate will be executed when service is started. It configures an IntentFilter to listen for
      * incoming Intents (USB ATTACHED, USB DETACHED...) and it tries to open a serial port.
-     *//*
+     */
     @Override
     public void onCreate() {
         this.context = this;
@@ -129,10 +128,10 @@ public class UsbService  {
         findSerialPortDevice();
     }
 
-    *//* MUST READ about services
+    /* MUST READ about services
      * http://developer.android.com/guide/components/services.html
      * http://developer.android.com/guide/components/bound-services.html
-     *//*
+     */
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
@@ -149,12 +148,18 @@ public class UsbService  {
         UsbService.SERVICE_CONNECTED = false;
     }
 
-    *//*
+    /*
      * This function will be called from MainActivity to write data through Serial Port
-     *//*
+     */
     public void write(byte[] data) {
         if (serialPort != null)
-            serialPort.write(data);
+            try{
+                Log.i("Data Written onto GenX3",data.toString()+" "+data[0]+" "+data[1]+" "+data[2]+" "+data[3]);
+                serialPort.write(data);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
     }
 
     public void setHandler(Handler mHandler) {
@@ -204,9 +209,9 @@ public class UsbService  {
         registerReceiver(usbReceiver, filter);
     }
 
-    *//*
+    /*
      * Request user permission. The response will be received in the BroadcastReceiver
-     *//*
+     */
     private void requestUserPermission() {
         PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
         usbManager.requestPermission(device, mPendingIntent);
@@ -218,10 +223,10 @@ public class UsbService  {
         }
     }
 
-    *//*
+    /*
      * A simple thread to open a serial port.
      * Although it should be a fast operation. moving usb operations away from UI thread is a good thing.
-     *//*
+     */
     private class ConnectionThread extends Thread {
         @Override
         public void run() {
@@ -233,12 +238,12 @@ public class UsbService  {
                     serialPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
                     serialPort.setStopBits(UsbSerialInterface.STOP_BITS_1);
                     serialPort.setParity(UsbSerialInterface.PARITY_NONE);
-                    *//**
+                    /**
                      * Current flow control Options:
                      * UsbSerialInterface.FLOW_CONTROL_OFF
                      * UsbSerialInterface.FLOW_CONTROL_RTS_CTS only for CP2102 and FT232
                      * UsbSerialInterface.FLOW_CONTROL_DSR_DTR only for CP2102 and FT232
-                     *//*
+                     */
                     serialPort.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
                     serialPort.read(mCallback);
                     serialPort.getCTS(ctsCallback);
@@ -269,5 +274,5 @@ public class UsbService  {
                 context.sendBroadcast(intent);
             }
         }
-    }*/
+    }
 }

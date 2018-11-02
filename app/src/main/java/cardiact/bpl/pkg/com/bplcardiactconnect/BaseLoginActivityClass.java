@@ -42,6 +42,7 @@ import login.fragment.*;
 import maintenance.*;
 import model.*;
 import patient.list.*;
+import real.ecg.frag.*;
 import store.credentials.*;
 import usb.*;
 import utility.*;
@@ -88,11 +89,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
 
-       /* UserIcon = findViewById(R.id.hospitalIcon1);
-        UserIcon.setVisibility(View.GONE);
-*/
-       // appName = findViewById(R.id.appName);
-
 
         nv = findViewById(R.id.nv);
 
@@ -116,21 +112,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         actionBarDrawerToggle.syncState();
 
 
-        //----
 
-
-/*
-
-        appName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewFlipper.showNext();
-                getCurrentViewFlipperID(BaseLoginActivityClass.this);
-
-
-            }
-        });
-*/
 
         nv.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -217,13 +199,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
 
-    /*    UserIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectOptions(BaseLoginActivityClass.this);
-            }
-        });
-*/
+
+
         DocsList=new ArrayList<>();
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -384,10 +361,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         mObservable.subscribe(mObserver);
 
-
-        //  EcgLeads= Utility.readfile("","");
-        // reloadEcgDisplayFragment(EcgLeads);
-    }
+        }
 
 
 
@@ -429,38 +403,16 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if (data.equalsIgnoreCase(ClassConstants.SIGNUP_FRAGMENT) ||
                 data.equalsIgnoreCase(ClassConstants.WELCOME_USER_FRAGMENT)) {
-          //  UserIcon.setVisibility(View.VISIBLE);
-         //   appName.setVisibility(View.GONE);
 
-        } else {
-          //  UserIcon.setVisibility(View.GONE);
-          //  appName.setVisibility(View.VISIBLE);
-        }
+            }
 
-       // appName.setVisibility(View.VISIBLE);
-       // UserIcon.setImageDrawable(ContextCompat.getDrawable(BaseLoginActivityClass.this, R.drawable.user_icon));
-
-
-        if (data.equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)) {
-          //  UserIcon.setVisibility(View.GONE);
-          //  viewFlipper.setVisibility(View.VISIBLE);
-
-
-           // ShowViewFlipper(viewFlipper, BaseLoginActivityClass.this);
-
-
-        }
-        //
 
         if (data.equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
-            //baseLayout.setVisibility(View.GONE);
             getSupportActionBar().show();
             return;
         }
 
         if (data.equals(ClassConstants.ECG_DISPALY_FRAGMENT)) {
-          //  baseLayout.setVisibility(View.GONE);
-            // getSupportActionBar().hide();
             return;
         }
 
@@ -472,14 +424,16 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
         if (data.equals(ClassConstants.LOGIN_FRAGMENT)) {
-           // baseLayout.setVisibility(View.GONE);
             return;
         }
 
+        if (data.equals(ClassConstants.SIX_BY_TWO_FARGMENT)) {
+            getSupportActionBar().hide();
+            return;
+        }
 
         if(data.equalsIgnoreCase(ClassConstants.ECG_GRAPH_FRAGMENT))
         {
-           // baseLayout.setVisibility(View.GONE);
             return;
         }
 
@@ -499,9 +453,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if(data.equalsIgnoreCase(ClassConstants.HOSPITAL_PROFILE_FRAGMENT))
         {
-          //  baseLayout.setVisibility(View.GONE);
             Bundle bundle=new Bundle();
-
             bundle.putParcelableArrayList(Constants.USER_NAME, (ArrayList<? extends Parcelable>) DocsList);
             bundle.putBoolean("checked",false);
             callFragments(ClassConstants.HOSPITAL_PROFILE_FRAGMENT, new AddHospitalDoctors(),
@@ -512,7 +464,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         if(data.equalsIgnoreCase(ClassConstants.ADD_HOSPITAL_DOCTORS_FRAGMENT))
         {
-          //  baseLayout.setVisibility(View.GONE);
+
             getSupportActionBar().show();
             MenuItem item1 = mMenu.findItem(R.id.age);
             MenuItem item2 = mMenu.findItem(R.id.name);
@@ -545,7 +497,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
             return;
         }
-        //baseLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -560,9 +511,9 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-        EcgGraphViewFragment ecgGraphViewFragment = new EcgGraphViewFragment();
-        fragmentTransaction.replace(R.id.fragmentContainer, ecgGraphViewFragment, ClassConstants.ECG_GRAPH_VIEW_FRAGMENT);
-        fragmentTransaction.addToBackStack(ClassConstants.ECG_GRAPH_VIEW_FRAGMENT);
+        SixByTwoFragment sixByTwoFragment = new SixByTwoFragment();
+        fragmentTransaction.replace(R.id.fragmentContainer, sixByTwoFragment, ClassConstants.SIX_BY_TWO_FARGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.SIX_BY_TWO_FARGMENT);
 
         fragmentTransaction.commit();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -575,12 +526,10 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         // Always get Current fragment
         currentFragment = fragmentManager.findFragmentByTag(tag);
-      //  Logger.log(Level.DEBUG, TAG, "--Navigation Image URI--" + NavigationUserIconUri);
         int count = fragmentManager.getBackStackEntryCount();
         Logger.log(Level.DEBUG, TAG, "Back stack frag count in On curreent frag()=" + count);
 
         if (currentFragment.getClass().getName().equals(ClassConstants.SIGNUP_FRAGMENT)) {
-         //   baseLayout.setVisibility(View.VISIBLE);
             return;
 
         }
@@ -590,7 +539,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         }
 
         else if (currentFragment.getClass().getName().equals(ClassConstants.SIGN_AS_NEW_USER_FRAGMENT)) {
-           // baseLayout.setVisibility(View.VISIBLE);
             getSupportActionBar().hide();
             return;
         }
@@ -598,46 +546,33 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT)) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-           /* if (NavigationUserIconUri != null) {
-                loadImageWithGlide(NavigationUserIconUri.toString(), navHeaderIcon);
 
-            }*/
 
 
         } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
-            //baseLayout.setVisibility(View.GONE);
+
             return;
         } else if (currentFragment.getClass().getName().equals(ClassConstants.WELCOME_USER_FRAGMENT)) {
-
-            //this will clear the back stack and displays no animation on the screen
-
             Logger.log(Level.DEBUG, TAG, "---Back stack entry count after POP BACK STACK IMMEDIATE---" + count);
         } else if (currentFragment.getClass().getName().equals(ClassConstants.ECG_DISPALY_FRAGMENT)) {
 
 
         } else if (currentFragment.getClass().getName().equals(ClassConstants.PATIENT_PROFILE_FRAGMENT)) {
-
-           // baseLayout.setVisibility(View.GONE);
             return;
         } else if (currentFragment.getClass().getName().equals(ClassConstants.EXISTING_PATIENT_FRAGMENT)) {
-          //  baseLayout.setVisibility(View.GONE);
             getSupportActionBar().show();
             return;
         }
 
 
         else if (currentFragment.getClass().getName().equals(ClassConstants.ECG_GRAPH_VIEW_FRAGMENT)) {
-          //  baseLayout.setVisibility(View.GONE);
-         getSupportActionBar().hide();
+            getSupportActionBar().hide();
             return;
         }
 
-
-
-
         Logger.log(Level.DEBUG, TAG, "Get Current Fragment=" + currentFragment.getClass().getName());
         getSupportActionBar().show();
-       // baseLayout.setVisibility(View.GONE);
+
     }
 
 
@@ -676,12 +611,11 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     @Override
     public void displayImage(Uri uri) {
         if (uri != null) {
-          //  loadImageWithGlide(uri.toString(), UserIcon);
-          //  NavigationUserIconUri = uri;
+
         } else{
 
         }
-            //UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
+
     }
 
     @Override
@@ -696,7 +630,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
         }
 
-          //  UserIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.user_icon));
+
         return isVisible;
     }
 
@@ -742,8 +676,7 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
 
 
         if (frag.equals(ClassConstants.PATIENT_LIST_FRAGMENT)) {
-        /*    final Strname=ClassConstants.PATIENT_MENU_TRACK_FRAGMENT;
-            fragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);*/
+
             for (int i = 2; i < count; ++i) {
                 fragmentManager.popBackStackImmediate();
             }
@@ -949,97 +882,6 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
     }
 
 
-    RoundedImageView roundedImageView;
-
-    private void ShowViewFlipper(ViewFlipper viewFlipper, Context context) {
-        List<String> UriList = mapUserIDICon(BaseLoginActivityClass.this);
-        Uri uri;
-
-        for (int i = 0; i < UriList.size(); i++) {
-            roundedImageView = new RoundedImageView(context);
-            uri = Uri.parse(UriList.get(i));
-            //loadImageWithGlide(uri.toString(), roundedImageView);
-            roundedImageView.setId(i);
-            viewFlipper.addView(roundedImageView);
-
-        }
-
-
-    }
-
-
-    public void getCurrentViewFlipperID(Context context) {
-
-        int index = -1;
-        List<String> UriList = mapUserIDICon(BaseLoginActivityClass.this);
-
-
-        for (int i = 0; i < UriList.size(); i++) {
-
-            if (i == viewFlipper.getCurrentView().getId()) {
-                index = i;
-            }
-        }
-
-        if (index == -1) {
-            // failed to determine the right index
-            Log.w("imagen1", "Could not determine the right index!");
-            return;
-        }
-
-        Uri uri = Uri.parse(UriList.get(index));
-        Logger.log(Level.DEBUG, TAG, "--GET URI from current View Flipper---" + uri);
-
-
-        getCurrentUserIdFromCurrentViewFlipper(uri.toString(), context);
-
-    }
-
-
-    private String getCurrentUserIdFromCurrentViewFlipper(String uriAsValue, Context context) {
-
-        SharedPreferences sharedPreferences;
-        sharedPreferences = context.getSharedPreferences(Constants.PREFERENCE_PROFILE_IMAGE, Context.MODE_PRIVATE);
-
-        String currentUserId = "";
-
-        Map<String, ?> allEntries = sharedPreferences.getAll();
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
-            if (uriAsValue.equals(entry.getValue())) {
-                currentUserId = entry.getKey();
-                break;
-            }
-
-
-        }
-        Logger.log(Level.DEBUG, TAG, "--Get current UserID mapped from Current Icons display--=" + currentUserId);
-        reloadSignAsNewUserFragment(currentUserId);
-        return currentUserId;
-    }
-
-
-    private void reloadSignAsNewUserFragment(String userId) {
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        SignAsNewUserFragment signUpFragment = new SignAsNewUserFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.USER_NAME, userId);
-        signUpFragment.setArguments(bundle);
-
-        fragmentTransaction.replace(R.id.fragmentContainer, signUpFragment, ClassConstants.SIGN_AS_NEW_USER_FRAGMENT);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-
-
-    }
-
-
-
-
 
 
 
@@ -1240,6 +1082,35 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
         fragmentTransaction.commit();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+
+
+
+
+
+
 
 
 

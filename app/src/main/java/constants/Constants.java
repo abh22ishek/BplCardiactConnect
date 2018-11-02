@@ -25,9 +25,9 @@ public class Constants {
 
     public static final float CMS_PER_INCH=2.54f;
 
-    public static final float AMPLITUDE_PER_CM=392f;
+    public static final float AMPLITUDE_PER_CM=328f;
 
-    public static final float SAMPLES_PER_CM=200f;   // 25 mm/sec for 500 samples or 1000 samples
+    public static final float SAMPLES_PER_CM=100f;   // 25 mm/sec for 500 samples or 1000 samples
 
 
     public static final String SHOW_ECG_DATA="ecg";

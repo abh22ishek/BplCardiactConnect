@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:id="@+id/layoutF"
+    android:orientation="vertical"
+    android:layout_marginEnd="30dp"
+    android:layout_marginBottom="-5dp"
+    android:layout_height="match_parent"
+
+    >
+
+
+
+    <custom.ecg.lead.realdata.BackgroungEcgView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/i"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.Lead1GraphView
+                android:id="@+id/RealTimeEcg1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:foregroundGravity="center_vertical"
+                />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+
+                android:gravity="center"
+                android:text="@string/v1_"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+
+            <custom.ecg.lead.realdata.LeadV1GraphView
+                android:layout_width="match_parent"
+                android:id="@+id/RealTimeEcgV1"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+
+                />
+
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/ii"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.Lead2GraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcg2"
+                android:layout_weight="1"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+
+                />
+
+
+            <TextView
+                android:layout_width="25dp"
+
+                android:layout_weight="0"
+
+                android:textColor="@color/white"
+                android:layout_height="match_parent"
+                android:textSize="13sp"
+                android:text="@string/v2"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+
+            <custom.ecg.lead.realdata.LeadV2GraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcgV2"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+
+            >
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/iii"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+            <custom.ecg.lead.realdata.Lead3GraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcg3"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:layout_width="25dp"
+
+                android:layout_height="match_parent"
+
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/v3"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.LeadV3GraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcgV3"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+
+                />
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:visibility="visible"
+
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/avr_"
+                android:textColor="@color/white"
+
+                android:textSize="12sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.LeadaVRGraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcgaVR"
+                android:layout_weight="1"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/v4_"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+            <custom.ecg.lead.realdata.LeadV4GraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcgV4"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/avl_"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.LeadaVLGraphView
+                android:id="@+id/RealTimeEcgaVL"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:foregroundGravity="center_vertical" />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/v5_"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.LeadV5GraphView
+                android:id="@+id/RealTimeEcgV5"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:foregroundGravity="center_vertical"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+
+
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/avf_"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.LeadaVFGraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcgaVF"
+                android:layout_weight="1"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                />
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/v6_"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.LeadV6GraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcgV6"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="50dp"
+
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</FrameLayout>

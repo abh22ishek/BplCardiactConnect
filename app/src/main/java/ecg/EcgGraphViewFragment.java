@@ -41,7 +41,7 @@ public class EcgGraphViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.ecg_graph_view, container,
+        View view = inflater.inflate(R.layout.real_ecg_ui, container,
                 false);
         grapView = view.findViewById(R.id.realTimeEcgView);
         GridLabelRenderer glr = grapView.getGridLabelRenderer();

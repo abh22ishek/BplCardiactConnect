@@ -16,14 +16,24 @@ import com.google.android.things.pio.*;
 
 import java.util.*;
 
+import cardiact.bpl.pkg.com.bplcardiactconnect.R;
 import constants.*;
 import logger.*;
 
 public class UsbConnectionFragment extends Fragment {
     private UartDevice mDevice;
-
     boolean isUSBConnected;
+
+
+    TextView textView;
+    Button start;
+
+
+
     private static final String ACTION_USB_PERMISSION  = "com.blecentral.USB_PERMISSION";
+
+
+    String AcknowledgementHexstring="0x50 0x00 0x08 0x13 0x00 0xFE 0x68 0x61";
 
     @Override
     public void onAttach(Context context) {
@@ -41,13 +51,27 @@ public class UsbConnectionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        View view = inflater.inflate(R.layout.usb_connection, container,
+                false);
+
+
+        textView=view.findViewById(R.id.txt);
+        start=view.findViewById(R.id.start);
+
+        return view;
     }
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        start.setOnClickListener(view -> {
+
+
+
+        });
     }
 
 

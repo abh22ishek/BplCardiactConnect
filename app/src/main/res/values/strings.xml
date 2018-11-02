@@ -559,6 +559,28 @@ This is when high blood pressure requires emergency medical attention.
     <string name="weigh_val">Weight cannot be empty</string>
     <string name="con_doc_val">Consultation Doctor cannot be empty</string>
     <string name="check_ineternet">Please Check your Internet Connection</string>
+    <string name="lead_switch">Lead Switch</string>
+    <string name="adf_mus">ADF MUS :</string>
+    <string name="gain">Gain :</string>
+    <string name="i">I</string>
+    <string name="ii">II</string>
+    <string name="v2">V2</string>
+    <string name="iii">III</string>
+    <string name="v3">V3</string>
+    <string name="avr_">aVR</string>
+    <string name="v4_">V4</string>
+    <string name="avl_">aVL</string>
+    <string name="v5_">V5</string>
+    <string name="avf_">aVF</string>
+    <string name="v6_">V6</string>
+    <string name="v1_">V1</string>
+    <string name="connecting">Connecting ......</string>
+    <string name="start_">Start</string>
+    <string name="la">LA</string>
+    <string name="ll">LL</string>
+    <string name="ra">RA</string>
+    <string name="battery_status">Battery Status :</string>
+
 
 
 </resources>

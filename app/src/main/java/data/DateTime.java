@@ -51,6 +51,24 @@ public class DateTime {
     }
 
 
+
+    @SuppressLint("SimpleDateFormat")
+    public  static String getDateTimeAMPM()
+    {
+        DateFormat dateFormat = null;
+
+        try{
+             dateFormat = new SimpleDateFormat("hh:mm a");
+
+             }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        Date date = new Date();
+        return  dateFormat.format(date);
+    }
+
     // convert sec to hhmmss
 
     public  static double seconds_to_minutes_hours(double total_secs)

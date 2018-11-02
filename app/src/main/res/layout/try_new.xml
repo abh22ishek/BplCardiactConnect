@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#000000"
+    android:id="@+id/layoutF"
+    android:orientation="vertical"
+    android:layout_marginEnd="30dp"
+    android:layout_marginBottom="-5dp"
+    android:layout_height="match_parent"
+
+    >
+
+
+
+    <custom.ecg.lead.realdata.BackgroungEcgView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/i"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.Lead1GraphView
+                android:id="@+id/RealTimeEcg1"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:foregroundGravity="center_vertical"
+                />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+
+            android:layout_marginTop="15dp"
+
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/ii"
+                android:textColor="@color/white"
+
+                android:textSize="13sp"
+
+                android:textStyle="bold" />
+
+            <custom.ecg.lead.realdata.Lead2GraphView
+                android:layout_width="0dp"
+                android:id="@+id/RealTimeEcg2"
+                android:layout_weight="1"
+                android:foregroundGravity="center_vertical"
+                android:layout_height="150dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</FrameLayout>
