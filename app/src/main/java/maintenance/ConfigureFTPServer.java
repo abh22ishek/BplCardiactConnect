@@ -110,30 +110,24 @@ public class ConfigureFTPServer extends Fragment {
         });
 
 
-        passwordBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                radioUrl.setChecked(false);
-                radioport.setChecked(false);
-                radioUserName.setChecked(false);
-                radioPassword.setChecked(true);
-                radioSaveDir.setChecked(false);
+        passwordBar.setOnClickListener(view -> {
+            radioUrl.setChecked(false);
+            radioport.setChecked(false);
+            radioUserName.setChecked(false);
+            radioPassword.setChecked(true);
+            radioSaveDir.setChecked(false);
 
-                headerText="FTP Server Password";
-            }
+            headerText="FTP Server Password";
         });
 
-        saveDirBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                radioUrl.setChecked(false);
-                radioport.setChecked(false);
-                radioUserName.setChecked(false);
-                radioPassword.setChecked(false);
-                radioSaveDir.setChecked(true);
+        saveDirBar.setOnClickListener(view -> {
+            radioUrl.setChecked(false);
+            radioport.setChecked(false);
+            radioUserName.setChecked(false);
+            radioPassword.setChecked(false);
+            radioSaveDir.setChecked(true);
 
-                headerText="FTP Server Directory";
-            }
+            headerText="FTP Server Directory";
         });
 
 
@@ -147,20 +141,17 @@ public class ConfigureFTPServer extends Fragment {
 
 
 
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                        .permitAll().build();
-                StrictMode.setThreadPolicy(policy);
+        btnUpload.setOnClickListener(view -> {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
 
-                if(isNetworkAvailable(getActivity()) &&isInternetAvailable() )
-                    new UploadPDFFiles().execute(new String[] { isloaded});
-                else
-                    Toast.makeText(getActivity(),R.string.check_ineternet,Toast.LENGTH_SHORT).show();
-               // Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gmail.com"));
-               // startActivity(browserIntent);
-            }
+            if(isNetworkAvailable(getActivity()) &&isInternetAvailable() )
+                new UploadPDFFiles().execute(new String[] { isloaded});
+            else
+                Toast.makeText(getActivity(),R.string.check_ineternet,Toast.LENGTH_SHORT).show();
+           // Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gmail.com"));
+           // startActivity(browserIntent);
         });
 
 

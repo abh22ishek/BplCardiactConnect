@@ -134,7 +134,6 @@ public class ECGDisplayFragment extends Fragment {
                 {
                     captureScreen("Big boss ","small");
                   //  ecgGraphView.clearCanvas();
-
                 }else if(menuItem.getItemId()==R.id.savePdf)
                 {
                     EcgPdf task = new EcgPdf();
@@ -355,8 +354,6 @@ public class ECGDisplayFragment extends Fragment {
 
          @Override
          protected String doInBackground(String... strings) {
-
-
              try {
 
                 createPdf();

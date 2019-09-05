@@ -92,10 +92,7 @@ public class Utility {
 
         for (int i=0;i<arr1.length;i=i+8)
             {
-
-
-
-                 EcgLead1String.add(arr1[i].replace("\n",""));
+                EcgLead1String.add(arr1[i].replace("\n",""));
              }
 
         for (int i=1;i<arr1.length;i=i+8)
@@ -159,7 +156,7 @@ public class Utility {
         Logger.log(Level.DEBUG,"EcgLeadV6 length=", "" + EcgLeadV6.size()+ " 10th itemzs" +Integer.parseInt(EcgLeadV6.get(10)));
 
 
-         e.setEcgLead1(EcgLead1String);
+        e.setEcgLead1(EcgLead1String);
         e.setEcgLead2(EcgLead2String);
         e.setEcgLeadV1(EcgLeadV1);
 

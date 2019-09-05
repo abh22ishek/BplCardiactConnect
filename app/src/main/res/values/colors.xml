@@ -42,4 +42,12 @@
     <color name="spalsh_text_color">#FF0F4183</color>
     <color name="top_strength_color">#FFE9E90F</color>
     <color name="sig_strength_top">#FFB0C826</color>
+
+
+    <color name="bg_start_color">#242D45</color>
+    <color name="bg_end_color">#212637</color>
+    <color name="bg_centre_color">#4E69AC</color>
+    <color name="bg_solid_color">#4E69AC</color>
+
+   <color name="button_bg_color">#808888</color>
 </resources>

@@ -75,7 +75,7 @@
             android:orientation="vertical"
             android:background="#50e91e63"
             android:foreground="?android:attr/selectableItemBackground"
-
+            android:id="@+id/importRec"
             android:layout_height="0dp">
             <TextView
                 android:layout_width="match_parent"

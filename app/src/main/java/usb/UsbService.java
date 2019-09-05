@@ -48,7 +48,6 @@ public class UsbService extends Service {
         @Override
         public void onReceivedData(byte[] arg0) {
             try {
-
                 //  String data = new String(arg0, "UTF-8");
                 if (mHandler != null)
                     mHandler.obtainMessage(MESSAGE_FROM_SERIAL_PORT, arg0).sendToTarget();
@@ -213,7 +212,8 @@ public class UsbService extends Service {
      * Request user permission. The response will be received in the BroadcastReceiver
      */
     private void requestUserPermission() {
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
+        PendingIntent mPendingIntent = PendingIntent.
+                getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
         usbManager.requestPermission(device, mPendingIntent);
     }
 

@@ -16,6 +16,7 @@ import java.util.*;
 import cardiact.bpl.pkg.com.bplcardiactconnect.*;
 import constants.*;
 import patient.list.*;
+import usb.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 
@@ -23,8 +24,10 @@ import patient.list.*;
 public class PatientMenuTrackFragment extends Fragment {
 
     private LoginActivityListner loginActivityListner;
-    private RelativeLayout archivedRec,realTimeEcgMeasurement;
+    private RelativeLayout archivedRec,realTimeEcgMeasurement,importRecord;
     private  Dialog mDialog;
+    String hexstring="0x50 0x00 0x08 0x13 0x00 0xFE 0x68 0x61";
+    UsbService usbService;
 
     @Override
     public void onAttach(Context context) {
@@ -45,9 +48,9 @@ public class PatientMenuTrackFragment extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         View view= inflater.inflate(R.layout.pat_menu_track,container,false);
-
         archivedRec=view.findViewById(R.id.archivedRec);
         realTimeEcgMeasurement=view.findViewById(R.id.realTimeEcgMeasurement);
+        importRecord=view.findViewById(R.id.importRec);
 
         return view;
     }
@@ -57,27 +60,38 @@ public class PatientMenuTrackFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         loginActivityListner.OnCurrentFragment(ClassConstants.PATIENT_MENU_TRACK_FRAGMENT);
         archivedRec.setOnClickListener(
-                new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onPatientList();
+                view -> onPatientList());
+
+
+        realTimeEcgMeasurement.setOnClickListener(view -> ExistingorNewPatient(getActivity()));
+        importRecord.setOnClickListener(view -> {
+
+            byte [] writeBuffer= HexData.stringTobytes(hexstring);
+            if (usbService != null) {
+                usbService.write(writeBuffer);
+
             }
+
         });
-
-
-
-
-        realTimeEcgMeasurement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                ExistingorNewPatient(getActivity());
-            }
-        });
-
 
     }
 
+
+
+
+    private final ServiceConnection usbConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName arg0, IBinder arg1) {
+            usbService = ((UsbService.UsbBinder) arg1).getService();
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            usbService = null;
+
+        }
+    };
 
 
 
@@ -117,7 +131,20 @@ public class PatientMenuTrackFragment extends Fragment {
     }
 
 
+    private void onPatientListq()
+    {
+        android.support.v4.app.FragmentManager fragmentManager = Objects.requireNonNull(getActivity().getSupportFragmentManager());
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        PatientListFragment patientListFragment = new PatientListFragment();
+        // fragmentTransaction.setTransition( FragmentTransaction.TRANSIT_FRAGMENT_FADE );
 
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.SORT_BY,"");
+        patientListFragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.fragmentContainer,patientListFragment,ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.addToBackStack(ClassConstants.PATIENT_LIST_FRAGMENT);
+        fragmentTransaction.commit();
+    }
 
     private void onExistingPatient()
     {

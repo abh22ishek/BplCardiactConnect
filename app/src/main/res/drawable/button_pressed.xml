@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+   <!-- &lt;!&ndash; Button Focused &ndash;&gt;
+    <item android:drawable="@mipmap/button_green_disabled" android:state_focused="true" android:state_pressed="false"/>
+    &lt;!&ndash; Button Focused Pressed &ndash;&gt;
+    <item android:drawable="@mipmap/button_green_disabled" android:state_focused="true" android:state_pressed="true"/>
+    &lt;!&ndash; Button Pressed &ndash;&gt;
+    <item android:drawable="@mipmap/button_green_disabled" android:state_focused="false" android:state_pressed="true"/>
+    &lt;!&ndash; Button Default Image &ndash;&gt;
+    <item android:drawable="@mipmap/button_green"/>
+-->
+</selector>

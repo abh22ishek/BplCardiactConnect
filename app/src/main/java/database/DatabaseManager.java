@@ -320,8 +320,7 @@ public class DatabaseManager {
         List<PatientModel> patientModelList=new ArrayList<>();
 
         Cursor cursor;
-
-           // cursor=mDatabase.query(TABLE_NAME_PATIENT_PROFILE,
+        // cursor=mDatabase.query(TABLE_NAME_PATIENT_PROFILE,
                //     null,USER_NAME_+"=?",new String[]{username},null,null,null);
 
           cursor = mDatabase.rawQuery("select * from " + TABLE_NAME_PATIENT_PROFILE, null);
@@ -350,10 +349,6 @@ public class DatabaseManager {
             m.setDiabolic(cursor.getString(cursor.getColumnIndex(PATIENT_DIABOLIC_DATA)));
             m.setConsultName(cursor.getString(cursor.getColumnIndex(PATIENT_CONSULTATTION_DOC)));
             m.setPatRefDoc(cursor.getString(cursor.getColumnIndex(PATIENT_REF_DOC)));
-
-
-
-
 
             patientModelList.add(m);
         }

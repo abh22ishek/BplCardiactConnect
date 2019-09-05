@@ -11,6 +11,7 @@ import android.net.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.design.widget.*;
+import android.support.v4.app.*;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.*;
@@ -82,13 +83,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
         globalVariable = (BaseApplicationClass) getApplicationContext();
 
 
-            doctorSets=new LinkedHashSet<>();
-
-
+        doctorSets=new LinkedHashSet<>();
         drawerLayout = findViewById(R.id.drawerLayout);
-
-
-
 
         nv = findViewById(R.id.nv);
 
@@ -173,7 +169,8 @@ public class BaseLoginActivityClass extends AppCompatActivity implements LoginAc
                 case R.id.managePatients:
                     drawerLayout.closeDrawer(Gravity.START);
                     getSupportActionBar().setTitle(getString(R.string.manage_pat));
-                    onPatientList();
+                    callFragments(ClassConstants.EXISTING_PATIENT_FRAGMENT,new ExistingPatientFragment(),
+                            ClassConstants.EXISTING_PATIENT_FRAGMENT,null);
                     break;
 
 

@@ -27,10 +27,10 @@ public class SplashScreenActivity extends Activity {
         View decorView = getWindow().getDecorView();
 
 
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-            setContentView(R.layout.activity_splash_screen);
-            globalVariable = (BaseApplicationClass) getApplicationContext();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        //decorView.setSystemUiVisibility(uiOptions);
+        setContentView(R.layout.activity_splash_screen);
+        globalVariable = (BaseApplicationClass) getApplicationContext();
 
     }
 
@@ -57,13 +57,12 @@ public class SplashScreenActivity extends Activity {
             public void run() {
 
                 Logger.log(Level.DEBUG,TAG,"***On Resume() Called***");
-
                 Intent intent=new Intent(SplashScreenActivity.this,BaseLoginActivityClass.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
-
                 finish();
+
+
             }
         }, splash_timeout);
 

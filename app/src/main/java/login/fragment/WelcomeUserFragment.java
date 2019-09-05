@@ -178,6 +178,10 @@ public class WelcomeUserFragment extends Fragment {
                         super.onLoadFailed(e, errorDrawable);
 
                         Logger.log(Level.ERROR, "------p", e.toString());
+                        // Add custom code
+
+
+
                     }
                 });
 
@@ -221,7 +225,6 @@ public class WelcomeUserFragment extends Fragment {
 
         fragmentTransaction.replace(R.id.fragmentContainer,signUpFragment, ClassConstants.SIGNUP_FRAGMENT);
         fragmentTransaction.addToBackStack(ClassConstants.SIGNUP_FRAGMENT);
-
         fragmentTransaction.commit();
 
 
@@ -250,8 +253,6 @@ public class WelcomeUserFragment extends Fragment {
 
     public  SharedPreferences getHospitalDetails(Context context)
     {
-
-
         SharedPreferences prefs;
         prefs = context.getSharedPreferences(Constants.HOSPITAL_INFO_FILE, Context.MODE_PRIVATE);
 
@@ -259,8 +260,6 @@ public class WelcomeUserFragment extends Fragment {
         hospInitials =prefs.getString(Constants.HOSPITAL_NAME, "");
         departName =prefs.getString(Constants.HOSPITAL_DEPARTMENT, "");
         savedUriHosp =prefs.getString(Constants.HOSPITAL_URI, "");
-
-
         return prefs;
     }
 }

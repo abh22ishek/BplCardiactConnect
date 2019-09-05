@@ -33,8 +33,8 @@ public class ExistingPatientFragment extends Fragment {
     private ArrayAdapter<CharSequence> adapter;
 
     private Spinner SearchBy;
-
     String searchByTag="";
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -100,10 +100,9 @@ public class ExistingPatientFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
                 //
-
-                Logger.log(Level.DEBUG,ExistingPatientFragment.class.getName(),"Nothing gets selected in Spinner");
+                Logger.log(Level.DEBUG,ExistingPatientFragment.class.getName(),
+                        "Nothing gets selected in Spinner");
             }
 
 
@@ -131,8 +130,6 @@ public class ExistingPatientFragment extends Fragment {
 
     private List<PatientModel>  getExistingPatientFromDB()
     {
-
-
         try {
             DatabaseManager.getInstance().openDatabase();
             ExistingPatientModelList= DatabaseManager.getInstance().getAllPatientsFromDB();
